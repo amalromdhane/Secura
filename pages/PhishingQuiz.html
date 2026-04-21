@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <title>CyberQuiz - Sensibilisation à la Cybersécurité</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
+  
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../css/quizStyle.css">
+
+    
+  
+</head>
+<body >
+<nav class="navbar">
+  <div class="nav-container">
+    <a class="nav-brand" href="../index.html">
+      <i class="fas fa-shield-alt"></i>
+       Sec<span>ura</span>
+    </a>
+    
+    <button class="nav-toggler" id="navToggler">
+      <i class="fas fa-bars"></i>
+    </button>
+    
+    <ul class="nav-menu" id="navMenu">
+      <li class="nav-item">
+        <a class="nav-link" href="../index.html">
+          <i class="fas fa-home"></i> Accueil
+        </a>
+      </li>
+      <li><a href="./phishing.html" class="nav-link"><i class="fas fa-long-arrow-alt-right" style="color:var(--cyber-cyan);"></i></a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="quiz-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 mx-auto text-center">
+        <h1 class="mb-3">Quiz de Sensibilisation au Phishing</h1>
+        <p class="lead mb-4">Testez vos connaissances sur les techniques d'hameçonnage et apprenez à vous protéger</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <div class="container my-5">
+  <div id="results">
+
+      <div id="quiz-section">
+        <form class="quiz" id="cyberQuiz">
+
+          <div class="question-card">
+            <div class="card-header">
+              <div class="question-header">
+                <span class="question-number">1</span>
+                <span>Selon le site Cybermalveillance.gouv.fr, que devez-vous faire AVANT de cliquer sur un lien douteux dans un email ?</span>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q1" id="q1a1">
+                <label class="form-check-label" for="q1a1">
+                  Cliquer rapidement pour voir où il mène
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q1" id="q1a2">
+                <label class="form-check-label" for="q1a2">
+                  Positionner le curseur de la souris sur le lien (sans cliquer) pour voir la véritable adresse[citation:1]
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q1" id="q1a3">
+                <label class="form-check-label" for="q1a3">
+                  Répondre à l'expéditeur pour lui demander des explications
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q1" id="q1a4">
+                <label class="form-check-label" for="q1a4">
+                  Transférer l'email à un collègue pour avoir son avis
+                </label>
+              </div>
+            </div>
+          </div>
+
+ 
+          <div class="question-card">
+            <div class="card-header">
+              <div class="question-header">
+                <span class="question-number">2</span>
+                <span>Vous recevez un SMS suspect (smishing) vous demandant de cliquer sur un lien. Quel est le numéro gratuit pour le signaler en France ?</span>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q2" id="q2a1">
+                <label class="form-check-label" for="q2a1">
+                  17 (police secours)
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q2" id="q2a2">
+                <label class="form-check-label" for="q2a2">
+                  33700[citation:1][citation:5]
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q2" id="q2a3">
+                <label class="form-check-label" for="q2a3">
+                  3113 (services de renseignements)
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q2" id="q2a4">
+                <label class="form-check-label" for="q2a4">
+                  118 418 (annuaire inversé)
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="question-card">
+            <div class="card-header">
+              <div class="question-header">
+                <span class="question-number">3</span>
+                <span>Que font les experts de la plateforme "Phishing Initiative" suite au signalement d'un site frauduleux ?</span>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q3" id="q3a1">
+                <label class="form-check-label" for="q3a1">
+                  Ils contactent directement le propriétaire du site pour l'avertir.
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q3" id="q3a2">
+                <label class="form-check-label" for="q3a2">
+                  Ils analysent le site et peuvent le bloquer sur les principaux navigateurs internet[citation:1][citation:5].
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q3" id="q3a3">
+                <label class="form-check-label" for="q3a3">
+                  Ils envoient une facture à l'organisme dont l'identité a été usurpée.
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q3" id="q3a4">
+                <label class="form-check-label" for="q3a4">
+                  Ils redirigent automatiquement le site frauduleux vers le site officiel.
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="question-card">
+            <div class="card-header">
+              <div class="question-header">
+                <span class="question-number">4</span>
+                <span>Quelle pratique est une technique courante d'hameçonnage par téléphone (vishing) ?</span>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q4" id="q4a1">
+                <label class="form-check-label" for="q4a1">
+                  Vous offrir un essai gratuit d'un nouveau service.
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q4" id="q4a2">
+                <label class="form-check-label" for="q4a2">
+                  Créer un sentiment d'urgence (ex: problème de sécurité sur votre compte) pour vous faire divulguer des informations[citation:5][citation:8].
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q4" id="q4a3">
+                <label class="form-check-label" for="q4a3">
+                  Vous appeler pour un sondage d'opinion anonyme.
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q4" id="q4a4">
+                <label class="form-check-label" for="q4a4">
+                  Vous rappeler que vous avez un rendez-vous médical.
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="question-card">
+            <div class="card-header">
+              <div class="question-header">
+                <span class="question-number">5</span>
+                <span>Selon la réglementation et les bonnes pratiques, que doivent faire les administrations et les sociétés sérieuses concernant vos données sensibles ?</span>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q5" id="q5a1">
+                <label class="form-check-label" for="q5a1">
+                  Vous les demander par email en cas de problème technique urgent.
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q5" id="q5a2">
+                <label class="form-check-label" for="q5a2">
+                  Vous les demander par SMS pour aller plus vite.
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q5" id="q5a3">
+                <label class="form-check-label" for="q5a3">
+                  Ne JAMAIS vous demander vos données bancaires ou mots de passe par message électronique ou téléphone[citation:1][citation:5].
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q5" id="q5a4">
+                <label class="form-check-label" for="q5a4">
+                  Vous envoyer un formulaire papier à signer et à renvoyer.
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="question-card">
+            <div class="card-header">
+              <div class="question-header">
+                <span class="question-number">6</span>
+                <span>Que signifie le terme "spear-phishing" ?</span>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q6" id="q6a1">
+                <label class="form-check-label" for="q6a1">
+                  Une attaque de phishing qui utilise uniquement des images.
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q6" id="q6a2">
+                <label class="form-check-label" for="q6a2">
+                  Une attaque de phishing très ciblée sur une personne ou une organisation spécifique, utilisant des informations personnelles[citation:8].
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q6" id="q6a3">
+                <label class="form-check-label" for="q6a3">
+                  Un logiciel qui bloque automatiquement les emails de phishing.
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q6" id="q6a4">
+                <label class="form-check-label" for="q6a4">
+                  Une technique pour pêcher le poisson-lance.
+                </label>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="question-card">
+            <div class="card-header">
+              <div class="question-header">
+                <span class="question-number">7</span>
+                <span>Si vous avez communiqué votre mot de passe suite à une tentative de phishing, quelle est la première chose à faire ?</span>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q7" id="q7a1">
+                <label class="form-check-label" for="q7a1">
+                  Attendre de voir si quelque chose d'anormal se produit.
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q7" id="q7a2">
+                <label class="form-check-label" for="q7a2">
+                  Le changer IMMÉDIATEMENT sur le service concerné, ainsi que sur tous les autres sites où vous l'utilisiez[citation:1].
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q7" id="q7a3">
+                <label class="form-check-label" for="q7a3">
+                  Éteindre votre ordinateur pendant 24 heures.
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q7" id="q7a4">
+                <label class="form-check-label" for="q7a4">
+                  Envoyer un email à tous vos contacts pour les prévenir.
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="question-card">
+            <div class="card-header">
+              <div class="question-header">
+                <span class="question-number">8</span>
+                <span>Un site web utilise le protocole HTTPS (avec un cadenas). Cela signifie-t-il automatiquement qu'il est légitime et non frauduleux ?</span>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q8" id="q8a1">
+                <label class="form-check-label" for="q8a1">
+                  Oui, HTTPS garantit toujours la légitimité du site.
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q8" id="q8a2">
+                <label class="form-check-label" for="q8a2">
+                  Non, HTTPS chiffre la connexion mais les fraudeurs peuvent aussi l'utiliser sur des sites frauduleux[citation:7].
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q8" id="q8a3">
+                <label class="form-check-label" for="q8a3">
+                  Oui, car seuls les sites officiels peuvent obtenir un certificat HTTPS.
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q8" id="q8a4">
+                <label class="form-check-label" for="q8a4">
+                  Non, mais cela signifie que le site est hébergé en Europe.
+                </label>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="question-card">
+            <div class="card-header">
+              <div class="question-header">
+                <span class="question-number">9</span>
+                <span>Quelle infraction pénale peut être retenue contre les auteurs d'une escroquerie par hameçonnage en France ?</span>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q9" id="q9a1">
+                <label class="form-check-label" for="q9a1">
+                  Atteinte à la vie privée uniquement.
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q9" id="q9a2">
+                <label class="form-check-label" for="q9a2">
+                  Escroquerie, pouvant être punie de 5 ans d'emprisonnement et 375 000 € d'amende[citation:1].
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q9" id="q9a3">
+                <label class="form-check-label" for="q9a3">
+                  Simple contravention pour envoi de mail non sollicité.
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q9" id="q9a4">
+                <label class="form-check-label" for="q9a4">
+                  Aucune, car les auteurs sont souvent à l'étranger.
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="question-card">
+            <div class="card-header">
+              <div class="question-header">
+                <span class="question-number">10</span>
+                <span>Quel est l'un des objectifs principaux d'une attaque par hameçonnage ?</span>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q10" id="q10a1">
+                <label class="form-check-label" for="q10a1">
+                  Améliorer le référencement (SEO) d'un site web.
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q10" id="q10a2">
+                <label class="form-check-label" for="q10a2">
+                  Vous vendre un produit de qualité à prix réduit.
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q10" id="q10a3">
+                <label class="form-check-label" for="q10a3">
+                  Voler des informations personnelles ou bancaires pour en faire un usage frauduleux[citation:1][citation:5].
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q10" id="q10a4">
+                <label class="form-check-label" for="q10a4">
+                  Tester la sécurité de votre connexion internet.
+                </label>
+              </div>
+            </div>
+          </div>
+
+    
+          <div class="d-flex justify-content-center mt-5">
+          <a href="#results" class="quiz-btn">
+            <i class="fas fa-paper-plane me-2"></i> Voir les corrections
+          </a>
+        </div>
+        <br>
+        </form>
+      </div>
+      <!---Resultes-->
+  
+      <div id="results-section" class="result-section" >
+        <div class="mb-5">
+                  <h3 class="mb-4 text-center"><i class="fas fa-clipboard-check me-2"></i>Correction détaillée</h3>
+        
+
+        <div class="question-card">
+          <div class="card-header">
+            <div class="question-header">
+              <span class="question-number">1</span>
+              <span>Selon le site Cybermalveillance.gouv.fr, que devez-vous faire AVANT de cliquer sur un lien douteux dans un email ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="correct-answer">
+              <div class="answer-header">
+                <span class="result-icon icon-correct"><i class="fas fa-check"></i></span>
+                <strong>Réponse correcte : Positionner le curseur de la souris sur le lien (sans cliquer) pour voir la véritable adresse</strong>
+              </div>
+              <p class="mt-2">Cette action permet d'afficher l'URL réelle vers laquelle pointe le lien dans la barre d'état du navigateur. Comparez-la soigneusement avec l'adresse officielle du site (souvent un seul caractère change). Si elle est suspecte, ne cliquez pas[citation:1].</p>
+            </div>
+          </div>
+        </div>
+        
+
+        <div class="question-card">
+          <div class="card-header">
+            <div class="question-header">
+              <span class="question-number">2</span>
+              <span>Vous recevez un SMS suspect (smishing) vous demandant de cliquer sur un lien. Quel est le numéro gratuit pour le signaler en France ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="correct-answer">
+              <div class="answer-header">
+                <span class="result-icon icon-correct"><i class="fas fa-check"></i></span>
+                <strong>Réponse correcte : 33700</strong>
+              </div>
+              <p class="mt-2">Le 33700 est la plateforme officielle de signalement des SMS indésirables (spam) et frauduleux (smishing) en France. Transférez simplement le SMS suspect à ce numéro[citation:1][citation:5].</p>
+            </div>
+          </div>
+        </div>
+ 
+        <div class="question-card">
+          <div class="card-header">
+            <div class="question-header">
+              <span class="question-number">3</span>
+              <span>Que font les experts de la plateforme "Phishing Initiative" suite au signalement d'un site frauduleux ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="correct-answer">
+              <div class="answer-header">
+                <span class="result-icon icon-correct"><i class="fas fa-check"></i></span>
+                <strong>Réponse correcte : Ils analysent le site et peuvent le bloquer sur les principaux navigateurs internet.</strong>
+              </div>
+              <p class="mt-2">Phishing-initiative.fr est une plateforme collaborative. Après vérification, les sites confirmés comme frauduleux sont ajoutés à des listes noires utilisées par les navigateurs (comme Chrome, Firefox) pour afficher un avertissement et empêcher les utilisateurs d'y accéder[citation:1][citation:5].</p>
+            </div>
+          </div>
+        </div>
+        
+
+        <div class="question-card">
+          <div class="card-header">
+            <div class="question-header">
+              <span class="question-number">4</span>
+              <span>Quelle pratique est une technique courante d'hameçonnage par téléphone (vishing) ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="correct-answer">
+              <div class="answer-header">
+                <span class="result-icon icon-correct"><i class="fas fa-check"></i></span>
+                <strong>Réponse correcte : Créer un sentiment d'urgence (ex: problème de sécurité sur votre compte) pour vous faire divulguer des informations.</strong>
+              </div>
+              <p class="mt-2">Les fraudeurs au téléphone utilisent souvent l'urgence ("Votre compte va être bloqué", "Une transaction suspecte vient d'avoir lieu") pour vous stresser et vous empêcher de réfléchir logiquement, vous poussant à donner codes, mots de passe ou codes 2FA[citation:5][citation:8].</p>
+            </div>
+          </div>
+        </div>
+        
+ 
+        <div class="question-card">
+          <div class="card-header">
+            <div class="question-header">
+              <span class="question-number">5</span>
+              <span>Selon la réglementation et les bonnes pratiques, que doivent faire les administrations et les sociétés sérieuses concernant vos données sensibles ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="correct-answer">
+              <div class="answer-header">
+                <span class="result-icon icon-correct"><i class="fas fa-check"></i></span>
+                <strong>Réponse correcte : Ne JAMAIS vous demander vos données bancaires ou mots de passe par message électronique ou téléphone.</strong>
+              </div>
+              <p class="mt-2">C'est une règle fondamentale. Votre banque, les impôts, la CAF, Ameli, etc., ne vous demanderont jamais de communiquer votre mot de passe, votre numéro de carte ou le cryptogramme par email, SMS ou téléphone. Un tel message est une tentative de phishing certaine[citation:1][citation:5].</p>
+            </div>
+          </div>
+        </div>
+        
+ 
+        <div class="question-card">
+          <div class="card-header">
+            <div class="question-header">
+              <span class="question-number">6</span>
+              <span>Que signifie le terme "spear-phishing" ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="correct-answer">
+              <div class="answer-header">
+                <span class="result-icon icon-correct"><i class="fas fa-check"></i></span>
+                <strong>Réponse correcte : Une attaque de phishing très ciblée sur une personne ou une organisation spécifique, utilisant des informations personnelles.</strong>
+              </div>
+              <p class="mt-2">Contrairement au phishing "en masse", le spear-phishing est personnalisé. Le fraudeur collecte des informations sur sa cible (sur LinkedIn, le site de l'entreprise...) pour créer un email extrêmement crédible, semblant venir d'un collègue, d'un partenaire ou d'un supérieur, augmentant ainsi ses chances de succès[citation:8].</p>
+            </div>
+          </div>
+        </div>
+        
+   
+        <div class="question-card">
+          <div class="card-header">
+            <div class="question-header">
+              <span class="question-number">7</span>
+              <span>Si vous avez communiqué votre mot de passe suite à une tentative de phishing, quelle est la première chose à faire ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="correct-answer">
+              <div class="answer-header">
+                <span class="result-icon icon-correct"><i class="fas fa-check"></i></span>
+                <strong>Réponse correcte : Le changer IMMÉDIATEMENT sur le service concerné, ainsi que sur tous les autres sites où vous l'utilisiez.</strong>
+              </div>
+              <p class="mt-2">La rapidité est cruciale pour limiter les dégâts. N'utilisez jamais le même mot de passe sur plusieurs sites. Si c'est le cas, changez-le partout. Activez également l'authentification à deux facteurs (2FA) si possible pour ajouter une couche de sécurité[citation:1].</p>
+            </div>
+          </div>
+        </div>
+        
+      
+        <div class="question-card">
+          <div class="card-header">
+            <div class="question-header">
+              <span class="question-number">8</span>
+              <span>Un site web utilise le protocole HTTPS (avec un cadenas). Cela signifie-t-il automatiquement qu'il est légitime et non frauduleux ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="correct-answer">
+              <div class="answer-header">
+                <span class="result-icon icon-correct"><i class="fas fa-check"></i></span>
+                <strong>Réponse correcte : Non, HTTPS chiffre la connexion mais les fraudeurs peuvent aussi l'utiliser sur des sites frauduleux.</strong>
+              </div>
+              <p class="mt-2">HTTPS garantit que les données échangées avec le site sont chiffrées, mais pas que le site lui-même est digne de confiance. Les fraudeurs obtiennent facilement des certificats pour leurs faux sites (par ex., paypal-secure-login.xyz). Vérifiez toujours le nom de domaine dans la barre d'adresse[citation:7].</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="question-card">
+          <div class="card-header">
+            <div class="question-header">
+              <span class="question-number">9</span>
+              <span>Quelle infraction pénale peut être retenue contre les auteurs d'une escroquerie par hameçonnage en France ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="correct-answer">
+              <div class="answer-header">
+                <span class="result-icon icon-correct"><i class="fas fa-check"></i></span>
+                <strong>Réponse correcte : Escroquerie, pouvant être punie de 5 ans d'emprisonnement et 375 000 € d'amende.</strong>
+              </div>
+              <p class="mt-2">L'hameçonnage entre dans le cadre de l'escroquerie (Article 313-1 du Code pénal) car il utilise des "manœuvres frauduleuses" pour tromper la victime. Il est important de conserver toutes les preuves (captures d'écran, emails) et de déposer plainte[citation:1].</p>
+            </div>
+          </div>
+        </div>
+        
+ 
+        <div class="question-card">
+          <div class="card-header">
+            <div class="question-header">
+              <span class="question-number">10</span>
+              <span>Quel est l'un des objectifs principaux d'une attaque par hameçonnage ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="correct-answer">
+              <div class="answer-header">
+                <span class="result-icon icon-correct"><i class="fas fa-check"></i></span>
+                <strong>Réponse correcte : Voler des informations personnelles ou bancaires pour en faire un usage frauduleux.</strong>
+              </div>
+              <p class="mt-2">Le phishing vise principalement à dérober des données de valeur : identifiants de connexion (email, réseaux sociaux, banque), numéros de carte bancaire, ou informations personnelles permettant une usurpation d'identité. Ces données sont ensuite utilisées pour vider des comptes, faire des achats ou revendues sur le dark web[citation:1][citation:5].</p>
+            </div>
+          </div>
+        </div>
+        
+      
+        <div class="d-flex justify-content-center gap-3 mt-5">
+          <a href="#" class="quiz-btn">
+            <i class="fas fa-redo me-2"></i> Refaire le quiz
+          </a>
+          <a href="#top" class="quiz-btn" style="background: rgba(255, 255, 255, 0.1); color: white; border: 1px solid var(--cyber-cyan);">
+            <i class="fas fa-arrow-up me-2"></i> Retour en haut
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<footer class="py-5 border-secondary">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 mx-auto text-center">
+        <div class="d-flex justify-content-center mb-4">
+          <div class="rounded-circle d-flex align-items-center justify-content-center me-3" 
+               style="width: 50px; height: 50px; background: rgba(0, 255, 255, 0.1);">
+            <i class="fas fa-shield-alt text-primary fs-4"></i>
+          </div>
+          <div class="rounded-circle d-flex align-items-center justify-content-center" 
+               style="width: 50px; height: 50px; background: rgba(255, 100, 100, 0.1);">
+            <i class="fas fa-bug text-danger fs-4"></i>
+          </div>
+        </div>
+        <h3 class="mb-3">Cyber<span class="text-primary">Aware</span></h3>
+        <p class="text-muted mb-4">Formation en ligne à la cybersécurité pour tous</p>
+        <div class="d-flex justify-content-center gap-4 mb-4">
+          <a href="#" class="text-primary">
+            <i class="fab fa-github fs-4"></i>
+          </a>
+          <a href="#" class="text-primary">
+            <i class="fab fa-linkedin fs-4"></i>
+          </a>
+          <a href="#" class="text-primary">
+            <i class="fas fa-envelope fs-4"></i>
+          </a>
+        </div>
+        <hr style="border-color: rgba(255,255,255,0.1); margin: 1.5rem 0;">
+        <p class="text-muted small mb-0">
+          © 2026 CyberAware - Quiz de Sensibilisation au Phishing
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+
+</body>
+</html>

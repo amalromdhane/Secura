@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz Ransomware & Malwares - CyberAware</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <link rel="stylesheet" href="../css/quizStyle.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-container">
+    <a class="nav-brand" href="../index.html">
+      <i class="fas fa-shield-alt"></i>
+       Sec<span>ura</span>
+    </a>
+    
+    <button class="nav-toggler" id="navToggler">
+      <i class="fas fa-bars"></i>
+    </button>
+    
+    <ul class="nav-menu" id="navMenu">
+      <li class="nav-item">
+        <a class="nav-link" href="../index.html">
+          <i class="fas fa-home"></i> Accueil
+        </a>
+      </li>
+      <li><a href="./ransomware.html" class="nav-link"><i class="fas fa-long-arrow-alt-right" style="color:var(--cyber-cyan);"></i></a></li>
+    </ul>
+  </div>
+</nav>
+
+
+
+<section class="quiz-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 mx-auto text-center">
+        <h1 class="mb-3">Quiz Ransomware & Malwares</h1>
+        <p class="lead mb-4">Évaluez vos connaissances sur les logiciels malveillants et leur prévention</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<br><br>
+<div class="container my-4">
+  <div id="results">
+    
+    <div id="quiz-section">
+      <form class="quiz" id="malwareQuiz">
+        
+
+        <div class="question-card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <span class="question-number">1</span>
+              <span>Qu'est-ce qui distingue un ransomware des autres types de malwares ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q1" id="q1a1">
+              <label class="form-check-label" for="q1a1">
+                Il se propage plus rapidement que les autres malwares
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q1" id="q1a2">
+              <label class="form-check-label" for="q1a2">
+                Il vole des informations personnelles sans être détecté
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q1" id="q1a3">
+              <label class="form-check-label" for="q1a3">
+                Il chiffre les fichiers et demande une rançon pour les déverrouiller
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q1" id="q1a4">
+              <label class="form-check-label" for="q1a4">
+                Il transforme l'ordinateur en serveur pour attaques DDoS
+              </label>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="question-card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <span class="question-number">2</span>
+              <span>Quelle est la méthode de propagation la plus courante des ransomwares ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q2" id="q2a1">
+              <label class="form-check-label" for="q2a1">
+                Via des clés USB infectées
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q2" id="q2a2">
+              <label class="form-check-label" for="q2a2">
+                Par des emails de phishing avec pièces jointes malveillantes
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q2" id="q2a3">
+              <label class="form-check-label" for="q2a3">
+                À travers des réseaux Wi-Fi publics non sécurisés
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q2" id="q2a4">
+              <label class="form-check-label" for="q2a4">
+                Par téléchargement automatique lors de la navigation web
+              </label>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="question-card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <span class="question-number">3</span>
+              <span>Que signifie la règle "3-2-1" pour les sauvegardes ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q3" id="q3a1">
+              <label class="form-check-label" for="q3a1">
+                3 sauvegardes, 2 types de chiffrement, 1 vérification
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q3" id="q3a2">
+              <label class="form-check-label" for="q3a2">
+                3 copies des données, 2 supports différents, 1 copie hors site
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q3" id="q3a3">
+              <label class="form-check-label" for="q3a3">
+                3 jours entre chaque sauvegarde, 2 vérifications, 1 archivage
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q3" id="q3a4">
+              <label class="form-check-label" for="q3a4">
+                3 niveaux de sécurité, 2 administrateurs, 1 plan de reprise
+              </label>
+            </div>
+          </div>
+        </div>
+
+ 
+        <div class="question-card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <span class="question-number">4</span>
+              <span>Que doit-on faire si on est victime d'un ransomware ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q4" id="q4a1">
+              <label class="form-check-label" for="q4a1">
+                Payer immédiatement la rançon pour récupérer ses fichiers
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q4" id="q4a2">
+              <label class="form-check-label" for="q4a2">
+                Redémarrer l'ordinateur plusieurs fois pour éliminer le malware
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q4" id="q4a3">
+              <label class="form-check-label" for="q4a3">
+                Déconnecter l'appareil du réseau et contacter un expert en sécurité
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q4" id="q4a4">
+              <label class="form-check-label" for="q4a4">
+                Formater immédiatement le disque dur pour supprimer le ransomware
+              </label>
+            </div>
+          </div>
+        </div>
+
+  
+        <div class="question-card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <span class="question-number">5</span>
+              <span>Quelle est la principale différence entre un virus et un ver informatique ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q5" id="q5a1">
+              <label class="form-check-label" for="q5a1">
+                Les virus sont plus dangereux que les vers
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q5" id="q5a2">
+              <label class="form-check-label" for="q5a2">
+                Les vers se répliquent automatiquement sans intervention utilisateur
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q5" id="q5a3">
+              <label class="form-check-label" for="q5a3">
+                Les virus ne s'attaquent qu'aux fichiers, les vers aux systèmes
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q5" id="q5a4">
+              <label class="form-check-label" for="q5a4">
+                Les vers peuvent être supprimés plus facilement que les virus
+              </label>
+            </div>
+          </div>
+        </div>
+
+  
+        <div class="question-card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <span class="question-number">6</span>
+              <span>Qu'est-ce qu'un cheval de Troie (Trojan) ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q6" id="q6a1">
+              <label class="form-check-label" for="q6a1">
+                Un malware qui se déguise en logiciel légitime
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q6" id="q6a2">
+              <label class="form-check-label" for="q6a2">
+                Un virus très ancien qui n'existe plus aujourd'hui
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q6" id="q6a3">
+              <label class="form-check-label" for="q6a3">
+                Un type de ransomware qui demande une rançon élevée
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q6" id="q6a4">
+              <label class="form-check-label" for="q6a4">
+                Un malware qui ne fonctionne que sur les systèmes Windows
+              </label>
+            </div>
+          </div>
+        </div>
+
+  
+        <div class="question-card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <span class="question-number">7</span>
+              <span>Pourquoi est-il déconseillé de payer la rançon demandée par un ransomware ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q7" id="q7a1">
+              <label class="form-check-label" for="q7a1">
+                Parce que c'est illégal dans la plupart des pays
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q7" id="q7a2">
+              <label class="form-check-label" for="q7a2">
+                Parce qu'il n'y a aucune garantie de récupérer les fichiers
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q7" id="q7a3">
+              <label class="form-check-label" for="q7a3">
+                Parce que cela encourage les attaquants à continuer
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q7" id="q7a4">
+              <label class="form-check-label" for="q7a4">
+                Toutes ces réponses sont correctes
+              </label>
+            </div>
+          </div>
+        </div>
+
+    
+        <div class="question-card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <span class="question-number">8</span>
+              <span>Quel est le principal objectif d'un spyware ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q8" id="q8a1">
+              <label class="form-check-label" for="q8a1">
+                Endommager le système d'exploitation
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q8" id="q8a2">
+              <label class="form-check-label" for="q8a2">
+                Voler des informations personnelles sans être détecté
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q8" id="q8a3">
+              <label class="form-check-label" for="q8a3">
+                Utiliser l'ordinateur pour miner des cryptomonnaies
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q8" id="q8a4">
+              <label class="form-check-label" for="q8a4">
+                Ralentir les performances de l'ordinateur
+              </label>
+            </div>
+          </div>
+        </div>
+
+   
+        <div class="question-card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <span class="question-number">9</span>
+              <span>Quelle pratique est la PLUS efficace pour se protéger des ransomwares ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q9" id="q9a1">
+              <label class="form-check-label" for="q9a1">
+                Utiliser un antivirus gratuit
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q9" id="q9a2">
+              <label class="form-check-label" for="q9a2">
+                Effectuer des sauvegardes régulières et externalisées
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q9" id="q9a3">
+              <label class="form-check-label" for="q9a3">
+                Ne jamais télécharger de fichiers depuis internet
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q9" id="q9a4">
+              <label class="form-check-label" for="q9a4">
+                Utiliser uniquement des logiciels open source
+              </label>
+            </div>
+          </div>
+        </div>
+
+     
+        <div class="question-card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <span class="question-number">10</span>
+              <span>À quoi sert un anti-malware et en quoi diffère-t-il d'un antivirus ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q10" id="q10a1">
+              <label class="form-check-label" for="q10a1">
+                C'est la même chose, juste un nom différent
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q10" id="q10a2">
+              <label class="form-check-label" for="q10a2">
+                L'anti-malware détecte plus de types de menaces que l'antivirus
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q10" id="q10a3">
+              <label class="form-check-label" for="q10a3">
+                L'antivirus est plus efficace contre les ransomwares
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q10" id="q10a4">
+              <label class="form-check-label" for="q10a4">
+                L'anti-malware ne fonctionne que sur Windows
+              </label>
+            </div>
+          </div>
+        </div>
+
+   
+          <div class="d-flex justify-content-center mt-5">
+          <a href="#results" class="quiz-btn">
+            <i class="fas fa-paper-plane me-2"></i> Voir les corrections
+          </a>
+        </div>
+<br>
+      </form>
+    </div>
+    
+
+    <div id="results-section" class="result-section">
+      <div class="mb-4">
+        <h3 class="mb-3 text-center"><i class="fas fa-clipboard-check me-2"></i>Corrections</h3>
+
+        <div class="question-card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <span class="question-number">1</span>
+              <span>Qu'est-ce qui distingue un ransomware des autres types de malwares ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="correct-answer">
+              <div class="d-flex align-items-center">
+                <span class="result-icon icon-correct"><i class="fas fa-check"></i></span>
+                <strong>Réponse correcte : Il chiffre les fichiers et demande une rançon pour les déverrouiller</strong>
+              </div>
+              <p class="mt-2 small">Le ransomware se distingue par son modèle économique : il prend en otage vos données en les chiffrant, puis exige un paiement (souvent en cryptomonnaie) pour fournir la clé de déchiffrement.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="question-card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <span class="question-number">2</span>
+              <span>Quelle est la méthode de propagation la plus courante des ransomwares ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="correct-answer">
+              <div class="d-flex align-items-center">
+                <span class="result-icon icon-correct"><i class="fas fa-check"></i></span>
+                <strong>Réponse correcte : Par des emails de phishing avec pièces jointes malveillantes</strong>
+              </div>
+              <p class="mt-2 small">Plus de 90% des infections par ransomware commencent par un email de phishing. Les attaquants envoient des emails semblant légitimes avec des pièces jointes (fichiers Word, PDF, ZIP) contenant le malware.</p>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="question-card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <span class="question-number">3</span>
+              <span>Que signifie la règle "3-2-1" pour les sauvegardes ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="correct-answer">
+              <div class="d-flex align-items-center">
+                <span class="result-icon icon-correct"><i class="fas fa-check"></i></span>
+                <strong>Réponse correcte : 3 copies des données, 2 supports différents, 1 copie hors site</strong>
+              </div>
+              <p class="mt-2 small">Cette règle est essentielle pour se protéger contre les ransomwares : avoir au moins 3 copies de ses données, sur 2 types de supports différents (cloud + disque dur externe par exemple), et au moins 1 copie stockée physiquement ailleurs (hors site).</p>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="question-card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <span class="question-number">4</span>
+              <span>Que doit-on faire si on est victime d'un ransomware ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="correct-answer">
+              <div class="d-flex align-items-center">
+                <span class="result-icon icon-correct"><i class="fas fa-check"></i></span>
+                <strong>Réponse correcte : Déconnecter l'appareil du réseau et contacter un expert en sécurité</strong>
+              </div>
+              <p class="mt-2 small">La priorité est d'isoler l'appareil infecté pour éviter la propagation aux autres appareils du réseau. Ne payez jamais la rançon. Contactez un professionnel ou des organismes comme Cybermalveillance.gouv.fr en France.</p>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="question-card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <span class="question-number">5</span>
+              <span>Quelle est la principale différence entre un virus et un ver informatique ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="correct-answer">
+              <div class="d-flex align-items-center">
+                <span class="result-icon icon-correct"><i class="fas fa-check"></i></span>
+                <strong>Réponse correcte : Les vers se répliquent automatiquement sans intervention utilisateur</strong>
+              </div>
+              <p class="mt-2 small">Un virus a besoin d'un programme hôte pour se propager (en s'attachant à un fichier exécutable), tandis qu'un ver peut se répliquer et se propager de manière autonome à travers les réseaux sans intervention humaine.</p>
+            </div>
+          </div>
+        </div>
+
+  
+        <div class="question-card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <span class="question-number">6</span>
+              <span>Qu'est-ce qu'un cheval de Troie (Trojan) ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="correct-answer">
+              <div class="d-flex align-items-center">
+                <span class="result-icon icon-correct"><i class="fas fa-check"></i></span>
+                <strong>Réponse correcte : Un malware qui se déguise en logiciel légitime</strong>
+              </div>
+              <p class="mt-2 small">Comme le cheval de Troie de la mythologie, ce malware se fait passer pour un logiciel utile ou inoffensif pour tromper l'utilisateur et l'inciter à l'exécuter. Une fois installé, il ouvre une porte dérobée pour d'autres malwares.</p>
+            </div>
+          </div>
+        </div>
+
+     
+        <div class="question-card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <span class="question-number">7</span>
+              <span>Pourquoi est-il déconseillé de payer la rançon demandée par un ransomware ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="correct-answer">
+              <div class="d-flex align-items-center">
+                <span class="result-icon icon-correct"><i class="fas fa-check"></i></span>
+                <strong>Réponse correcte : Toutes ces réponses sont correctes</strong>
+              </div>
+              <p class="mt-2 small">Payer la rançon présente plusieurs problèmes : aucune garantie de récupération des fichiers, financement du crime organisé, signalement comme cible facile pour de futures attaques, et dans certains pays, cela peut être illégal (financement d'activités criminelles).</p>
+            </div>
+          </div>
+        </div>
+
+      
+        <div class="question-card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <span class="question-number">8</span>
+              <span>Quel est le principal objectif d'un spyware ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="correct-answer">
+              <div class="d-flex align-items-center">
+                <span class="result-icon icon-correct"><i class="fas fa-check"></i></span>
+                <strong>Réponse correcte : Voler des informations personnelles sans être détecté</strong>
+              </div>
+              <p class="mt-2 small">Les spywares sont conçus pour collecter discrètement des informations : historiques de navigation, mots de passe, informations bancaires, frappes au clavier (keyloggers). Ils cherchent à rester indétectés le plus longtemps possible.</p>
+            </div>
+          </div>
+        </div>
+
+    
+        <div class="question-card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <span class="question-number">9</span>
+              <span>Quelle pratique est la PLUS efficace pour se protéger des ransomwares ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="correct-answer">
+              <div class="d-flex align-items-center">
+                <span class="result-icon icon-correct"><i class="fas fa-check"></i></span>
+                <strong>Réponse correcte : Effectuer des sauvegardes régulières et externalisées</strong>
+              </div>
+              <p class="mt-2 small">Même avec un bon antivirus, un ransomware peut parfois passer. Les sauvegardes sont votre ultime protection : si vos fichiers sont chiffrés, vous pourrez restaurer une version propre depuis vos sauvegardes sans payer de rançon.</p>
+            </div>
+          </div>
+        </div>
+
+      
+        <div class="question-card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <span class="question-number">10</span>
+              <span>À quoi sert un anti-malware et en quoi diffère-t-il d'un antivirus ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="correct-answer">
+              <div class="d-flex align-items-center">
+                <span class="result-icon icon-correct"><i class="fas fa-check"></i></span>
+                <strong>Réponse correcte : L'anti-malware détecte plus de types de menaces que l'antivirus</strong>
+              </div>
+              <p class="mt-2 small">Un antivirus se concentre traditionnellement sur les virus, tandis qu'un anti-malware (logiciel anti-programme malveillant) détecte une plus large gamme de menaces : spywares, adwares, ransomwares, chevaux de Troie, vers, etc. Les solutions modernes combinent souvent les deux.</p>
+            </div>
+          </div>
+        </div>
+
+       
+        <div class="d-flex justify-content-center gap-3 mt-5">
+          <a href="#" class="quiz-btn">
+            <i class="fas fa-redo me-2"></i> Refaire le quiz
+          </a>
+          <a href="#top" class="quiz-btn" style="background: rgba(255, 255, 255, 0.1); color: white; border: 1px solid var(--cyber-cyan);">
+            <i class="fas fa-arrow-up me-2"></i> Retour en haut
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="py-5 border-secondary">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 mx-auto text-center">
+        <div class="d-flex justify-content-center mb-4">
+          <div class="rounded-circle d-flex align-items-center justify-content-center me-3" 
+               style="width: 50px; height: 50px; background: rgba(0, 255, 255, 0.1);">
+            <i class="fas fa-shield-alt text-primary fs-4"></i>
+          </div>
+          <div class="rounded-circle d-flex align-items-center justify-content-center" 
+               style="width: 50px; height: 50px; background: rgba(255, 100, 100, 0.1);">
+            <i class="fas fa-bug text-danger fs-4"></i>
+          </div>
+        </div>
+        <h3 class="mb-3">Cyber<span class="text-primary">Aware</span></h3>
+        <p class="text-muted mb-4">Formation en ligne à la cybersécurité pour tous</p>
+        <div class="d-flex justify-content-center gap-4 mb-4">
+          <a href="#" class="text-primary">
+            <i class="fab fa-github fs-4"></i>
+          </a>
+          <a href="#" class="text-primary">
+            <i class="fab fa-linkedin fs-4"></i>
+          </a>
+          <a href="#" class="text-primary">
+            <i class="fas fa-envelope fs-4"></i>
+          </a>
+        </div>
+        <hr style="border-color: rgba(255,255,255,0.1); margin: 1.5rem 0;">
+        <p class="text-muted small mb-0">
+          © 2026 CyberAware - Quiz Ransomware & Malwares
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+
+</body>
+</html>

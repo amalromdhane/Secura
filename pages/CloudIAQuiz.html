@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz Cloud & IA - CyberAware</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>☁️</text></svg>">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../css/quizStyle.css">
+
+    
+  
+</head>
+<body>
+
+
+<nav class="navbar">
+  <div class="nav-container">
+    <a class="nav-brand" href="../index.html">
+      <i class="fas fa-shield-alt"></i>
+       Sec<span>ura</span>
+    </a>
+    
+    <button class="nav-toggler" id="navToggler">
+      <i class="fas fa-bars"></i>
+    </button>
+    
+    <ul class="nav-menu" id="navMenu">
+      <li class="nav-item">
+        <a class="nav-link" href="../index.html">
+          <i class="fas fa-home"></i> Accueil
+        </a>
+      </li>
+      <li><a href="./cloud.html" class="nav-link"><i class="fas fa-long-arrow-alt-right" style="color:var(--cyber-cyan);"></i></a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="quiz-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 mx-auto text-center">
+        <h1 class="mb-3">Quiz Cloud & Intelligence Artificielle</h1>
+        <p class="lead mb-4">Testez vos connaissances sur la sécurité du cloud computing et les enjeux émergents de l'IA en cybersécurité.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<div class="container my-5">
+  <div id="results">
+    
+   
+    <div id="quiz-section">
+      <form class="quiz" id="cloudIAQuiz">
+        
+      
+        <div class="question-card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <span class="question-number">1</span>
+              <span>Quel est le principal avantage du modèle "Zero Trust" dans le contexte du cloud computing ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q1" id="q1a1">
+              <label class="form-check-label" for="q1a1">
+                Il réduit les coûts de stockage des données
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q1" id="q1a2">
+              <label class="form-check-label" for="q1a2">
+                Il applique le principe "Never Trust, Always Verify" pour tous les accès
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q1" id="q1a3">
+              <label class="form-check-label" for="q1a3">
+                Il accélère le temps de traitement des requêtes
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q1" id="q1a4">
+              <label class="form-check-label" for="q1a4">
+                Il simplifie l'interface utilisateur
+              </label>
+            </div>
+          </div>
+        </div>
+
+      
+        <div class="question-card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <span class="question-number">2</span>
+              <span>Qu'est-ce que le "data poisoning" dans le contexte de l'intelligence artificielle ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q2" id="q2a1">
+              <label class="form-check-label" for="q2a1">
+                Une technique pour nettoyer les données corrompues
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q2" id="q2a2">
+              <label class="form-check-label" for="q2a2">
+                Une attaque visant à corrompre les données d'entraînement d'un modèle d'IA
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q2" id="q2a3">
+              <label class="form-check-label" for="q2a3">
+                Un processus pour sécuriser les données sensibles
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q2" id="q2a4">
+              <label class="form-check-label" for="q2a4">
+                Une méthode de compression des données
+              </label>
+            </div>
+          </div>
+        </div>
+
+       
+        <div class="question-card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <span class="question-number">3</span>
+              <span>Quelle est la principale différence entre les modèles IaaS, PaaS et SaaS en matière de responsabilité sécurité ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q3" id="q3a1">
+              <label class="form-check-label" for="q3a1">
+                Ils ont tous le même niveau de responsabilité sécurité
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q3" id="q3a2">
+              <label class="form-check-label" for="q3a2">
+                Le client a plus de responsabilités en IaaS, le fournisseur en a plus en SaaS
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q3" id="q3a3">
+              <label class="form-check-label" for="q3a3">
+                Seul le PaaS garantit une sécurité complète
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q3" id="q3a4">
+              <label class="form-check-label" for="q3a4">
+                Le SaaS est toujours moins sécurisé que l'IaaS
+              </label>
+            </div>
+          </div>
+        </div>
+
+      
+        <div class="question-card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <span class="question-number">4</span>
+              <span>Qu'est-ce qu'une attaque par "deepfake" et pourquoi représente-t-elle un risque en sécurité ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q4" id="q4a1">
+              <label class="form-check-label" for="q4a1">
+                Une attaque qui utilise de fausses identités sur les réseaux sociaux
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q4" id="q4a2">
+              <label class="form-check-label" for="q4a2">
+                Une manipulation audio/vidéo ultra-réaliste pouvant tromper les systèmes d'authentification
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q4" id="q4a3">
+              <label class="form-check-label" for="q4a3">
+                Une technique pour pirater les bases de données cloud
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q4" id="q4a4">
+              <label class="form-check-label" for="q4a4">
+                Un virus qui se propage via les services cloud
+              </label>
+            </div>
+          </div>
+        </div>
+
+      
+        <div class="question-card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <span class="question-number">5</span>
+              <span>Quelle est la meilleure pratique pour sécuriser les données dans le cloud selon l'ANSSI ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q5" id="q5a1">
+              <label class="form-check-label" for="q5a1">
+                Stocker toutes les données sur un seul serveur pour simplifier la gestion
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q5" id="q5a2">
+              <label class="form-check-label" for="q5a2">
+                Chiffrer les données au repos et en transit, et gérer ses propres clés de chiffrement
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q5" id="q5a3">
+              <label class="form-check-label" for="q5a3">
+                Désactiver toutes les sauvegardes pour éviter les copies non autorisées
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q5" id="q5a4">
+              <label class="form-check-label" for="q5a4">
+                Utiliser le même mot de passe pour tous les services cloud
+              </label>
+            </div>
+          </div>
+        </div>
+
+     
+        <div class="question-card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <span class="question-number">6</span>
+              <span>Comment l'IA peut-elle être utilisée pour renforcer la cybersécurité ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q6" id="q6a1">
+              <label class="form-check-label" for="q6a1">
+                En remplaçant complètement les analystes en sécurité
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q6" id="q6a2">
+              <label class="form-check-label" for="q6a2">
+                En analysant des volumes massifs de logs pour détecter des anomalies comportementales
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q6" id="q6a3">
+              <label class="form-check-label" for="q6a3">
+                En créant des mots de passe plus complexes
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q6" id="q6a4">
+              <label class="form-check-label" for="q6a4">
+                En bloquant automatiquement tous les emails entrants
+              </label>
+            </div>
+          </div>
+        </div>
+
+       
+        <div class="question-card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <span class="question-number">7</span>
+              <span>Qu'est-ce que le "shadow IT" et pourquoi représente-t-il un risque en environnement cloud ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q7" id="q7a1">
+              <label class="form-check-label" for="q7a1">
+                Un logiciel antivirus obsolète
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q7" id="q7a2">
+              <label class="form-check-label" for="q7a2">
+                L'utilisation de services cloud non approuvés par le département IT
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q7" id="q7a3">
+              <label class="form-check-label" for="q7a3">
+                Un système d'exploitation non mis à jour
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q7" id="q7a4">
+              <label class="form-check-label" for="q7a4">
+                Un pare-feu mal configuré
+              </label>
+            </div>
+          </div>
+        </div>
+
+       
+        <div class="question-card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <span class="question-number">8</span>
+              <span>Qu'est-ce qu'une "attaque adverse" (adversarial attack) contre un système d'IA ?</span>
+            </div>
+            <div class="mt-2">
+              <span class="ai-badge">Intelligence Artificielle</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q8" id="q8a1">
+              <label class="form-check-label" for="q8a1">
+                Une critique publique d'un algorithme d'IA
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q8" id="q8a2">
+              <label class="form-check-label" for="q8a2">
+                Une modification subtile d'une image pour tromper un système de reconnaissance
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q8" id="q8a3">
+              <label class="form-check-label" for="q8a3">
+                Un déni de service ciblant un service cloud hébergeant un modèle d'IA
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q8" id="q8a4">
+              <label class="form-check-label" for="q8a4">
+                Un vol des données d'entraînement d'un modèle d'IA
+              </label>
+            </div>
+          </div>
+        </div>
+
+       
+        <div class="question-card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <span class="question-number">9</span>
+              <span>Pourquoi est-il important d'avoir une stratégie de "cloud hybride" ou "multi-cloud" ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q9" id="q9a1">
+              <label class="form-check-label" for="q9a1">
+                Pour éviter la dépendance à un seul fournisseur et réduire les risques
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q9" id="q9a2">
+              <label class="form-check-label" for="q9a2">
+                Parce que c'est toujours moins cher qu'un cloud unique
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q9" id="q9a3">
+              <label class="form-check-label" for="q9a3">
+                Pour simplifier la gestion des données
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q9" id="q9a4">
+              <label class="form-check-label" for="q9a4">
+                Parce que les réglementations l'exigent
+              </label>
+            </div>
+          </div>
+        </div>
+
+       
+        <div class="question-card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <span class="question-number">10</span>
+              <span>Qu'est-ce que le concept de "Responsible AI" (IA responsable) et pourquoi est-ce important ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q10" id="q10a1">
+              <label class="form-check-label" for="q10a1">
+                Une IA qui respecte les délais de développement
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q10" id="q10a2">
+              <label class="form-check-label" for="q10a2">
+                Un cadre éthique garantissant transparence, équité et contrôle humain des systèmes d'IA
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q10" id="q10a3">
+              <label class="form-check-label" for="q10a3">
+                Une IA qui fonctionne uniquement avec des données ouvertes
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q10" id="q10a4">
+              <label class="form-check-label" for="q10a4">
+                Une IA développée par des entreprises responsables
+              </label>
+            </div>
+          </div>
+        </div>
+
+        
+        <div class="d-flex justify-content-center mt-5">
+          <a href="#results" class="quiz-btn">
+            <i class="fas fa-paper-plane me-2"></i> Voir les corrections
+          </a>
+        </div>
+
+      </form>
+    </div>
+    
+   
+    <div id="results-section" class="result-section">
+      <div class="mb-5">
+        <h3 class="mb-4 text-center"><i class="fas fa-clipboard-check me-2"></i>Correction détaillée</h3>
+        
+      
+        <div class="question-card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <span class="question-number">1</span>
+              <span>Quel est le principal avantage du modèle "Zero Trust" dans le contexte du cloud computing ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="correct-answer">
+              <div class="d-flex align-items-center">
+                <span class="result-icon icon-correct"><i class="fas fa-check"></i></span>
+                <strong>Réponse correcte : Il applique le principe "Never Trust, Always Verify" pour tous les accès</strong>
+              </div>
+              <p class="mt-2">Le modèle Zero Trust part du principe qu'aucune entité (interne ou externe) n'est digne de confiance par défaut. Tous les accès aux ressources cloud doivent être authentifiés et autorisés à chaque requête, ce qui réduit considérablement la surface d'attaque.</p>
+            </div>
+          </div>
+        </div>
+
+      
+        <div class="question-card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <span class="question-number">2</span>
+              <span>Qu'est-ce que le "data poisoning" dans le contexte de l'intelligence artificielle ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="correct-answer">
+              <div class="d-flex align-items-center">
+                <span class="result-icon icon-correct"><i class="fas fa-check"></i></span>
+                <strong>Réponse correcte : Une attaque visant à corrompre les données d'entraînement d'un modèle d'IA</strong>
+              </div>
+              <p class="mt-2">Le data poisoning consiste à injecter intentionnellement des données erronées ou biaisées dans le jeu de données d'entraînement d'un modèle d'IA. Cela permet à l'attaquant d'influencer les prédictions du modèle une fois déployé, potentiellement pour le faire échouer ou prendre de mauvaises décisions.</p>
+            </div>
+          </div>
+        </div>
+
+      
+        <div class="question-card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <span class="question-number">3</span>
+              <span>Quelle est la principale différence entre les modèles IaaS, PaaS et SaaS en matière de responsabilité sécurité ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="correct-answer">
+              <div class="d-flex align-items-center">
+                <span class="result-icon icon-correct"><i class="fas fa-check"></i></span>
+                <strong>Réponse correcte : Le client a plus de responsabilités en IaaS, le fournisseur en a plus en SaaS</strong>
+              </div>
+              <p class="mt-2">Dans le modèle IaaS (Infrastructure as a Service), le client est responsable de la sécurité du système d'exploitation, des applications et des données. En PaaS (Platform as a Service), le fournisseur gère l'infrastructure et la plateforme. En SaaS (Software as a Service), le fournisseur gère presque tout, le client se concentrant uniquement sur la sécurité de ses données et accès.</p>
+            </div>
+          </div>
+        </div>
+
+       
+        <div class="question-card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <span class="question-number">4</span>
+              <span>Qu'est-ce qu'une attaque par "deepfake" et pourquoi représente-t-elle un risque en sécurité ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="correct-answer">
+              <div class="d-flex align-items-center">
+                <span class="result-icon icon-correct"><i class="fas fa-check"></i></span>
+                <strong>Réponse correcte : Une manipulation audio/vidéo ultra-réaliste pouvant tromper les systèmes d'authentification</strong>
+              </div>
+              <p class="mt-2">Les deepfakes utilisent l'IA pour créer des contenus audiovisuels falsifiés d'une qualité telle qu'ils peuvent tromper les systèmes de reconnaissance faciale ou vocale, ainsi que les humains. Ils représentent un risque majeur pour l'authentification biométrique, la désinformation et les fraudes.</p>
+            </div>
+          </div>
+        </div>
+
+      
+        <div class="question-card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <span class="question-number">5</span>
+              <span>Quelle est la meilleure pratique pour sécuriser les données dans le cloud selon l'ANSSI ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="correct-answer">
+              <div class="d-flex align-items-center">
+                <span class="result-icon icon-correct"><i class="fas fa-check"></i></span>
+                <strong>Réponse correcte : Chiffrer les données au repos et en transit, et gérer ses propres clés de chiffrement</strong>
+              </div>
+              <p class="mt-2">L'ANSSI recommande le chiffrement systématique des données stockées dans le cloud (au repos) et des données transmises (en transit). Le BYOK (Bring Your Own Key) permet de conserver le contrôle des clés de chiffrement, limitant l'accès du fournisseur cloud aux données chiffrées.</p>
+            </div>
+          </div>
+        </div>
+
+       
+        <div class="question-card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <span class="question-number">6</span>
+              <span>Comment l'IA peut-elle être utilisée pour renforcer la cybersécurité ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="correct-answer">
+              <div class="d-flex align-items-center">
+                <span class="result-icon icon-correct"><i class="fas fa-check"></i></span>
+                <strong>Réponse correcte : En analysant des volumes massifs de logs pour détecter des anomalies comportementales</strong>
+              </div>
+              <p class="mt-2">L'IA excelle dans l'analyse de grands volumes de données en temps réel. En cybersécurité, elle peut détecter des patterns suspects invisibles aux humains, identifier des comportements anormaux d'utilisateurs ou de systèmes, et prévenir des attaques avant qu'elles ne se produisent.</p>
+            </div>
+          </div>
+        </div>
+
+       
+        <div class="question-card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <span class="question-number">7</span>
+              <span>Qu'est-ce que le "shadow IT" et pourquoi représente-t-il un risque en environnement cloud ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="correct-answer">
+              <div class="d-flex align-items-center">
+                <span class="result-icon icon-correct"><i class="fas fa-check"></i></span>
+                <strong>Réponse correcte : L'utilisation de services cloud non approuvés par le département IT</strong>
+              </div>
+              <p class="mt-2">Le shadow IT désigne l'utilisation par les employés de services cloud (comme Google Drive, Dropbox, etc.) sans l'approbation ou la connaissance du service informatique. Cela crée des failles de sécurité car ces services ne sont pas contrôlés, monitorés ni sécurisés selon les standards de l'entreprise.</p>
+            </div>
+          </div>
+        </div>
+
+       
+        <div class="question-card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <span class="question-number">8</span>
+              <span>Qu'est-ce qu'une "attaque adverse" (adversarial attack) contre un système d'IA ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="correct-answer">
+              <div class="d-flex align-items-center">
+                <span class="result-icon icon-correct"><i class="fas fa-check"></i></span>
+                <strong>Réponse correcte : Une modification subtile d'une image pour tromper un système de reconnaissance</strong>
+              </div>
+              <p class="mt-2">Les attaques adverses exploitent les failles subtiles des modèles d'IA en modifiant légèrement les données d'entrée (pixels d'une image, mots dans un texte) pour induire le modèle en erreur. Ces modifications sont souvent imperceptibles à l'œil humain mais suffisent à tromper l'algorithme, ce qui pose des risques critiques dans les systèmes de sécurité basés sur l'IA.</p>
+            </div>
+          </div>
+        </div>
+
+       
+        <div class="question-card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <span class="question-number">9</span>
+              <span>Pourquoi est-il important d'avoir une stratégie de "cloud hybride" ou "multi-cloud" ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="correct-answer">
+              <div class="d-flex align-items-center">
+                <span class="result-icon icon-correct"><i class="fas fa-check"></i></span>
+                <strong>Réponse correcte : Pour éviter la dépendance à un seul fournisseur et réduire les risques</strong>
+              </div>
+              <p class="mt-2">Une stratégie multi-cloud permet d'éviter le "vendor lock-in" (dépendance à un seul fournisseur) et améliore la résilience. Si un fournisseur subit une panne ou une attaque, les services peuvent basculer vers un autre. Cela permet également de choisir le meilleur service pour chaque besoin spécifique et de négocier de meilleurs tarifs.</p>
+            </div>
+          </div>
+        </div>
+
+        
+        <div class="question-card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <span class="question-number">10</span>
+              <span>Qu'est-ce que le concept de "Responsible AI" (IA responsable) et pourquoi est-ce important ?</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="correct-answer">
+              <div class="d-flex align-items-center">
+                <span class="result-icon icon-correct"><i class="fas fa-check"></i></span>
+                <strong>Réponse correcte : Un cadre éthique garantissant transparence, équité et contrôle humain des systèmes d'IA</strong>
+              </div>
+              <p class="mt-2">L'IA responsable vise à développer des systèmes d'IA éthiques, transparents et équitables. Cela inclut : l'explicabilité des décisions, la prévention des biais discriminatoires, la protection de la vie privée et le maintien d'un contrôle humain significatif. Ce cadre est essentiel pour bâtir la confiance et assurer que l'IA bénéficie à toute la société.</p>
+            </div>
+          </div>
+        </div>
+
+       
+        <div class="d-flex justify-content-center gap-3 mt-5">
+          <a href="#" class="quiz-btn">
+            <i class="fas fa-redo me-2"></i> Refaire le quiz
+          </a>
+          <a href="#top" class="quiz-btn" style="background: rgba(255, 255, 255, 0.1); color: white; border: 1px solid var(--cyber-cyan);">
+            <i class="fas fa-arrow-up me-2"></i> Retour en haut
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="py-5 border-secondary">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 mx-auto text-center">
+        <div class="d-flex justify-content-center mb-4">
+          <div class="rounded-circle d-flex align-items-center justify-content-center me-3" 
+               style="width: 50px; height: 50px; background: rgba(0, 255, 255, 0.1);">
+            <i class="fas fa-shield-alt text-primary fs-4"></i>
+          </div>
+          <div class="rounded-circle d-flex align-items-center justify-content-center" 
+               style="width: 50px; height: 50px; background: rgba(255, 100, 100, 0.1);">
+            <i class="fas fa-bug text-danger fs-4"></i>
+          </div>
+        </div>
+        <h3 class="mb-3">Cyber<span class="text-primary">Aware</span></h3>
+        <p class="text-muted mb-4">Formation en ligne à la cybersécurité pour tous</p>
+        <div class="d-flex justify-content-center gap-4 mb-4">
+          <a href="#" class="text-primary">
+            <i class="fab fa-github fs-4"></i>
+          </a>
+          <a href="#" class="text-primary">
+            <i class="fab fa-linkedin fs-4"></i>
+          </a>
+          <a href="#" class="text-primary">
+            <i class="fas fa-envelope fs-4"></i>
+          </a>
+        </div>
+        <hr style="border-color: rgba(255,255,255,0.1); margin: 1.5rem 0;">
+        <p class="text-muted small mb-0">
+          © 2026 CyberAware - Quiz Cloud & Intelligence Artificielle
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+
+</body>
+</html>
