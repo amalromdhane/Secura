@@ -1,3 +1,15 @@
+<?php
+session_start();
+require_once 'api/config.php';
+
+// Check if user is logged in
+$isLoggedIn = isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true;
+$username = $_SESSION['username'] ?? '';
+$firstName = $_SESSION['first_name'] ?? '';
+
+// Check for logout success message
+$logoutSuccess = isset($_GET['logout']) && $_GET['logout'] === 'success';
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -8,6 +20,170 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
   <link rel="stylesheet" href="./css/style.css">
+  <style>
+    .user-dropdown {
+      position: relative;
+    }
+    
+    .user-dropdown-toggle {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--cyber-primary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .user-dropdown-toggle::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(13, 110, 253, 0.2), transparent);
+      transition: left 0.5s ease;
+    }
+    
+    .user-dropdown-toggle:hover {
+      background: rgba(13, 110, 253, 0.15);
+      border-color: var(--cyber-primary);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(13, 110, 253, 0.3);
+    }
+    
+    .user-dropdown-toggle:hover::before {
+      left: 100%;
+    }
+    
+    .user-dropdown-menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: rgba(10, 14, 23, 0.95);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(13, 110, 253, 0.3);
+      border-radius: 16px;
+      min-width: 220px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+      z-index: 1000;
+      display: none;
+      margin-top: 0.5rem;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .user-dropdown-menu.show {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .user-dropdown-item {
+      display: flex;
+      align-items: center;
+      padding: 1rem 1.2rem;
+      color: rgba(255, 255, 255, 0.9);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .user-dropdown-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(13, 110, 253, 0.1), transparent);
+      transition: left 0.4s ease;
+    }
+    
+    .user-dropdown-item:first-child {
+      border-radius: 16px 16px 0 0;
+    }
+    
+    .user-dropdown-item:last-child {
+      border-radius: 0 0 16px 16px;
+      border-bottom: none;
+    }
+    
+    .user-dropdown-item:hover {
+      background: rgba(13, 110, 253, 0.1);
+      color: white;
+      transform: translateX(5px);
+    }
+    
+    .user-dropdown-item:hover::before {
+      left: 100%;
+    }
+    
+    .user-dropdown-item i {
+      margin-right: 0.8rem;
+      font-size: 1.1rem;
+    }
+    
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #0d6efd 0%, #00d4ff 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 1rem;
+      box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .user-avatar::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      animation: shimmer 3s infinite;
+    }
+    
+    @keyframes shimmer {
+      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    }
+    
+    .user-name {
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.95);
+    }
+    
+    .user-dropdown-item.logout {
+      border-top: 1px solid rgba(220, 53, 69, 0.3);
+      margin-top: 0.5rem;
+    }
+    
+    .user-dropdown-item.logout:hover {
+      background: rgba(220, 53, 69, 0.1);
+    }
+    
+    .user-dropdown-item.logout i {
+      color: #dc3545;
+    }
+  </style>
 
 </head>
 
@@ -46,10 +222,44 @@
             <i class="bi bi-headset"></i> Contact
           </a>
         </li>
+        <?php if ($isLoggedIn): ?>
+        <li class="nav-item user-dropdown">
+          <button class="nav-link user-dropdown-toggle" onclick="toggleDropdown()">
+            <div class="user-avatar"><?php echo strtoupper(substr($firstName, 0, 1)); ?></div>
+            <span class="user-name"><?php echo htmlspecialchars($firstName); ?></span>
+            <i class="bi bi-chevron-down"></i>
+          </button>
+          <div class="user-dropdown-menu" id="userDropdown">
+            <a href="#" class="user-dropdown-item">
+              <i class="bi bi-person"></i> Mon profil
+            </a>
+            <a href="#" class="user-dropdown-item">
+              <i class="bi bi-gear"></i> Paramètres
+            </a>
+            <a href="api/logout.php" class="user-dropdown-item logout">
+              <i class="bi bi-box-arrow-left"></i> Déconnexion
+            </a>
+          </div>
+        </li>
+        <?php else: ?>
+        <li class="nav-item">
+          <a class="nav-link" href="login.php">
+            <i class="bi bi-person-circle"></i> Connexion
+          </a>
+        </li>
+        <?php endif; ?>
       </ul>
     </div>
   </nav>
 
+
+  <?php if ($logoutSuccess): ?>
+    <div class="alert alert-success" style="position: fixed; top: 20px; right: 20px; z-index: 1000; background: rgba(40, 167, 69, 0.9); border: 1px solid rgba(40, 167, 69, 0.3); color: white; border-radius: 8px; padding: 1rem 1.5rem; box-shadow: 0 10px 30px rgba(40, 167, 69, 0.3); backdrop-filter: blur(10px);">
+      <i class="bi bi-check-circle me-2"></i>
+      <strong>Déconnexion réussie</strong><br>
+      <small>Vous avez été déconnecté avec succès</small>
+    </div>
+  <?php endif; ?>
 
   <section class="cyber-hero">
     <div class="floating-shapes">
@@ -364,6 +574,34 @@
     </div>
   </footer>
 
+<script>
+    function toggleDropdown() {
+      const dropdown = document.getElementById('userDropdown');
+      dropdown.classList.toggle('show');
+    }
+    
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(event) {
+      const dropdown = document.getElementById('userDropdown');
+      const toggle = document.querySelector('.user-dropdown-toggle');
+      
+      if (!toggle.contains(event.target)) {
+        dropdown.classList.remove('show');
+      }
+    });
+    
+    // Auto-hide logout success message after 5 seconds
+    setTimeout(function() {
+      const successAlert = document.querySelector('.alert-success');
+      if (successAlert) {
+        successAlert.style.transition = 'opacity 0.5s ease';
+        successAlert.style.opacity = '0';
+        setTimeout(function() {
+          successAlert.remove();
+        }, 500);
+      }
+    }, 5000);
+  </script>
 </body>
 
 </html>
