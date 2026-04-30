@@ -12,11 +12,8 @@ if (isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] === true) 
     exit();
 }
 
-// Database configuration
-$db_host = '127.0.0.1';
-$db_name = 'secura_cyber';
-$db_user = 'root';
-$db_pass = '';
+// Include database configuration
+require_once 'config.php';
 
 $error = '';
 $success = '';
@@ -42,9 +39,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Veuillez entrer une adresse email valide.';
     } else {
         try {
-            // Connect to MySQL database
-            $pdo = new PDO("mysql:host=$db_host;dbname=$db_name;charset=utf8mb4", $db_user, $db_pass);
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            // Connect to MySQL database using config
+            $pdo = getDBConnection('cyber');
             
             // Check if email already exists (email is unique for login)
             $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
