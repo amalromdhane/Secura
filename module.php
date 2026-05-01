@@ -337,7 +337,7 @@ try {
       </div>
       <div class="col-lg-6 text-center">
         <?php if ($module['image']): ?>
-        <img src="<?php echo htmlspecialchars($module['image']); ?>" alt="<?php echo htmlspecialchars($module['title']); ?>" class="img-fluid rounded-4 shadow-lg" style="max-height: 500px; border: 3px solid var(--neon-cyan); box-shadow: var(--glow-cyan);">
+        <img src="<?php echo htmlspecialchars($module['image']); ?>" alt="<?php echo htmlspecialchars($module['title']); ?>" class="img-fluid rounded-4 shadow-lg" style="height: 350px; width: 750px; border: 3px solid var(--neon-cyan); box-shadow: var(--glow-cyan);">
         <?php else: ?>
         <div class="module-hero-placeholder">
           <i class="fas fa-graduation-cap"></i>
