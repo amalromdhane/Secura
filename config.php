@@ -9,7 +9,8 @@ $db_user = 'root';
 $db_pass = '';
 
 // Database names
-$db_name_secura = 'secura_modules';  // For login    // For register
+$db_name_secura = 'secura_modules';  // For login/register
+$db_name_cyber = 'secura_modules';   // For modules/courses (same DB for now)
 
 /**
  * Get PDO database connection
