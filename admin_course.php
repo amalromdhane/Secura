@@ -143,6 +143,8 @@ try {
             border-radius: 16px;
             width: 90%;
             max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
             backdrop-filter: blur(15px);
             box-shadow: 0 20px 60px rgba(13, 110, 253, 0.2);
         }
@@ -201,18 +203,26 @@ try {
                     <label>Titre du chapitre</label>
                     <input type="text" id="title" name="title" required>
                 </div>
-                <div class="form-group">
-                    <label>URL Vidéo (YouTube Embed)</label>
-                    <input type="text" id="video_url" name="video_url" placeholder="https://www.youtube.com/embed/...">
-                </div>
-                <div class="form-group">
-                    <label>Contenu (HTML autorisé)</label>
-                    <textarea id="content" name="content"></textarea>
-                </div>
-                <div class="form-group">
-                    <label>Ordre d'affichage</label>
-                    <input type="number" id="order_index" name="order_index" value="0">
-                </div>
+
+                 <div class="form-group">
+                     <label>URL de l'image (optionnel)</label>
+                     <input type="url" id="image_url" name="image_url" placeholder="https://…">
+                 </div>
+
+                 <div class="form-group">
+                     <label class="checkbox-row">
+                         <input type="checkbox" id="quiz_enabled" name="quiz_enabled">
+                         <span>Quiz activé pour ce chapitre</span>
+                     </label>
+                 </div>
+                 <div class="form-group">
+                     <label>Description courte</label>
+                     <textarea id="description" name="description" rows="2" placeholder="Description du chapitre…"></textarea>
+                 </div>
+                 <div class="form-group">
+                     <label>Ordre d'affichage</label>
+                     <input type="number" id="order_index" name="order_index" value="0">
+                 </div>
                 <div style="text-align: right; display: flex; gap: 10px; justify-content: flex-end;">
                     <button type="button" onclick="closeModal()" class="btn" style="background: rgba(18, 24, 38, 0.7); color: var(--text-secondary); border: 1px solid rgba(255, 255, 255, 0.1);">Annuler</button>
                     <button type="submit" class="btn btn-primary">Enregistrer</button>
@@ -235,11 +245,15 @@ try {
                         <div class="chapter-item">
                             <div>
                                 <strong>${c.title}</strong>
-                                <div style="font-size: 0.8em; color: #666;">Ordre: ${c.order_index}</div>
+                                <div style="font-size: 0.8em; color: var(--text-secondary);">
+                                    Ordre: ${c.order_index}
+                                    ${c.image_url ? ' | Image: ✓' : ''}
+                                    ${c.quiz_enabled == 1 ? ' | Quiz: ✓' : ''}
+                                </div>
                             </div>
                             <div>
-                                <button onclick="editChapter(${JSON.stringify(c).replace(/"/g, '&quot;')})" class="btn" style="background:#ffc107;">Modifier</button>
-                                <button onclick="deleteChapter(${c.id})" class="btn btn-danger">Supprimer</button>
+                                <button onclick="editChapter(${JSON.stringify(c).replace(/"/g, '&quot;')})" class="btn" style="background: rgba(255, 193, 7, 0.15); color: var(--cyber-warning); border: 1px solid rgba(255, 193, 7, 0.3);">✏️ Modifier</button>
+                                <button onclick="deleteChapter(${c.id})" class="btn btn-danger">🗑️ Supprimer</button>
                             </div>
                         </div>
                     `).join('');
@@ -250,6 +264,8 @@ try {
             document.getElementById('modalTitle').innerText = "Ajouter un chapitre";
             document.getElementById('chapterForm').reset();
             document.getElementById('chapterId').value = "";
+            document.getElementById('order_index').value = "0";
+            document.getElementById('quiz_enabled').checked = false;
             document.getElementById('chapterModal').classList.add('open');
         }
 
@@ -261,8 +277,9 @@ try {
             document.getElementById('modalTitle').innerText = "Modifier le chapitre";
             document.getElementById('chapterId').value = c.id;
             document.getElementById('title').value = c.title;
-            document.getElementById('video_url').value = c.video_url || "";
-            document.getElementById('content').value = c.content || "";
+            document.getElementById('image_url').value = c.image_url || "";
+            document.getElementById('quiz_enabled').checked = c.quiz_enabled == 1;
+            document.getElementById('description').value = c.description || "";
             document.getElementById('order_index').value = c.order_index;
             document.getElementById('chapterModal').classList.add('open');
         }

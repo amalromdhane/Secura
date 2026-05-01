@@ -346,6 +346,38 @@ $edit_id = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
     .list-empty { padding:40px; text-align:center; color:var(--text-secondary); font-style:italic; }
     .list-loading { padding:40px; text-align:center; color:#999; }
 
+    /* Collapsible Add Form */
+    .add-form-container {
+      margin-top: 18px;
+      background: rgba(18, 24, 38, 0.7);
+      border: 1px solid rgba(13, 110, 253, 0.2);
+      border-radius: 12px;
+      padding: 20px;
+      transition: all 0.3s ease;
+      max-height: 70vh;
+      overflow-y: auto;
+    }
+    .add-form {
+      display: grid;
+      gap: 15px;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      padding: 10px 0;
+    }
+    .form-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-top: 15px;
+    }
+
     /* Modal */
     .modal-backdrop {
       display:none;
@@ -581,7 +613,75 @@ $edit_id = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
   <div class="dash-section">
     <h2>📚 Gestion des Modules</h2>
 
-    <button class="btn-add" id="btnAdd">➕ Nouveau Module</button>
+    <button class="btn-add" id="btnToggleForm">➕ Nouveau Module</button>
+
+    <!-- Collapsible Add Form -->
+    <div id="addFormContainer" class="add-form-container" style="display: none;">
+      <form id="addModuleForm" class="add-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="addTitle">Titre *</label>
+            <input type="text" id="addTitle" required>
+          </div>
+          <div class="form-group">
+            <label for="addCategory">Catégorie *</label>
+            <select id="addCategory" required>
+              <option value="">— Sélectionner —</option>
+              <option>Sécurité</option>
+              <option>Réseau</option>
+              <option>Données</option>
+              <option>Cloud</option>
+              <option>IA</option>
+              <option>Phishing</option>
+              <option>Ransomware</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="addDuration">Durée (minutes)</label>
+            <input type="number" id="addDuration" value="30" min="1" max="600">
+          </div>
+          <div class="form-group">
+            <label for="addImage">URL de l'image</label>
+            <input type="url" id="addImage" placeholder="https://…">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="addVideo">URL YouTube</label>
+            <input type="url" id="addVideo" placeholder="https://www.youtube.com/watch?v=…">
+          </div>
+          <div class="form-group">
+            <label for="addContent">Contenu additionnel</label>
+            <textarea id="addContent" rows="3" placeholder="Contenu optionnel…"></textarea>
+          </div>
+        </div>
+          <div class="form-group">
+            <label for="addDescription">Description</label>
+            <textarea id="addDescription" rows="2" placeholder="Description détaillée…"></textarea>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="checkbox-group">
+            <label class="checkbox-row">
+              <input type="checkbox" id="addQuizEnabled">
+              <span>Quiz activé</span>
+            </label>
+          </div>
+          <div class="checkbox-group">
+            <label class="checkbox-row">
+              <input type="checkbox" id="addActive" checked>
+              <span>Module actif</span>
+            </label>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn" id="btnCancelAdd" style="background: rgba(18, 24, 38, 0.7); color: var(--text-secondary); border: 1px solid rgba(255, 255, 255, 0.1);">Annuler</button>
+          <button type="submit" class="btn btn-primary">Enregistrer</button>
+        </div>
+      </form>
+    </div>
 
     <div class="list-container">
       <div class="list-header">
@@ -639,26 +739,15 @@ $edit_id = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
           <input type="url" id="fImage" placeholder="https://…">
         </div>
 
-        <div class="form-group">
-          <label for="fPage">Fichier HTML du module</label>
-          <input type="text" id="fPage" placeholder="phishing.html">
-          <small>Fichier dans le dossier pages/</small>
-        </div>
+         <div class="form-group">
+           <label for="fVideo">URL YouTube</label>
+           <input type="url" id="fVideo" placeholder="https://www.youtube.com/watch?v=…">
+         </div>
 
-        <div class="form-group">
-          <label for="fVideo">URL YouTube</label>
-          <input type="url" id="fVideo" placeholder="https://www.youtube.com/watch?v=…">
-        </div>
-
-        <div class="form-group">
-          <label for="fContent">Contenu HTML additionnel</label>
-          <textarea id="fContent" rows="3" placeholder="HTML optionnel…"></textarea>
-        </div>
-
-        <div class="form-group">
-          <label for="fQuizPage">Fichier quiz HTML</label>
-          <input type="text" id="fQuizPage" placeholder="PasswordQuiz.html">
-        </div>
+         <div class="form-group">
+           <label for="fContent">Contenu additionnel</label>
+           <textarea id="fContent" rows="3" placeholder="Contenu optionnel…"></textarea>
+         </div>
 
         <div class="form-group">
           <label class="checkbox-row">
@@ -724,13 +813,11 @@ $edit_id = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
     id:           document.getElementById('fId'),
     title:        document.getElementById('fTitle'),
     category:     document.getElementById('fCategory'),
-    duration:     document.getElementById('fDuration'),
-    image:        document.getElementById('fImage'),
-    page:         document.getElementById('fPage'),
-    video:        document.getElementById('fVideo'),
-    content:      document.getElementById('fContent'),
-    quizPage:     document.getElementById('fQuizPage'),
-    quizEnabled:  document.getElementById('fQuizEnabled'),
+     duration:     document.getElementById('fDuration'),
+     image:        document.getElementById('fImage'),
+     video:        document.getElementById('fVideo'),
+     content:      document.getElementById('fContent'),
+     quizEnabled:  document.getElementById('fQuizEnabled'),
     description:  document.getElementById('fDescription'),
     active:       document.getElementById('fActive'),
   };
@@ -817,20 +904,66 @@ $edit_id = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
     console.log('Action:', action, 'ID:', id);
 
     if (action === 'edit')   openEdit(id);
+    if (action === 'delete') openDeleteModal(id);
+    if (action === 'toggle') toggleStatus(id);
     if (action === 'toggle') toggleStatus(id);
     if (action === 'delete') openDeleteModal(id);
   });
 
-  // ─── Open add form ────────────────────────────────────────────────────────
-  document.getElementById('btnAdd').addEventListener('click', function () {
-    state.mode = 'add';
-    document.getElementById('formTitle').textContent = 'Ajouter un Module';
-    form.reset();
-    f.id.value       = '';
-    f.active.checked = true;
-    f.duration.value = 30;
-    openFormModal();
+  // ─── Toggle add form ───────────────────────────────────────────────────────
+  document.getElementById('btnToggleForm').addEventListener('click', function () {
+    const container = document.getElementById('addFormContainer');
+    const isVisible = container.style.display !== 'none';
+    if (isVisible) {
+      container.style.display = 'none';
+      this.innerHTML = '➕ Nouveau Module';
+    } else {
+      container.style.display = 'block';
+      this.innerHTML = '➖ Masquer Formulaire';
+      // Reset form
+      document.getElementById('addModuleForm').reset();
+      document.getElementById('addActive').checked = true;
+      document.getElementById('addDuration').value = 30;
+    }
   });
+
+  // ─── Cancel add form ───────────────────────────────────────────────────────
+  document.getElementById('btnCancelAdd').addEventListener('click', function () {
+    document.getElementById('addFormContainer').style.display = 'none';
+    document.getElementById('btnToggleForm').innerHTML = '➕ Nouveau Module';
+  });
+
+  // ─── Open edit form (modal) ─────────────────────────────────────────────────
+  function openEdit(id) {
+    console.log('openEdit called with id:', id, 'type:', typeof id);
+    console.log('Available modules:', state.modules.map(m => ({id: m.id, title: m.title})));
+    const m = state.modules.find(x => x.id == id); // Use == instead of === for type coercion
+    console.log('Found module:', m);
+    if (!m) {
+      console.log('Module not found! Available IDs:', state.modules.map(m => m.id));
+      return;
+    }
+
+    state.mode = 'edit';
+    document.getElementById('formTitle').textContent = 'Modifier le Module';
+
+    // Populate from JSON object (JSON.stringify used when storing, parse when reading)
+    f.id.value           = m.id;
+    f.title.value        = m.title        ?? '';
+    f.category.value     = m.category     ?? '';
+    f.duration.value     = m.duration     ?? 30;
+    f.image.value        = m.image        ?? '';
+    f.page.value         = m.page         ?? '';
+    f.video.value        = m.video_url    ?? '';
+    f.content.value      = m.content      ?? '';
+    f.quizPage.value     = m.quiz_page    ?? '';
+    f.quizEnabled.checked= !!m.quiz_enabled;
+    f.description.value  = m.description  ?? '';
+    f.active.checked     = !!m.active;
+
+    console.log('Form populated, opening modal');
+    openFormModal();
+  }
 
   // ─── Open edit form ───────────────────────────────────────────────────────
   function openEdit(id) {
@@ -864,7 +997,44 @@ $edit_id = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
     openFormModal();
   }
 
-  // ─── Form submit (add or edit) ────────────────────────────────────────────
+  // ─── Inline Add Form submit ────────────────────────────────────────────────
+  document.getElementById('addModuleForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const title = document.getElementById('addTitle').value.trim();
+    const category = document.getElementById('addCategory').value;
+    if (!title || !category) {
+      showToast('Titre et catégorie sont obligatoires', 'error');
+      return;
+    }
+
+    const payload = {
+      title:        title,
+      category:     category,
+      duration:     document.getElementById('addDuration').value,
+      image:        document.getElementById('addImage').value.trim(),
+      video_url:    document.getElementById('addVideo').value.trim(),
+      content:      document.getElementById('addContent').value.trim(),
+      quiz_enabled: document.getElementById('addQuizEnabled').checked ? 1 : 0,
+      description:  document.getElementById('addDescription').value.trim(),
+      active:       document.getElementById('addActive').checked ? 1 : 0,
+    };
+
+    apiFetch('module.php?action=add', { method:'POST', body: encodeBody(payload) })
+      .then(data => {
+        if (data.success) {
+          document.getElementById('addFormContainer').style.display = 'none';
+          document.getElementById('btnToggleForm').innerHTML = '➕ Nouveau Module';
+          showToast('Module ajouté ✔', 'success');
+          loadModules();
+        } else {
+          showToast(data.error || 'Échec de l\'ajout', 'error');
+        }
+      })
+      .catch(() => showToast('Erreur de connexion', 'error'));
+  });
+
+  // ─── Modal Form submit (edit) ──────────────────────────────────────────────
   form.addEventListener('submit', function (e) {
     e.preventDefault();
 
@@ -879,28 +1049,23 @@ $edit_id = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
       category:     f.category.value,
       duration:     f.duration.value,
       image:        f.image.value.trim(),
-      page:         f.page.value.trim(),
       video_url:    f.video.value.trim(),
       content:      f.content.value.trim(),
-      quiz_page:    f.quizPage.value.trim(),
       quiz_enabled: f.quizEnabled.checked ? 1 : 0,
       description:  f.description.value.trim(),
       active:       f.active.checked ? 1 : 0,
     };
 
-    const isEdit = state.mode === 'edit';
-    if (isEdit) payload.id = f.id.value;
+    payload.id = f.id.value;
 
-    const url = isEdit ? 'module.php?action=update' : 'module.php?action=add';
-
-    apiFetch(url, { method:'POST', body: encodeBody(payload) })
+    apiFetch('module.php?action=update', { method:'POST', body: encodeBody(payload) })
       .then(data => {
         if (data.success) {
           closeFormModal();
-          showToast(isEdit ? 'Module mis à jour ✔' : 'Module ajouté ✔', 'success');
+          showToast('Module mis à jour ✔', 'success');
           loadModules();
         } else {
-          showToast(data.error || 'Échec de l\'opération', 'error');
+          showToast(data.error || 'Échec de la mise à jour', 'error');
         }
       })
       .catch(() => showToast('Erreur de connexion', 'error'));
@@ -917,10 +1082,8 @@ $edit_id = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
       category:     m.category,
       duration:     m.duration,
       image:        m.image        ?? '',
-      page:         m.page         ?? '',
       video_url:    m.video_url    ?? '',
       content:      m.content      ?? '',
-      quiz_page:    m.quiz_page    ?? '',
       quiz_enabled: m.quiz_enabled ?? 0,
       description:  m.description  ?? '',
       active:       m.active ? 0 : 1,   // flip
