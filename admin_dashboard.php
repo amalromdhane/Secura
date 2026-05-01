@@ -26,39 +26,127 @@ $edit_id = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
   <title>Admin Dashboard – Secura</title>
   <link rel="stylesheet" href="css/style.css">
   <style>
+    :root {
+      --cyber-primary: #0d6efd;
+      --cyber-secondary: #6f42c1;
+      --cyber-accent: #00d4ff;
+      --cyber-success: #20c997;
+      --cyber-warning: #ffc107;
+      --cyber-danger: #ff4757;
+      --cyber-dark: #141824;
+      --cyber-card: #1e2436;
+      --cyber-border: rgba(13, 110, 253, 0.2);
+      --cyber-gradient: linear-gradient(135deg, #0d6efd 0%, #6f42c1 100%);
+      --cyber-glow: 0 0 20px rgba(13, 110, 253, 0.4);
+      --text-primary: #f8f9fa;
+      --text-secondary: #adb5bd;
+      --neon-cyan: #00d4ff;
+      --glow-cyan: 0 0 20px rgba(0, 212, 255, 0.4);
+    }
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-    body { font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; background:#f0f2f5; color:#333; }
+    body {
+      font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+      background: var(--cyber-dark);
+      color: var(--text-primary);
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      background-image:
+        radial-gradient(circle at 10% 20%, rgba(13, 110, 253, 0.03) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(111, 66, 193, 0.03) 0%, transparent 20%);
+    }
 
     /* Navbar */
     .navbar {
-      background: linear-gradient(135deg,#1a73e8,#0d47a1);
-      color:#fff;
+      background: linear-gradient(135deg, rgba(30, 36, 54, 0.9) 0%, rgba(26, 31, 46, 0.9) 100%);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 2px 10px rgba(13, 110, 253, 0.2);
+      color:var(--text-primary);
       padding:15px 30px;
       display:flex;
       justify-content:space-between;
       align-items:center;
-      box-shadow:0 2px 10px rgba(0,0,0,.15);
-      position:sticky;
-      top:0;
-      z-index:100;
+      margin-bottom: 20px;
+      border-radius: 12px;
+      border: 1px solid rgba(0, 212, 255, 0.3);
     }
-    .navbar h1 { font-size:22px; }
+    .navbar h1 { font-size:20px; color: var(--cyber-accent); margin: 0; }
     .user-info { display:flex; align-items:center; gap:14px; }
-    .user-info span { opacity:.9; font-size:14px; }
+    .user-info span { opacity:.9; font-size:14px; color: var(--text-secondary); }
     .logout-btn {
-      background:rgba(255,255,255,.2);
-      color:#fff;
+      background: rgba(255,255,255,.1);
+      color: var(--text-primary);
       padding:8px 18px;
-      border:none;
+      border:1px solid rgba(255,255,255,.2);
       border-radius:6px;
       cursor:pointer;
       text-decoration:none;
       font-size:14px;
-      transition:background .25s;
+      transition:all .25s;
     }
-    .logout-btn:hover { background:rgba(255,255,255,.32); }
+    .logout-btn:hover { background: rgba(0, 212, 255, 0.1); border-color: var(--cyber-accent); }
 
-    .container { max-width:1200px; margin:30px auto; padding:0 20px; }
+    /* Sidebar */
+    .sidebar {
+      width: 250px;
+      background: linear-gradient(180deg, rgba(15, 24, 36, 0.95) 0%, rgba(20, 24, 36, 0.95) 100%);
+      backdrop-filter: blur(12px);
+      border-right: 1px solid rgba(13, 110, 253, 0.3);
+      height: 100vh;
+      position: fixed;
+      left: 0;
+      top: 0;
+      padding: 20px;
+      box-shadow: 2px 0 20px rgba(13, 110, 253, 0.2);
+      z-index: 100;
+    }
+    .sidebar-header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(13, 110, 253, 0.2);
+    }
+    .sidebar-header h2 {
+      color: var(--cyber-accent);
+      font-size: 18px;
+      margin: 0;
+    }
+    .sidebar-menu {
+      list-style: none;
+      padding: 0;
+    }
+    .sidebar-menu li {
+      margin-bottom: 10px;
+    }
+    .sidebar-menu a {
+      display: flex;
+      align-items: center;
+      padding: 12px 15px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+    .sidebar-menu a:hover, .sidebar-menu a.active {
+      background: rgba(13, 110, 253, 0.1);
+      color: var(--cyber-accent);
+      border-left: 3px solid var(--cyber-accent);
+    }
+    .sidebar-menu a i {
+      margin-right: 10px;
+      width: 20px;
+      text-align: center;
+    }
+
+    /* Main content */
+    .main-content {
+      margin-left: 250px;
+      flex: 1;
+      padding: 20px;
+      min-height: 100vh;
+    }
+    .container { max-width:1200px; margin:0 auto; padding:0; }
 
     /* Stats */
     .stats-grid {
@@ -68,84 +156,125 @@ $edit_id = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
       margin-bottom:28px;
     }
     .stat-card {
-      background:#fff;
+      background: rgba(26, 31, 46, 0.9);
+      border: 1px solid rgba(13, 110, 253, 0.25);
       padding:22px 24px;
-      border-radius:12px;
-      box-shadow:0 2px 8px rgba(0,0,0,.07);
+      border-radius:16px;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(13, 110, 253, 0.15);
+      position: relative;
+      overflow: hidden;
     }
-    .stat-card h3 { color:#888; font-size:13px; margin-bottom:8px; text-transform:uppercase; letter-spacing:.5px; }
-    .stat-card .number { font-size:32px; font-weight:700; color:#1a73e8; }
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--cyber-gradient);
+    }
+    .stat-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(13, 110, 253, 0.5);
+      box-shadow: 0 10px 30px rgba(13, 110, 253, 0.2);
+    }
+    .stat-card:nth-child(1)::before { background: var(--cyber-accent); }
+    .stat-card:nth-child(2)::before { background: var(--cyber-success); }
+    .stat-card:nth-child(3)::before { background: var(--cyber-warning); }
+    .stat-card h3 { color:var(--text-secondary); font-size:13px; margin-bottom:8px; text-transform:uppercase; letter-spacing:.5px; }
+    .stat-card .number { font-size:32px; font-weight:700; color: var(--cyber-accent); }
 
     /* Dashboard section */
     .dash-section {
-      background:#fff;
-      border-radius:12px;
-      box-shadow:0 2px 8px rgba(0,0,0,.07);
+      background: linear-gradient(135deg, rgba(26, 31, 46, 0.9) 0%, rgba(22, 27, 40, 0.9) 100%);
+      border: 1px solid rgba(13, 110, 253, 0.25);
+      border-radius:16px;
+      backdrop-filter: blur(10px);
       padding:24px;
       margin-bottom:22px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    .dash-section::after {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: -1px;
+      right: -1px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--cyber-accent), transparent);
+      border-radius: 16px 16px 0 0;
+    }
+    .dash-section:hover {
+      border-color: rgba(13, 110, 253, 0.5);
+      box-shadow: 0 10px 30px rgba(13, 110, 253, 0.2);
     }
     .dash-section h2 {
       font-size:18px;
-      color:#333;
+      color:var(--text-primary);
       margin-bottom:20px;
       padding-bottom:12px;
-      border-bottom:2px solid #1a73e8;
+      border-bottom:2px solid var(--cyber-accent);
     }
 
     /* Menu grid */
     .menu-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:14px; }
     .menu-item {
-      background:#f8f9fa;
-      border:2px solid transparent;
-      border-radius:10px;
+      background: rgba(18, 24, 38, 0.7);
+      border: 1px solid rgba(13, 110, 253, 0.3);
+      border-radius:12px;
       padding:20px;
       text-align:center;
       text-decoration:none;
-      color:#333;
+      color:var(--text-primary);
       transition:all .25s;
       display:block;
+      backdrop-filter: blur(5px);
     }
     .menu-item:hover {
-      background:#fff;
-      border-color:#1a73e8;
+      background: rgba(13, 110, 253, 0.1);
+      border-color: var(--cyber-accent);
       transform:translateY(-3px);
-      box-shadow:0 6px 16px rgba(0,0,0,.1);
+      box-shadow: 0 6px 16px rgba(13, 110, 253, 0.2);
     }
-    .menu-item .icon { font-size:30px; margin-bottom:8px; }
+    .menu-item .icon { font-size:30px; margin-bottom:8px; color: var(--cyber-primary); }
     .menu-item .label { font-weight:600; font-size:13px; }
 
     /* Alert */
-    .alert { padding:14px 18px; border-radius:8px; margin-bottom:18px; font-size:14px; }
-    .alert-success { background:#e8f5e9; color:#2e7d32; border-left:4px solid #2e7d32; }
+    .alert { padding:14px 18px; border-radius:8px; margin-bottom:18px; font-size:14px; backdrop-filter: blur(5px); }
+    .alert-success { background: rgba(32, 201, 151, 0.1); color: var(--cyber-success); border-left:4px solid var(--cyber-success); }
 
     /* Module list */
     .btn-add {
       display:inline-flex;
       align-items:center;
       gap:8px;
-      background:linear-gradient(135deg,#1a73e8,#0d47a1);
+      background: var(--cyber-gradient);
       color:#fff;
       border:none;
       padding:11px 22px;
-      border-radius:8px;
+      border-radius:10px;
       cursor:pointer;
       font-size:14px;
       font-weight:600;
       margin-bottom:18px;
       transition:all .25s;
     }
-    .btn-add:hover { transform:translateY(-2px); box-shadow:0 6px 16px rgba(26,115,232,.4); }
+    .btn-add:hover { transform:translateY(-2px); box-shadow: 0 6px 16px rgba(13, 110, 253, 0.4); }
 
     .list-container {
-      border:1px solid #e0e0e0;
-      border-radius:10px;
+      border:1px solid rgba(13, 110, 253, 0.3);
+      border-radius:12px;
       overflow:hidden;
+      backdrop-filter: blur(10px);
     }
     .list-header {
       display:grid;
       grid-template-columns:2fr 1fr 80px 90px 1fr;
-      background:linear-gradient(135deg,#1a73e8,#0d47a1);
-      color:#fff;
+      background: var(--cyber-gradient);
+      color:var(--text-primary);
       padding:13px 18px;
       font-size:13px;
       font-weight:600;
@@ -155,56 +284,66 @@ $edit_id = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
       display:grid;
       grid-template-columns:2fr 1fr 80px 90px 1fr;
       padding:14px 18px;
-      background:#fff;
-      border-bottom:1px solid #f0f0f0;
+      background: rgba(18, 24, 38, 0.7);
+      border-bottom:1px solid rgba(13, 110, 253, 0.15);
       align-items:center;
       gap:10px;
       transition:background .2s;
+      position: relative;
+    }
+    .module-row:hover {
+      background: rgba(13, 110, 253, 0.05);
+      border-left: 3px solid var(--cyber-accent);
+      padding-left: 15px;
     }
     .module-row:last-child { border-bottom:none; }
-    .module-row:hover { background:#fafcff; }
+    .module-row:hover { background: rgba(13, 110, 253, 0.1); }
 
-    .module-row .col-title { font-weight:600; font-size:14px; color:#222; }
+    .module-row .col-title { font-weight:600; font-size:14px; color:var(--text-primary); }
     .tag {
       display:inline-block;
-      background:#e3f2fd;
-      color:#1976d2;
+      background: rgba(13, 110, 253, 0.15);
+      color: var(--cyber-primary);
+      border: 1px solid rgba(13, 110, 253, 0.3);
       padding:3px 10px;
       border-radius:20px;
       font-size:11px;
       font-weight:600;
+      backdrop-filter: blur(5px);
     }
-    .col-duration { text-align:center; color:#666; font-size:13px; }
+    .col-duration { text-align:center; color:var(--text-secondary); font-size:13px; }
     .col-status { text-align:center; }
     .badge {
       padding:4px 12px;
       border-radius:20px;
       font-size:11px;
       font-weight:600;
+      backdrop-filter: blur(5px);
     }
-    .badge-active   { background:#e8f5e9; color:#2e7d32; }
-    .badge-inactive { background:#ffebee; color:#c62828; }
+    .badge-active   { background: rgba(32, 201, 151, 0.15); color: var(--cyber-success); border: 1px solid rgba(32, 201, 151, 0.3); }
+    .badge-inactive { background: rgba(255, 71, 87, 0.15); color: var(--cyber-danger); border: 1px solid rgba(255, 71, 87, 0.3); }
     .col-actions { display:flex; gap:6px; justify-content:flex-end; }
 
     .btn-sm {
       padding:5px 12px;
       border:none;
-      border-radius:5px;
+      border-radius:6px;
       cursor:pointer;
       font-size:12px;
       font-weight:600;
       transition:all .2s;
+      backdrop-filter: blur(5px);
     }
-    .btn-edit    { background:#fff3e0; color:#e65100; }
-    .btn-edit:hover { background:#ffe0b2; }
-    .btn-toggle  { background:#e8f5e9; color:#2e7d32; }
-    .btn-toggle:hover { background:#c8e6c9; }
-    .btn-toggle.is-inactive { background:#ffebee; color:#c62828; }
-    .btn-toggle.is-inactive:hover { background:#ffcdd2; }
-    .btn-del { background:#ffebee; color:#c62828; }
-    .btn-del:hover { background:#ffcdd2; }
+    .btn-edit    { background: rgba(255, 193, 7, 0.15); color: var(--cyber-warning); border: 1px solid rgba(255, 193, 7, 0.3); }
+    .btn-edit:hover { background: rgba(255, 193, 7, 0.25); }
+    .btn-toggle  { background: rgba(32, 201, 151, 0.15); color: var(--cyber-success); border: 1px solid rgba(32, 201, 151, 0.3); }
+    .btn-toggle:hover { background: rgba(32, 201, 151, 0.25); }
+    .btn-toggle.is-inactive { background: rgba(255, 71, 87, 0.15); color: var(--cyber-danger); border: 1px solid rgba(255, 71, 87, 0.3); }
+    .btn-toggle.is-inactive:hover { background: rgba(255, 71, 87, 0.25); }
+    .btn-del { background: rgba(255, 71, 87, 0.15); color: var(--cyber-danger); border: 1px solid rgba(255, 71, 87, 0.3); }
+    .btn-del:hover { background: rgba(255, 71, 87, 0.25); }
 
-    .list-empty { padding:40px; text-align:center; color:#999; font-style:italic; }
+    .list-empty { padding:40px; text-align:center; color:var(--text-secondary); font-style:italic; }
     .list-loading { padding:40px; text-align:center; color:#999; }
 
     /* Modal */
@@ -212,40 +351,42 @@ $edit_id = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
       display:none;
       position:fixed;
       inset:0;
-      background:rgba(0,0,0,.55);
+      background:rgba(0,0,0,.6);
       z-index:200;
       align-items:center;
       justify-content:center;
-      backdrop-filter:blur(3px);
+      backdrop-filter:blur(8px);
     }
     .modal-backdrop.open { display:flex; }
     .modal {
-      background:#fff;
-      border-radius:14px;
+      background: rgba(26, 31, 46, 0.95);
+      border: 1px solid rgba(13, 110, 253, 0.3);
+      border-radius:16px;
       max-width:520px;
       width:92%;
       max-height:92vh;
       overflow-y:auto;
-      box-shadow:0 20px 60px rgba(0,0,0,.25);
+      box-shadow: 0 20px 60px rgba(13, 110, 253, 0.2);
+      backdrop-filter: blur(15px);
     }
     .modal-head {
       display:flex;
       justify-content:space-between;
       align-items:center;
       padding:18px 22px;
-      border-bottom:1px solid #eee;
+      border-bottom:1px solid rgba(13, 110, 253, 0.3);
     }
-    .modal-head h3 { font-size:18px; color:#222; }
+    .modal-head h3 { font-size:18px; color:var(--text-primary); }
     .btn-close {
       background:none;
       border:none;
       font-size:26px;
       cursor:pointer;
-      color:#aaa;
+      color:var(--text-secondary);
       line-height:1;
       transition:color .2s;
     }
-    .btn-close:hover { color:#333; }
+    .btn-close:hover { color:var(--cyber-accent); }
     .modal-body { padding:22px; }
     .form-group { margin-bottom:18px; }
     .form-group label {
@@ -253,21 +394,29 @@ $edit_id = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
       margin-bottom:6px;
       font-weight:600;
       font-size:13px;
-      color:#444;
+      color:var(--text-primary);
     }
     .form-group input,
     .form-group select,
     .form-group textarea {
       width:100%;
       padding:10px 13px;
-      border:1px solid #ddd;
-      border-radius:7px;
+      background: rgba(18, 24, 38, 0.7);
+      border:1px solid rgba(13, 110, 253, 0.3);
+      border-radius:10px;
+      color: var(--text-primary);
       font-size:14px;
-      transition:border .2s;
+      transition:all .3s ease;
+      backdrop-filter: blur(5px);
     }
     .form-group input:focus,
     .form-group select:focus,
-    .form-group textarea:focus { outline:none; border-color:#1a73e8; }
+    .form-group textarea:focus {
+      outline:none;
+      border-color: var(--cyber-accent);
+      box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.15);
+      background: rgba(18, 24, 38, 0.9);
+    }
     .form-group small { color:#999; font-size:11px; margin-top:4px; display:block; }
     .checkbox-row {
       display:flex;
@@ -275,58 +424,65 @@ $edit_id = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
       gap:10px;
       font-weight:600;
       font-size:14px;
-      color:#444;
+      color:var(--text-primary);
       cursor:pointer;
     }
-    .checkbox-row input[type="checkbox"] { width:18px; height:18px; cursor:pointer; }
+    .checkbox-row input[type="checkbox"] {
+      width:18px;
+      height:18px;
+      cursor:pointer;
+      accent-color: var(--cyber-primary);
+    }
     .modal-foot {
       display:flex;
       gap:10px;
       justify-content:flex-end;
       padding:16px 22px;
-      border-top:1px solid #eee;
+      border-top:1px solid rgba(13, 110, 253, 0.3);
     }
     .btn-cancel-form {
-      background:#f0f0f0;
-      color:#666;
-      border:none;
+      background: rgba(18, 24, 38, 0.7);
+      color: var(--text-secondary);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       padding:10px 22px;
-      border-radius:7px;
+      border-radius:10px;
       cursor:pointer;
       font-size:14px;
       font-weight:600;
-      transition:background .2s;
+      transition:all .2s;
+      backdrop-filter: blur(5px);
     }
-    .btn-cancel-form:hover { background:#e0e0e0; }
+    .btn-cancel-form:hover { background: rgba(18, 24, 38, 0.9); }
     .btn-save {
-      background:linear-gradient(135deg,#1a73e8,#0d47a1);
+      background: var(--cyber-gradient);
       color:#fff;
       border:none;
       padding:10px 24px;
-      border-radius:7px;
+      border-radius:10px;
       cursor:pointer;
       font-size:14px;
       font-weight:600;
       transition:all .25s;
     }
-    .btn-save:hover { transform:translateY(-2px); box-shadow:0 5px 16px rgba(26,115,232,.4); }
+    .btn-save:hover { transform:translateY(-2px); box-shadow: 0 5px 16px rgba(13, 110, 253, 0.4); }
 
     /* Delete confirm modal */
     .modal-confirm { text-align:center; padding:32px; }
-    .modal-confirm h3 { color:#c62828; margin-bottom:12px; font-size:20px; }
-    .modal-confirm p { color:#666; margin-bottom:24px; }
+    .modal-confirm h3 { color: var(--cyber-danger); margin-bottom:12px; font-size:20px; }
+    .modal-confirm p { color: var(--text-secondary); margin-bottom:24px; }
     .btn-del-confirm {
-      background:#c62828;
-      color:#fff;
-      border:none;
+      background: rgba(255, 71, 87, 0.2);
+      color: var(--cyber-danger);
+      border: 1px solid rgba(255, 71, 87, 0.3);
       padding:10px 26px;
-      border-radius:7px;
+      border-radius:10px;
       cursor:pointer;
       font-size:14px;
       font-weight:600;
-      transition:background .2s;
+      transition:all .2s;
+      backdrop-filter: blur(5px);
     }
-    .btn-del-confirm:hover { background:#b71c1c; }
+    .btn-del-confirm:hover { background: rgba(255, 71, 87, 0.3); }
 
     /* Toast */
     .toast {
@@ -335,26 +491,76 @@ $edit_id = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
       right:22px;
       z-index:9999;
       padding:13px 20px;
-      border-radius:8px;
+      border-radius:10px;
       font-size:14px;
       font-weight:500;
       color:#fff;
-      box-shadow:0 4px 20px rgba(0,0,0,.2);
+      box-shadow: 0 4px 20px rgba(13, 110, 253, 0.2);
       transition:all .35s;
+      backdrop-filter: blur(10px);
     }
-    .toast-success { background:#2e7d32; }
-    .toast-error   { background:#c62828; }
+    .toast-success { background: rgba(32, 201, 151, 0.9); }
+    .toast-error   { background: rgba(255, 71, 87, 0.9); }
     .toast-hide { opacity:0; transform:translateY(-12px); }
+
+    /* Floating shapes */
+    .floating-shapes {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+    .shape {
+      position: absolute;
+      background: rgba(0, 212, 255, 0.08);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      border-radius: 12px;
+      animation: float 8s ease-in-out infinite;
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.1);
+    }
+    .shape:nth-child(1) { width: 80px; height: 80px; top: 20%; left: 10%; }
+    .shape:nth-child(2) { width: 60px; height: 60px; top: 60%; right: 15%; animation-delay: 2s; }
+    .shape:nth-child(3) { width: 100px; height: 100px; bottom: 20%; left: 20%; animation-delay: 4s; }
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(5deg); }
+    }
   </style>
 </head>
-<body>
-<nav class="navbar">
-  <h1>🔐 Admin Dashboard – Secura</h1>
-  <div class="user-info">
-    <span>Bienvenue, <?php echo htmlspecialchars($username); ?> (Admin)</span>
-    <a href="login.php?action=logout" class="logout-btn">Déconnexion</a>
+  <body>
+  <div class="floating-shapes">
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
   </div>
-</nav>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h2>🔐 Secura</h2>
+    </div>
+    <ul class="sidebar-menu">
+      <li><a href="#" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+      <li><a href="all_modules.php"><i class="fas fa-layer-group"></i> Modules</a></li>
+      <li><a href="pages/cloud.html"><i class="fas fa-cloud"></i> Cloud</a></li>
+      <li><a href="pages/passwords.html"><i class="fas fa-lock"></i> Mots de passe</a></li>
+      <li><a href="pages/phishing.html"><i class="fas fa-fish"></i> Phishing</a></li>
+      <li><a href="pages/ransomware.html"><i class="fas fa-skull"></i> Ransomware</a></li>
+      <li><a href="#"><i class="fas fa-cog"></i> Paramètres</a></li>
+      <li><a href="#"><i class="fas fa-users"></i> Utilisateurs</a></li>
+    </ul>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <nav class="navbar">
+      <h1>Admin Dashboard</h1>
+      <div class="user-info">
+        <span>Bienvenue, <?php echo htmlspecialchars($username); ?> (Admin)</span>
+        <a href="login.php?action=logout" class="logout-btn">Déconnexion</a>
+      </div>
+    </nav>
 
 <div class="container">
 
@@ -369,18 +575,7 @@ $edit_id = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
     <div class="stat-card"><h3>Catégories</h3><div class="number" id="statCats">…</div></div>
   </div>
 
-  <!-- Menu -->
-  <div class="dash-section">
-    <h2>📋 Menu Administrateur</h2>
-    <div class="menu-grid">
-      <a href="pages/cloud.html"        class="menu-item"><div class="icon">☁️</div><div class="label">Cloud</div></a>
-      <a href="pages/passwords.html"    class="menu-item"><div class="icon">🔑</div><div class="label">Mots de passe</div></a>
-      <a href="pages/phishing.html"     class="menu-item"><div class="icon">🎣</div><div class="label">Phishing</div></a>
-      <a href="pages/ransomware.html"   class="menu-item"><div class="icon">💀</div><div class="label">Ransomware</div></a>
-      <a href="all_modules.php"         class="menu-item"><div class="icon">📚</div><div class="label">Tous les Modules</div></a>
-      <a href="#"                        class="menu-item"><div class="icon">⚙️</div><div class="label">Paramètres</div></a>
-    </div>
-  </div>
+
 
   <!-- Module management -->
   <div class="dash-section">
@@ -400,9 +595,9 @@ $edit_id = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
         <div class="list-loading">Chargement…</div>
       </div>
     </div>
-  </div>
+    </div>
 
-</div>
+  </div> <!-- End main-content -->
 
 <!-- ── Add/Edit Module Modal ── -->
 <div class="modal-backdrop" id="formModal">

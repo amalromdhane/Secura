@@ -23,32 +23,167 @@ try {
     <title>Gestion du Quiz - <?php echo htmlspecialchars($module['title']); ?></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { font-family: sans-serif; background: #f0f2f5; margin: 0; padding: 20px; }
-        .container { max-width: 1000px; margin: 0 auto; }
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; }
-        .btn { padding: 10px 15px; border-radius: 5px; cursor: pointer; text-decoration: none; border: none; font-weight: bold; }
-        .btn-primary { background: #1a73e8; color: white; }
-        .btn-danger { background: #dc3545; color: white; }
-        .question-item { border-bottom: 1px solid #eee; padding: 15px 0; }
-        .option-item { margin-left: 20px; font-size: 0.9em; color: #555; }
-        .correct { color: #28a745; font-weight: bold; }
+        :root {
+            --cyber-primary: #0d6efd;
+            --cyber-secondary: #6f42c1;
+            --cyber-accent: #00d4ff;
+            --cyber-success: #20c997;
+            --cyber-warning: #ffc107;
+            --cyber-danger: #ff4757;
+      --cyber-dark: #141824;
+      --cyber-card: #1e2436;
+            --cyber-border: rgba(13, 110, 253, 0.15);
+            --cyber-gradient: linear-gradient(135deg, #0d6efd 0%, #6f42c1 100%);
+            --cyber-glow: 0 0 20px rgba(13, 110, 253, 0.4);
+            --text-primary: #f8f9fa;
+            --text-secondary: #adb5bd;
+        }
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+            background: var(--cyber-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(13, 110, 253, 0.03) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(111, 66, 193, 0.03) 0%, transparent 20%);
+        }
+        .container { max-width: 1200px; margin: 20px auto; padding: 0 20px; }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, rgba(30, 36, 54, 0.9) 0%, rgba(26, 31, 46, 0.9) 100%);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+        }
+        .header h1 { color: var(--cyber-accent); }
+        .card {
+            background: rgba(26, 31, 46, 0.9);
+            border: 1px solid rgba(13, 110, 253, 0.2);
+            padding: 20px;
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        .card:hover { border-color: rgba(13, 110, 253, 0.5); }
+        .btn {
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            border: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-primary { background: var(--cyber-gradient); color: white; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(13, 110, 253, 0.4); }
+        .btn-danger { background: rgba(255, 71, 87, 0.2); color: var(--cyber-danger); border: 1px solid rgba(255, 71, 87, 0.3); }
+        .btn-danger:hover { background: rgba(255, 71, 87, 0.3); }
+        .btn:hover { transform: translateY(-2px); }
+        .question-item {
+            border-bottom: 1px solid rgba(13, 110, 253, 0.1);
+            padding: 15px 0;
+            transition: background 0.2s;
+        }
+        .question-item:hover { background: rgba(13, 110, 253, 0.05); }
+        .option-item { margin-left: 20px; font-size: 0.9em; color: var(--text-secondary); }
+        .correct { color: var(--cyber-success); font-weight: bold; }
         .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; }
-        input { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; overflow-y: auto; }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.9rem;
+        }
+        input {
+            width: 100%;
+            padding: 10px 13px;
+            background: rgba(18, 24, 38, 0.7);
+            border: 1px solid rgba(13, 110, 253, 0.3);
+            border-radius: 8px;
+            color: var(--text-primary);
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+        input:focus {
+            outline: none;
+            border-color: var(--cyber-accent);
+            box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.15);
+            background: rgba(18, 24, 38, 0.9);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            align-items: center;
+            justify-content: center;
+            overflow-y: auto;
+            backdrop-filter: blur(8px);
+        }
         .modal.open { display: flex; }
-        .modal-content { background: white; padding: 20px; border-radius: 8px; width: 90%; max-width: 600px; margin: 20px; }
+        .modal-content {
+            background: rgba(26, 31, 46, 0.95);
+            border: 1px solid rgba(13, 110, 253, 0.3);
+            padding: 20px;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 600px;
+            margin: 20px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 20px 60px rgba(13, 110, 253, 0.2);
+        }
         .option-input-row { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; }
+        .option-input-row input[type="text"] { flex: 1; }
+        .option-input-row input[type="radio"] { width: auto; accent-color: var(--cyber-primary); }
+        .floating-shapes {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+        .shape {
+            position: absolute;
+            background: rgba(0, 212, 255, 0.08);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 12px;
+            animation: float 8s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.1);
+        }
+        .shape:nth-child(1) { width: 80px; height: 80px; top: 20%; left: 10%; }
+        .shape:nth-child(2) { width: 60px; height: 60px; top: 60%; right: 15%; animation-delay: 2s; }
+        .shape:nth-child(3) { width: 100px; height: 100px; bottom: 20%; left: 20%; animation-delay: 4s; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
     </style>
 </head>
-<body>
+  <body>
+    <div class="floating-shapes">
+      <div class="shape"></div>
+      <div class="shape"></div>
+      <div class="shape"></div>
+    </div>
     <div class="container">
         <div class="header">
             <h1>Quiz : <?php echo htmlspecialchars($module['title']); ?></h1>
-            <div>
-                <a href="admin_dashboard.php" class="btn" style="background: #666; color: white;">Retour</a>
-                <button onclick="openModal()" class="btn btn-primary">Ajouter une question</button>
+            <div style="display: flex; gap: 10px;">
+                <a href="admin_dashboard.php" class="btn" style="background: rgba(18, 24, 38, 0.7); color: var(--text-secondary); border: 1px solid rgba(255, 255, 255, 0.1);">← Retour Dashboard</a>
+                <button onclick="openModal()" class="btn btn-primary">➕ Ajouter une question</button>
             </div>
         </div>
 
@@ -75,10 +210,10 @@ try {
                     <div id="optionsContainer">
                         <!-- Options générées ici -->
                     </div>
-                    <button type="button" onclick="addOptionInput()" class="btn" style="background:#eee; font-size:0.8em; margin-top:10px;">+ Ajouter une option</button>
+                    <button type="button" onclick="addOptionInput()" class="btn" style="background: rgba(13, 110, 253, 0.1); color: var(--cyber-primary); border: 1px solid rgba(13, 110, 253, 0.3); font-size:0.8em; margin-top:10px;">➕ Ajouter une option</button>
                 </div>
-                <div style="text-align: right; margin-top: 20px;">
-                    <button type="button" onclick="closeModal()" class="btn" style="background: #ccc;">Annuler</button>
+                <div style="text-align: right; margin-top: 20px; display: flex; gap: 10px; justify-content: flex-end;">
+                    <button type="button" onclick="closeModal()" class="btn" style="background: rgba(18, 24, 38, 0.7); color: var(--text-secondary); border: 1px solid rgba(255, 255, 255, 0.1);">Annuler</button>
                     <button type="submit" class="btn btn-primary">Enregistrer</button>
                 </div>
             </form>
@@ -119,7 +254,7 @@ try {
             div.innerHTML = `
                 <input type="radio" name="is_correct" ${isCorrect ? 'checked' : ''} style="width:auto;">
                 <input type="text" class="option-text" value="${text}" placeholder="Texte de l'option" required>
-                <button type="button" onclick="this.parentElement.remove()" class="btn btn-danger" style="padding:5px 10px;">×</button>
+                <button type="button" onclick="this.parentElement.remove()" class="btn btn-danger" style="padding:5px 10px; font-size: 1.2rem;">×</button>
             `;
             container.appendChild(div);
         }
