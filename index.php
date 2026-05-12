@@ -37,12 +37,20 @@ if (!isset($_SESSION['user_logged_in']) || $_SESSION['user_logged_in'] !== true)
 
       <ul class="nav-menu" id="navMenu">
         <li class="nav-item">
+<<<<<<< HEAD
           <a class="nav-link" href="../index.php">
+=======
+          <a class="nav-link" href="index.php">
+>>>>>>> 334029efde0fa668c90e674856a9cee753836baf
             <i class="fas fa-home"></i> Accueil
           </a>
         </li>
         <li class="nav-item">
+<<<<<<< HEAD
           <a class="nav-link" href="../index.php#modules">
+=======
+          <a class="nav-link" href="index.php#modules">
+>>>>>>> 334029efde0fa668c90e674856a9cee753836baf
             <i class="fas fa-layer-group"></i> Modules
           </a>
         </li>
@@ -53,7 +61,11 @@ if (!isset($_SESSION['user_logged_in']) || $_SESSION['user_logged_in'] !== true)
           </a>
         </li>
         <li class="nav-item">
+<<<<<<< HEAD
           <a class="nav-link" href="../index.php#contact">
+=======
+          <a class="nav-link" href="index.php#contact">
+>>>>>>> 334029efde0fa668c90e674856a9cee753836baf
             <i class="bi bi-headset"></i> Contact
           </a>
         </li>
