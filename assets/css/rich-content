@@ -1,0 +1,340 @@
+/* ================================================================
+   rich-content.css  — Dark Mode Edition
+   Reproduit pixel-perfect le style de l'éditeur admin_course.php
+   en version dark pour module.php
+   ================================================================ */
+
+/* ── Zone de contenu ─────────────────────────────────────────── */
+.chapter-rich-content,
+.module-rich-content {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 14px;
+  line-height: 1.75;
+  color: #e2e8f0;
+}
+.chapter-rich-content *,
+.module-rich-content * { box-sizing: border-box; }
+
+.chapter-rich-content p,
+.module-rich-content p { color: #c9d1d9; margin: 0 0 0.9em; }
+
+.chapter-rich-content ul,
+.chapter-rich-content ol,
+.module-rich-content ul,
+.module-rich-content ol { padding-left: 1.5em; margin-bottom: 0.9em; color: #c9d1d9; }
+
+.chapter-rich-content li,
+.module-rich-content li { margin-bottom: 0.4em; }
+
+.chapter-rich-content strong,
+.module-rich-content strong { color: #e2e8f0; }
+
+.chapter-rich-content h4,
+.module-rich-content h4 { color: #00d4ff; font-size: 1.05rem; margin: 1.1em 0 0.5em; }
+
+.chapter-rich-content h6,
+.module-rich-content h6 { color: #8896a7; font-size: 0.88rem; margin: 0.8em 0 0.3em; font-weight: 600; }
+
+/* ================================================================
+   🃏 CARTE  .blk-card
+   Fond sombre avec bordure bleue, titre cyan — miroir dark du blanc
+================================================================ */
+.blk-card {
+  background: rgba(13, 110, 253, 0.07);
+  border: 1px solid rgba(0, 212, 255, 0.22);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin: 12px 0;
+  color: #e2e8f0;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.blk-card:hover {
+  border-color: rgba(0, 212, 255, 0.45);
+  box-shadow: 0 4px 18px rgba(0, 212, 255, 0.1);
+}
+.blk-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #0d6efd, #00d4ff);
+}
+.blk-card > strong {
+  display: block;
+  color: #6ea8fe;
+  font-size: 0.96rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.blk-card > p { color: #c9d1d9; margin: 0; }
+
+/* ================================================================
+   📐 GRILLES  .blk-grid2 / .blk-grid3
+================================================================ */
+.blk-grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin: 14px 0;
+}
+.blk-grid3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  margin: 14px 0;
+}
+.blk-grid2 > .blk-card,
+.blk-grid3 > .blk-card { margin: 0; }
+
+@media (max-width: 768px) {
+  .blk-grid2,
+  .blk-grid3 { grid-template-columns: 1fr; }
+}
+
+/* ================================================================
+   🚨 ALERTES — bordure gauche colorée, fond teinté
+================================================================ */
+
+/* 💡 Conseil — vert */
+.blk-tip {
+  background: rgba(32, 201, 151, 0.07);
+  border-left: 4px solid #20c997;
+  border-top: none; border-right: none; border-bottom: none;
+  border-radius: 0 12px 12px 0;
+  padding: 14px 18px;
+  margin: 12px 0;
+  display: block;
+}
+.blk-tip > strong {
+  display: block;
+  color: #20c997;
+  font-size: 0.93rem;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+.blk-tip > p { color: #a8d5c2; margin: 0; }
+
+/* ⚠️ Avertissement — orange */
+.blk-warning {
+  background: rgba(255, 193, 7, 0.07);
+  border-left: 4px solid #ffc107;
+  border-top: none; border-right: none; border-bottom: none;
+  border-radius: 0 12px 12px 0;
+  padding: 14px 18px;
+  margin: 12px 0;
+  display: block;
+}
+.blk-warning > strong {
+  display: block;
+  color: #ffc107;
+  font-size: 0.93rem;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+.blk-warning > p { color: #d4b483; margin: 0; }
+
+/* 🚫 Danger — rouge */
+.blk-danger {
+  background: rgba(255, 71, 87, 0.07);
+  border-left: 4px solid #ff4757;
+  border-top: none; border-right: none; border-bottom: none;
+  border-radius: 0 12px 12px 0;
+  padding: 14px 18px;
+  margin: 12px 0;
+  display: block;
+}
+.blk-danger > strong {
+  display: block;
+  color: #ff6b7a;
+  font-size: 0.93rem;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+.blk-danger > p { color: #d4a0a5; margin: 0; }
+
+/* ℹ️ Info — bleu */
+.blk-info {
+  background: rgba(13, 110, 253, 0.07);
+  border-left: 4px solid #0d6efd;
+  border-top: none; border-right: none; border-bottom: none;
+  border-radius: 0 12px 12px 0;
+  padding: 14px 18px;
+  margin: 12px 0;
+  display: block;
+}
+.blk-info > strong {
+  display: block;
+  color: #6ea8fe;
+  font-size: 0.93rem;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+.blk-info > p { color: #93b8f5; margin: 0; }
+
+/* ================================================================
+   📊 TABLEAUX  .comparison-table
+================================================================ */
+table.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 13px;
+  display: table;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 212, 255, 0.15);
+}
+table.comparison-table thead {
+  background: linear-gradient(135deg, rgba(13,110,253,0.35), rgba(0,212,255,0.15));
+}
+table.comparison-table th {
+  padding: 11px 14px;
+  text-align: left;
+  font-weight: 700;
+  color: #e2e8f0;
+  border: 1px solid rgba(0, 212, 255, 0.12);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+table.comparison-table td {
+  padding: 10px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  vertical-align: top;
+  color: #c9d1d9;
+}
+table.comparison-table tr:nth-child(even) td {
+  background: rgba(255, 255, 255, 0.03);
+}
+table.comparison-table tbody tr:hover td {
+  background: rgba(0, 212, 255, 0.06);
+  transition: background 0.15s;
+}
+@media (max-width: 600px) {
+  table.comparison-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+
+/* ================================================================
+   🔢 RÈGLE 3-2-1  .blk-321
+================================================================ */
+.blk-321 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 16px 0;
+  text-align: center;
+}
+.blk-321-item {
+  background: rgba(13, 110, 253, 0.08);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: 12px;
+  padding: 22px 14px;
+  display: block;
+  transition: transform 0.22s, box-shadow 0.22s;
+}
+.blk-321-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 26px rgba(0, 212, 255, 0.15);
+}
+.blk-321-num {
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: #00d4ff;
+  line-height: 1;
+  text-shadow: 0 0 20px rgba(0, 212, 255, 0.45);
+  display: block;
+}
+.blk-321-label {
+  font-size: 0.76rem;
+  color: #8896a7;
+  margin-top: 9px;
+  line-height: 1.45;
+  display: block;
+}
+@media (max-width: 600px) {
+  .blk-321 { grid-template-columns: 1fr; }
+}
+
+/* ================================================================
+   👣 ÉTAPES  .blk-steps / .blk-step
+   Miroir dark des cards à numéro bleu de l'éditeur
+================================================================ */
+.blk-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 16px 0;
+}
+.blk-step {
+  background: rgba(13, 110, 253, 0.07);
+  border: 1px solid rgba(13, 110, 253, 0.22);
+  border-radius: 12px;
+  padding: 20px 14px;
+  text-align: center;
+  display: block;
+  transition: transform 0.22s, box-shadow 0.22s;
+}
+.blk-step:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 26px rgba(0, 212, 255, 0.12);
+}
+.blk-step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0d6efd, #00aaff);
+  color: #fff;
+  font-weight: 800;
+  font-size: 1.05rem;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 14px rgba(13, 110, 253, 0.45);
+}
+.blk-step-title {
+  font-weight: 700;
+  color: #e2e8f0;
+  margin-bottom: 6px;
+  font-size: 0.9rem;
+  display: block;
+}
+.blk-step-desc {
+  font-size: 0.78rem;
+  color: #8896a7;
+  line-height: 1.5;
+  display: block;
+}
+@media (max-width: 768px) {
+  .blk-steps { grid-template-columns: 1fr; }
+}
+
+/* ================================================================
+   🔖 SÉPARATEUR DE CHAPITRE
+================================================================ */
+.chapter-divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+.chapter-divider-badge {
+  background: linear-gradient(135deg, #0d6efd, #00d4ff);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 5px 15px;
+  border-radius: 20px;
+  white-space: nowrap;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  box-shadow: 0 4px 12px rgba(0, 212, 255, 0.28);
+}
+.chapter-divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(0,212,255,0.35), transparent);
+}
