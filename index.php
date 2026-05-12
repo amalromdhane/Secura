@@ -1,3 +1,14 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['user_logged_in']) || $_SESSION['user_logged_in'] !== true) {
+    $is_logged_in = false;
+    $user_role = '';
+} else {
+    $is_logged_in = true;
+    $user_role = $_SESSION['user_role'] ?? '';
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -7,7 +18,7 @@
   <title>Secura - Sensibilisation à la Cybersécurité</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
-  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="assets/css/style.css">
 
 </head>
 
@@ -26,31 +37,37 @@
 
       <ul class="nav-menu" id="navMenu">
         <li class="nav-item">
-          <a class="nav-link" href="index.html">
+          <a class="nav-link" href="index.php">
             <i class="fas fa-home"></i> Accueil
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="index.html#modules">
+
+          <a class="nav-link" href="index.php#modules">
+
             <i class="fas fa-layer-group"></i> Modules
           </a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="index.html#about">
+          <a class="nav-link" href="index.php#about">
             <i class="fas fa-info-circle"></i> À propos
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="index.html#contact">
+
+          <a class="nav-link" href="index.php#contact">
+
             <i class="bi bi-headset"></i> Contact
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="login.php">
-            <i class="fas fa-sign-in-alt"></i> Connexion
-          </a>
-        </li>
+        <?php if (!$is_logged_in): ?>
+          <li class="nav-item">
+            <a class="nav-link" href="login.php">
+              <i class="fas fa-sign-in-alt"></i> Connexion
+            </a>
+          </li>
+        <?php endif; ?>
       </ul>
     </div>
   </nav>
@@ -148,8 +165,8 @@
               style="width: 240px; height: 150px; border-radius: 16px; object-fit: cover; border: 2px solid  var(--neon-cyan); box-shadow: var(--glow-cyan);">
             <h5 class="mt-4 mb-3">Phishing & Hameçonnage</h5>
             <p class="text-muted mb-4">Reconnaître les emails et messages frauduleux pour éviter les pièges.</p>
-<a href="all_modules.php" class="btn btn-primary"><i class="bi bi-play-circle me-2"></i> Accéder
-	              au cours</a>
+            <a href="./pages/phishing.html" class="btn btn-primary"><i class="bi bi-play-circle me-2"></i> Accéder
+              au cours</a>
           </div>
         </div>
         <div class="col col-md-3">
@@ -161,8 +178,8 @@
               style="width: 240px; height: 150px; border-radius: 16px; object-fit: cover; border: 2px solid  var(--neon-cyan); box-shadow: var(--glow-cyan);">
             <h5 class="mt-4 mb-3">Sécurité des mots de passe</h5>
             <p class="text-muted mb-4">Créer et gérer des mots de passe robustes pour une sécurité optimale.</p>
-<a href="all_modules.php" class="btn btn-primary"><i class="bi bi-play-circle me-2"></i>
-	              Accéder au cours</a>
+            <a href="./pages/passwords.html" class="btn btn-primary"><i class="bi bi-play-circle me-2"></i>
+              Accéder au cours</a>
           </div>
         </div>
         <div class="col col-md-3">
@@ -174,8 +191,8 @@
               style="width: 240px; height: 150px; border-radius: 16px; object-fit: cover; border: 2px solid  var(--neon-cyan); box-shadow: var(--glow-cyan);">
             <h5 class="mt-4 mb-3">Ransomware & Malwares</h5>
             <p class="text-muted mb-4">Comprendre les logiciels malveillants et comment s'en protéger.</p>
-<a href="all_modules.php" class="btn btn-primary"><i class="bi bi-play-circle me-2"></i>
-	              Accéder au cours</a>
+            <a href="./pages/ransomware.html" class="btn btn-primary"><i class="bi bi-play-circle me-2"></i>
+              Accéder au cours</a>
           </div>
         </div>
         <div class="col col-md-3">
@@ -188,8 +205,8 @@
               style="width: 240px; height: 150px; border-radius: 16px; object-fit: cover; border: 2px solid  var(--neon-cyan); box-shadow: var(--glow-cyan);">
             <h5 class="mt-4 mb-3">Cloud & Intelligence Artificielle</h5>
             <p class="text-muted mb-4">Sécurité des données dans le cloud et enjeux de l'IA.</p><br>
-<a href="all_modules.php" class="btn btn-primary"><i class="bi bi-play-circle me-2"></i> Accéder au
-	              cours</a>
+            <a href="./pages/cloud.html" class="btn btn-primary"><i class="bi bi-play-circle me-2"></i> Accéder au
+              cours</a>
           </div>
         </div>
       </div>

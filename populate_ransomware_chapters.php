@@ -3,7 +3,7 @@
  * Populate Ransomware Module Chapters
  * Converts static HTML content into database chapters
  */
-require_once 'config.php';
+require_once 'includes/config.php';
 
 $pdo = getDBConnection('cyber');
 

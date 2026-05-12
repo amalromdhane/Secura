@@ -24,90 +24,169 @@ $edit_id = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard – Secura</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="assets/css/style.css">
   <style>
     :root {
-      --cyber-primary: #0d6efd;
-      --cyber-secondary: #6f42c1;
-      --cyber-accent: #00d4ff;
-      --cyber-success: #20c997;
-      --cyber-warning: #ffc107;
-      --cyber-danger: #ff4757;
-      --cyber-dark: #141824;
-      --cyber-card: #1e2436;
-      --cyber-border: rgba(13, 110, 253, 0.2);
-      --cyber-gradient: linear-gradient(135deg, #0d6efd 0%, #6f42c1 100%);
-      --cyber-glow: 0 0 20px rgba(13, 110, 253, 0.4);
-      --text-primary: #f8f9fa;
-      --text-secondary: #adb5bd;
-      --neon-cyan: #00d4ff;
-      --glow-cyan: 0 0 20px rgba(0, 212, 255, 0.4);
+      --admin-primary: #1e293b;
+      --admin-secondary: #334155;
+      --admin-accent: #3b82f6;
+      --admin-success: #10b981;
+      --admin-warning: #f59e0b;
+      --admin-danger: #ef4444;
+      --admin-dark: #f8fafc;
+      --admin-card: #ffffff;
+      --admin-light: #f1f5f9;
+      --admin-border: rgba(71, 85, 105, 0.2);
+      --admin-gradient: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+      --admin-glow: 0 0 20px rgba(59, 130, 246, 0.4);
+      --cyber-card: #ffffff;
+      --text-primary: #1e293b;
+      --text-secondary: #64748b;
+      --text-muted: #94a3b8;
+      --text-light: #f8fafc;
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     }
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
     body {
-      font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
-      background: var(--cyber-dark);
+      font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
       color: var(--text-primary);
       min-height: 100vh;
       margin: 0;
-      display: flex;
-      background-image:
-        radial-gradient(circle at 10% 20%, rgba(13, 110, 253, 0.03) 0%, transparent 20%),
-        radial-gradient(circle at 90% 80%, rgba(111, 66, 193, 0.03) 0%, transparent 20%);
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.04) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(16, 185, 129, 0.03) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
     }
 
     /* Navbar */
     .navbar {
-      background: linear-gradient(135deg, rgba(30, 36, 54, 0.9) 0%, rgba(26, 31, 46, 0.9) 100%);
-      backdrop-filter: blur(12px);
-      box-shadow: 0 2px 10px rgba(13, 110, 253, 0.2);
-      color:var(--text-primary);
-      padding:15px 30px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-bottom: 20px;
-      border-radius: 12px;
-      border: 1px solid rgba(0, 212, 255, 0.3);
-    }
-    .navbar h1 { font-size:20px; color: var(--cyber-accent); margin: 0; }
-    .user-info { display:flex; align-items:center; gap:14px; }
-    .user-info span { opacity:.9; font-size:14px; color: var(--text-secondary); }
-    .logout-btn {
-      background: rgba(255,255,255,.1);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       color: var(--text-primary);
-      padding:8px 18px;
-      border:1px solid rgba(255,255,255,.2);
-      border-radius:6px;
-      cursor:pointer;
-      text-decoration:none;
-      font-size:14px;
-      transition:all .25s;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      border-radius: 16px;
+      position: relative;
+      z-index: 10;
     }
-    .logout-btn:hover { background: rgba(0, 212, 255, 0.1); border-color: var(--cyber-accent); }
+    .navbar::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(59, 130, 246, 0.3) 50%,
+        transparent 100%);
+    }
+    .navbar h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin: 0;
+      background: linear-gradient(135deg, var(--admin-accent), var(--admin-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.025em;
+    }
+    .user-info { display:flex; align-items:center; gap:14px; position: relative; }
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 3px solid var(--cyber-accent);
+      transition: all 0.3s ease;
+      object-fit: cover;
+      background: var(--cyber-card);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    .user-avatar:hover {
+      border-color: var(--admin-accent);
+      transform: scale(1.1);
+      box-shadow: 0 4px 16px rgba(0, 212, 255, 0.3);
+    }
+    .user-dropdown {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      margin-top: 8px;
+      background: rgba(255, 255, 255, 0.98);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      min-width: 200px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(15px);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      z-index: 2000;
+      padding: 8px 0;
+    }
+    .user-dropdown.open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .user-dropdown-item {
+      display: block;
+      padding: 12px 20px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border-radius: 6px;
+      margin: 2px 8px;
+    }
+    .user-dropdown-item:hover {
+      background: rgba(0, 212, 255, 0.1);
+      color: var(--text-primary);
+      transform: translateX(4px);
+    }
+    .user-dropdown-item i { margin-right: 8px; }
 
     /* Sidebar */
     .sidebar {
       width: 250px;
-      background: linear-gradient(180deg, rgba(15, 24, 36, 0.95) 0%, rgba(20, 24, 36, 0.95) 100%);
-      backdrop-filter: blur(12px);
-      border-right: 1px solid rgba(13, 110, 253, 0.3);
+      background: var(--cyber-card);
+      background-image: linear-gradient(135deg, rgba(30,58,138,0.3) 0%, rgba(30,64,175,0.25) 25%, rgba(16,185,129,0.2) 50%, rgba(245,158,11,0.25) 75%, rgba(239,68,68,0.3) 100%);
+      border-right: 1px solid rgba(0, 0, 0, 0.1);
       height: 100vh;
       position: fixed;
       left: 0;
       top: 0;
       padding: 20px;
-      box-shadow: 2px 0 20px rgba(13, 110, 253, 0.2);
+      box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
       z-index: 100;
     }
     .sidebar-header {
       text-align: center;
       margin-bottom: 30px;
       padding-bottom: 20px;
-      border-bottom: 1px solid rgba(13, 110, 253, 0.2);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     }
     .sidebar-header h2 {
-      color: var(--cyber-accent);
+      color: var(--text-primary);
       font-size: 18px;
       margin: 0;
     }
@@ -129,9 +208,9 @@ $edit_id = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
       font-weight: 500;
     }
     .sidebar-menu a:hover, .sidebar-menu a.active {
-      background: rgba(13, 110, 253, 0.1);
-      color: var(--cyber-accent);
-      border-left: 3px solid var(--cyber-accent);
+      background: rgba(0, 0, 0, 0.1);
+      color: var(--text-primary);
+      border-left: 3px solid var(--cyber-primary);
     }
     .sidebar-menu a i {
       margin-right: 10px;
@@ -156,13 +235,13 @@ $edit_id = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
       margin-bottom:28px;
     }
     .stat-card {
-      background: rgba(26, 31, 46, 0.9);
-      border: 1px solid rgba(13, 110, 253, 0.25);
-      padding:22px 24px;
-      border-radius:16px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      padding: 22px 24px;
+      border-radius: 16px;
       backdrop-filter: blur(10px);
       transition: all 0.3s ease;
-      box-shadow: 0 4px 20px rgba(13, 110, 253, 0.15);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
       position: relative;
       overflow: hidden;
     }
@@ -177,8 +256,8 @@ $edit_id = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
     }
     .stat-card:hover {
       transform: translateY(-5px);
-      border-color: rgba(13, 110, 253, 0.5);
-      box-shadow: 0 10px 30px rgba(13, 110, 253, 0.2);
+      border-color: rgba(0, 0, 0, 0.2);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     }
     .stat-card:nth-child(1)::before { background: var(--cyber-accent); }
     .stat-card:nth-child(2)::before { background: var(--cyber-success); }
@@ -188,12 +267,12 @@ $edit_id = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
 
     /* Dashboard section */
     .dash-section {
-      background: linear-gradient(135deg, rgba(26, 31, 46, 0.9) 0%, rgba(22, 27, 40, 0.9) 100%);
-      border: 1px solid rgba(13, 110, 253, 0.25);
-      border-radius:16px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 16px;
       backdrop-filter: blur(10px);
-      padding:24px;
-      margin-bottom:22px;
+      padding: 24px;
+      margin-bottom: 22px;
       transition: all 0.3s ease;
       position: relative;
     }
@@ -208,8 +287,8 @@ $edit_id = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
       border-radius: 16px 16px 0 0;
     }
     .dash-section:hover {
-      border-color: rgba(13, 110, 253, 0.5);
-      box-shadow: 0 10px 30px rgba(13, 110, 253, 0.2);
+      border-color: rgba(0, 0, 0, 0.2);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     }
     .dash-section h2 {
       font-size:18px;
@@ -222,22 +301,22 @@ $edit_id = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
     /* Menu grid */
     .menu-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:14px; }
     .menu-item {
-      background: rgba(18, 24, 38, 0.7);
-      border: 1px solid rgba(13, 110, 253, 0.3);
-      border-radius:12px;
-      padding:20px;
-      text-align:center;
-      text-decoration:none;
-      color:var(--text-primary);
-      transition:all .25s;
-      display:block;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      text-decoration: none;
+      color: var(--text-primary);
+      transition: all 0.25s;
+      display: block;
       backdrop-filter: blur(5px);
     }
     .menu-item:hover {
-      background: rgba(13, 110, 253, 0.1);
+      background: rgba(0, 0, 0, 0.05);
       border-color: var(--cyber-accent);
-      transform:translateY(-3px);
-      box-shadow: 0 6px 16px rgba(13, 110, 253, 0.2);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
     }
     .menu-item .icon { font-size:30px; margin-bottom:8px; color: var(--cyber-primary); }
     .menu-item .label { font-weight:600; font-size:13px; }
@@ -252,6 +331,23 @@ $edit_id = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
       align-items:center;
       gap:8px;
       background: var(--cyber-gradient);
+      color:#fff;
+      border:none;
+      padding:11px 22px;
+      border-radius:10px;
+      cursor:pointer;
+      font-size:14px;
+      font-weight:600;
+      margin-bottom:18px;
+      transition:all .25s;
+    }
+
+
+    .btn-annuler {
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      background: var(--cyber-accent);
       color:#fff;
       border:none;
       padding:11px 22px;
@@ -284,7 +380,7 @@ $edit_id = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
       display:grid;
       grid-template-columns:2fr 1fr 80px 90px 1fr;
       padding:14px 18px;
-      background: rgba(18, 24, 38, 0.7);
+      /* background: rgba(18, 24, 38, 0.7); */
       border-bottom:1px solid rgba(13, 110, 253, 0.15);
       align-items:center;
       gap:10px;
@@ -346,6 +442,42 @@ $edit_id = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
     .list-empty { padding:40px; text-align:center; color:var(--text-secondary); font-style:italic; }
     .list-loading { padding:40px; text-align:center; color:#999; }
 
+    /* Collapsible Add Form */
+    .add-form-container {
+      margin-top: 18px;
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 16px;
+      padding: 32px;
+      transition: all 0.3s ease;
+      max-height: 70vh;
+      overflow-y: auto;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+    }
+    .add-form {
+      display: grid;
+      gap: 24px;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      padding: 10px 0;
+    }
+    .form-actions {
+      display: flex;
+      gap: 16px;
+      justify-content: flex-end;
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
     /* Modal */
     .modal-backdrop {
       display:none;
@@ -359,15 +491,16 @@ $edit_id = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
     }
     .modal-backdrop.open { display:flex; }
     .modal {
-      background: rgba(26, 31, 46, 0.95);
-      border: 1px solid rgba(13, 110, 253, 0.3);
-      border-radius:16px;
-      max-width:520px;
-      width:92%;
-      max-height:92vh;
+      background: rgba(255, 255, 255, 0.98);
+      border: 2px solid rgba(0, 0, 0, 0.1);
+      border-radius:20px;
+      max-width:600px;
+      width:95%;
+      max-height:90vh;
       overflow-y:auto;
-      box-shadow: 0 20px 60px rgba(13, 110, 253, 0.2);
-      backdrop-filter: blur(15px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(20px);
+      padding: 32px;
     }
     .modal-head {
       display:flex;
@@ -400,10 +533,10 @@ $edit_id = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
     .form-group select,
     .form-group textarea {
       width:100%;
-      padding:10px 13px;
-      background: rgba(18, 24, 38, 0.7);
-      border:1px solid rgba(13, 110, 253, 0.3);
-      border-radius:10px;
+      padding:14px 16px;
+      background: rgba(255, 255, 255, 0.95);
+      border:2px solid rgba(0, 0, 0, 0.1);
+      border-radius:12px;
       color: var(--text-primary);
       font-size:14px;
       transition:all .3s ease;
@@ -414,8 +547,9 @@ $edit_id = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
     .form-group textarea:focus {
       outline:none;
       border-color: var(--cyber-accent);
-      box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.15);
-      background: rgba(18, 24, 38, 0.9);
+      box-shadow: 0 0 0 4px rgba(0, 212, 255, 0.2);
+      background: #fff;
+      transform: translateY(-2px);
     }
     .form-group small { color:#999; font-size:11px; margin-top:4px; display:block; }
     .checkbox-row {
@@ -435,36 +569,37 @@ $edit_id = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
     }
     .modal-foot {
       display:flex;
-      gap:10px;
+      gap:16px;
       justify-content:flex-end;
-      padding:16px 22px;
-      border-top:1px solid rgba(13, 110, 253, 0.3);
+      margin-top:32px;
+      padding-top:24px;
+      border-top:2px solid rgba(0, 0, 0, 0.1);
     }
     .btn-cancel-form {
-      background: rgba(18, 24, 38, 0.7);
-      color: var(--text-secondary);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      padding:10px 22px;
-      border-radius:10px;
+      background: rgba(108, 117, 125, 0.1);
+      color: #6c757d;
+      border: 2px solid rgba(108, 117, 125, 0.3);
+      padding:12px 24px;
+      border-radius:12px;
       cursor:pointer;
       font-size:14px;
       font-weight:600;
-      transition:all .2s;
+      transition:all .3s;
       backdrop-filter: blur(5px);
     }
-    .btn-cancel-form:hover { background: rgba(18, 24, 38, 0.9); }
+    .btn-cancel-form:hover { background: rgba(108, 117, 125, 0.2); transform: translateY(-2px); }
     .btn-save {
       background: var(--cyber-gradient);
       color:#fff;
       border:none;
-      padding:10px 24px;
-      border-radius:10px;
+      padding:12px 24px;
+      border-radius:12px;
       cursor:pointer;
       font-size:14px;
       font-weight:600;
-      transition:all .25s;
+      transition:all .3s;
     }
-    .btn-save:hover { transform:translateY(-2px); box-shadow: 0 5px 16px rgba(13, 110, 253, 0.4); }
+    .btn-save:hover { transform:translateY(-2px); box-shadow: 0 6px 16px rgba(13, 110, 253, 0.4); }
 
     /* Delete confirm modal */
     .modal-confirm { text-align:center; padding:32px; }
@@ -543,31 +678,35 @@ $edit_id = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
     <ul class="sidebar-menu">
       <li><a href="#" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
       <li><a href="all_modules.php"><i class="fas fa-layer-group"></i> Modules</a></li>
-      <li><a href="pages/cloud.html"><i class="fas fa-cloud"></i> Cloud</a></li>
-      <li><a href="pages/passwords.html"><i class="fas fa-lock"></i> Mots de passe</a></li>
-      <li><a href="pages/phishing.html"><i class="fas fa-fish"></i> Phishing</a></li>
-      <li><a href="pages/ransomware.html"><i class="fas fa-skull"></i> Ransomware</a></li>
-      <li><a href="#"><i class="fas fa-cog"></i> Paramètres</a></li>
-      <li><a href="#"><i class="fas fa-users"></i> Utilisateurs</a></li>
+      <li><a href="profil.php" ><i class="fas fa-cog"></i> Paramètres</a></li>
+      <li><a href="admin_users.php"><i class="fas fa-users"></i> Utilisateurs</a></li>
     </ul>
   </aside>
 
-  <!-- Main Content -->
+<!-- Main Content -->
   <div class="main-content">
     <nav class="navbar">
       <h1>Admin Dashboard</h1>
       <div class="user-info">
-        <span>Bienvenue, <?php echo htmlspecialchars($username); ?> (Admin)</span>
-        <a href="login.php?action=logout" class="logout-btn">Déconnexion</a>
+        <img src="<?php echo !empty($_SESSION['user_avatar']) ? htmlspecialchars($_SESSION['user_avatar']) : 'assets/images/default-avatar.svg'; ?>"
+              alt="Avatar" class="user-avatar" id="userAvatar">
+        <div class="user-dropdown" id="userDropdown">
+          <a href="profil.php" class="user-dropdown-item">
+            <i class="fas fa-user"></i> Mon Profil
+          </a>
+          <a href="admin_users.php" class="user-dropdown-item">
+            <i class="fas fa-users"></i> Gestion Utilisateurs
+          </a>
+          <a href="login.php?action=logout" class="user-dropdown-item">
+            <i class="fas fa-sign-out-alt"></i> Déconnexion
+          </a>
+        </div>
       </div>
     </nav>
 
 <div class="container">
 
-  <div class="alert alert-success">
-    ✅ Connecté en tant qu'administrateur. Bonne gestion !
-  </div>
-
+<br>
   <!-- Stats -->
   <div class="stats-grid" id="statsGrid">
     <div class="stat-card"><h3>Total Modules</h3><div class="number" id="statTotal">…</div></div>
@@ -581,7 +720,73 @@ $edit_id = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
   <div class="dash-section">
     <h2>📚 Gestion des Modules</h2>
 
-    <button class="btn-add" id="btnAdd">➕ Nouveau Module</button>
+    <button class="btn-add" id="btnToggleForm">➕ Nouveau Module</button>
+
+    <!-- Collapsible Add Form -->
+    <div id="addFormContainer" class="add-form-container" style="display: none;">
+      <form id="addModuleForm" class="add-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="addTitle">Titre *</label>
+            <input type="text" id="addTitle" required>
+          </div>
+          <div class="form-group">
+            <label for="addCategory">Catégorie *</label>
+            <select id="addCategory" required>
+              <option value="">— Sélectionner —</option>
+              <option>Sécurité</option>
+              <option>Réseau</option>
+              <option>Données</option>
+              <option>Cloud</option>
+              <option>IA</option>
+              <option>Phishing</option>
+              <option>Ransomware</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="addDuration">Durée (minutes)</label>
+            <input type="number" id="addDuration" value="30" min="1" max="600">
+          </div>
+          <div class="form-group">
+            <label for="addImage">URL de l'image</label>
+            <input type="url" id="addImage" placeholder="https://…">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="addVideo">URL YouTube</label>
+            <input type="url" id="addVideo" placeholder="https://www.youtube.com/watch?v=…">
+          </div>
+          <div class="form-group">
+            <label for="addContent">Contenu additionnel</label>
+            <textarea id="addContent" rows="3" placeholder="Contenu optionnel…"></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="addDescription">Description</label>
+          <textarea id="addDescription" rows="2" placeholder="Description détaillée…"></textarea>
+        </div>
+
+        <div class="checkbox-group">
+          <label>Quiz activé</label>
+          <input type="checkbox" id="addQuizEnabled">
+        </div>
+
+        <div class="checkbox-group">
+          <label>Module actif (visible)</label>
+          <input type="checkbox" id="addActive" checked>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn-annuler" id="btnCancelAdd" style="background: rgba(18, 24, 38, 0.7); color: var(--text-secondary); border: 1px solid rgba(255, 255, 255, 0.1);">Annuler</button>
+          <button type="submit" class="btn-add">Enregistrer</button>
+        </div>
+        </div>
+        
+        
+      </form>
+    </div>
 
     <div class="list-container">
       <div class="list-header">
@@ -639,26 +844,15 @@ $edit_id = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
           <input type="url" id="fImage" placeholder="https://…">
         </div>
 
-        <div class="form-group">
-          <label for="fPage">Fichier HTML du module</label>
-          <input type="text" id="fPage" placeholder="phishing.html">
-          <small>Fichier dans le dossier pages/</small>
-        </div>
+         <div class="form-group">
+           <label for="fVideo">URL YouTube</label>
+           <input type="url" id="fVideo" placeholder="https://www.youtube.com/watch?v=…">
+         </div>
 
-        <div class="form-group">
-          <label for="fVideo">URL YouTube</label>
-          <input type="url" id="fVideo" placeholder="https://www.youtube.com/watch?v=…">
-        </div>
-
-        <div class="form-group">
-          <label for="fContent">Contenu HTML additionnel</label>
-          <textarea id="fContent" rows="3" placeholder="HTML optionnel…"></textarea>
-        </div>
-
-        <div class="form-group">
-          <label for="fQuizPage">Fichier quiz HTML</label>
-          <input type="text" id="fQuizPage" placeholder="PasswordQuiz.html">
-        </div>
+         <div class="form-group">
+           <label for="fContent">Contenu additionnel</label>
+           <textarea id="fContent" rows="3" placeholder="Contenu optionnel…"></textarea>
+         </div>
 
         <div class="form-group">
           <label class="checkbox-row">
@@ -724,13 +918,11 @@ $edit_id = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
     id:           document.getElementById('fId'),
     title:        document.getElementById('fTitle'),
     category:     document.getElementById('fCategory'),
-    duration:     document.getElementById('fDuration'),
-    image:        document.getElementById('fImage'),
-    page:         document.getElementById('fPage'),
-    video:        document.getElementById('fVideo'),
-    content:      document.getElementById('fContent'),
-    quizPage:     document.getElementById('fQuizPage'),
-    quizEnabled:  document.getElementById('fQuizEnabled'),
+     duration:     document.getElementById('fDuration'),
+     image:        document.getElementById('fImage'),
+     video:        document.getElementById('fVideo'),
+     content:      document.getElementById('fContent'),
+     quizEnabled:  document.getElementById('fQuizEnabled'),
     description:  document.getElementById('fDescription'),
     active:       document.getElementById('fActive'),
   };
@@ -784,7 +976,7 @@ $edit_id = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
 
     listEl.innerHTML = state.modules.map(m => `
       <div class="module-row" data-id="${m.id}">
-        <span class="col-title">${esc(m.title)}</span>
+        <span class="col-title">${m.image ? `<img src="${esc(m.image)}" alt="" style="width:60px; height:60px; margin-right:10px; object-fit:cover; border-radius:4px;">` : ''}${esc(m.title)}</span>
         <span><span class="tag">${esc(m.category)}</span></span>
         <span class="col-duration">${m.duration} min</span>
         <span class="col-status">
@@ -817,22 +1009,50 @@ $edit_id = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
     console.log('Action:', action, 'ID:', id);
 
     if (action === 'edit')   openEdit(id);
+    if (action === 'delete') openDeleteModal(id);
+    if (action === 'toggle') toggleStatus(id);
     if (action === 'toggle') toggleStatus(id);
     if (action === 'delete') openDeleteModal(id);
   });
 
-  // ─── Open add form ────────────────────────────────────────────────────────
-  document.getElementById('btnAdd').addEventListener('click', function () {
-    state.mode = 'add';
-    document.getElementById('formTitle').textContent = 'Ajouter un Module';
-    form.reset();
-    f.id.value       = '';
-    f.active.checked = true;
-    f.duration.value = 30;
-    openFormModal();
+  // ─── Toggle add form ───────────────────────────────────────────────────────
+  document.getElementById('btnToggleForm').addEventListener('click', function () {
+    const container = document.getElementById('addFormContainer');
+    const isVisible = container.style.display !== 'none';
+    if (isVisible) {
+      container.style.display = 'none';
+      this.innerHTML = '➕ Nouveau Module';
+    } else {
+      container.style.display = 'block';
+      this.innerHTML = '➖ Masquer Formulaire';
+      // Reset form
+      document.getElementById('addModuleForm').reset();
+      document.getElementById('addActive').checked = true;
+      document.getElementById('addDuration').value = 30;
+    }
   });
 
-  // ─── Open edit form ───────────────────────────────────────────────────────
+  // ─── Cancel add form ───────────────────────────────────────────────────────
+  document.getElementById('btnCancelAdd').addEventListener('click', function () {
+    document.getElementById('addFormContainer').style.display = 'none';
+    document.getElementById('btnToggleForm').innerHTML = '➕ Nouveau Module';
+  });
+
+  // ─── User Dropdown ─────────────────────────────────────────────────────────
+  const userAvatar = document.getElementById('userAvatar');
+  const userDropdown = document.getElementById('userDropdown');
+
+  userAvatar.addEventListener('click', function (e) {
+    e.stopPropagation();
+    userDropdown.classList.toggle('open');
+  });
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', function () {
+    userDropdown.classList.remove('open');
+  });
+
+  // ─── Open edit form (modal) ─────────────────────────────────────────────────
   function openEdit(id) {
     console.log('openEdit called with id:', id, 'type:', typeof id);
     console.log('Available modules:', state.modules.map(m => ({id: m.id, title: m.title})));
@@ -852,10 +1072,8 @@ $edit_id = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
     f.category.value     = m.category     ?? '';
     f.duration.value     = m.duration     ?? 30;
     f.image.value        = m.image        ?? '';
-    f.page.value         = m.page         ?? '';
     f.video.value        = m.video_url    ?? '';
     f.content.value      = m.content      ?? '';
-    f.quizPage.value     = m.quiz_page    ?? '';
     f.quizEnabled.checked= !!m.quiz_enabled;
     f.description.value  = m.description  ?? '';
     f.active.checked     = !!m.active;
@@ -864,7 +1082,44 @@ $edit_id = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
     openFormModal();
   }
 
-  // ─── Form submit (add or edit) ────────────────────────────────────────────
+  // ─── Inline Add Form submit ────────────────────────────────────────────────
+  document.getElementById('addModuleForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const title = document.getElementById('addTitle').value.trim();
+    const category = document.getElementById('addCategory').value;
+    if (!title || !category) {
+      showToast('Titre et catégorie sont obligatoires', 'error');
+      return;
+    }
+
+    const payload = {
+      title:        title,
+      category:     category,
+      duration:     document.getElementById('addDuration').value,
+      image:        document.getElementById('addImage').value.trim(),
+      video_url:    document.getElementById('addVideo').value.trim(),
+      content:      document.getElementById('addContent').value.trim(),
+      quiz_enabled: document.getElementById('addQuizEnabled').checked ? 1 : 0,
+      description:  document.getElementById('addDescription').value.trim(),
+      active:       document.getElementById('addActive').checked ? 1 : 0,
+    };
+
+    apiFetch('module.php?action=add', { method:'POST', body: encodeBody(payload) })
+      .then(data => {
+        if (data.success) {
+          document.getElementById('addFormContainer').style.display = 'none';
+          document.getElementById('btnToggleForm').innerHTML = '➕ Nouveau Module';
+          showToast('Module ajouté ✔', 'success');
+          loadModules();
+        } else {
+          showToast(data.error || 'Échec de l\'ajout', 'error');
+        }
+      })
+      .catch(() => showToast('Erreur de connexion', 'error'));
+  });
+
+  // ─── Modal Form submit (edit) ──────────────────────────────────────────────
   form.addEventListener('submit', function (e) {
     e.preventDefault();
 
@@ -879,28 +1134,23 @@ $edit_id = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
       category:     f.category.value,
       duration:     f.duration.value,
       image:        f.image.value.trim(),
-      page:         f.page.value.trim(),
       video_url:    f.video.value.trim(),
       content:      f.content.value.trim(),
-      quiz_page:    f.quizPage.value.trim(),
       quiz_enabled: f.quizEnabled.checked ? 1 : 0,
       description:  f.description.value.trim(),
       active:       f.active.checked ? 1 : 0,
     };
 
-    const isEdit = state.mode === 'edit';
-    if (isEdit) payload.id = f.id.value;
+    payload.id = f.id.value;
 
-    const url = isEdit ? 'module.php?action=update' : 'module.php?action=add';
-
-    apiFetch(url, { method:'POST', body: encodeBody(payload) })
+    apiFetch('module.php?action=update', { method:'POST', body: encodeBody(payload) })
       .then(data => {
         if (data.success) {
           closeFormModal();
-          showToast(isEdit ? 'Module mis à jour ✔' : 'Module ajouté ✔', 'success');
+          showToast('Module mis à jour ✔', 'success');
           loadModules();
         } else {
-          showToast(data.error || 'Échec de l\'opération', 'error');
+          showToast(data.error || 'Échec de la mise à jour', 'error');
         }
       })
       .catch(() => showToast('Erreur de connexion', 'error'));
@@ -917,10 +1167,8 @@ $edit_id = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
       category:     m.category,
       duration:     m.duration,
       image:        m.image        ?? '',
-      page:         m.page         ?? '',
       video_url:    m.video_url    ?? '',
       content:      m.content      ?? '',
-      quiz_page:    m.quiz_page    ?? '',
       quiz_enabled: m.quiz_enabled ?? 0,
       description:  m.description  ?? '',
       active:       m.active ? 0 : 1,   // flip

@@ -14,7 +14,7 @@ if (!isset($_SESSION['user_logged_in']) || $_SESSION['user_logged_in'] !== true)
     $user_role = $_SESSION['user_role'] ?? '';
 }
 
-require_once 'config.php';
+require_once 'includes/config.php';
 
 $pdo = getDBConnection('cyber');
 $stmt = $pdo->query("SELECT id, title, description, category, duration, image, page, quiz_page, video_url, active FROM modules WHERE active = 1 ORDER BY id DESC");
@@ -28,12 +28,12 @@ $modules = $stmt->fetchAll();
   <title>Tous les Modules – Secura</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/cyberaware.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/cyberaware.css">
   <style>
     /* ── Hero ── */
     .modules-hero {
-      background: linear-gradient(135deg, rgba(10,14,23,0.98) 0%, rgba(18,24,38,0.95) 100%);
+      background: linear-gradient(135deg, rgba(30,58,138,0.9) 0%, rgba(30,64,175,0.85) 25%, rgba(16,185,129,0.8) 50%, rgba(245,158,11,0.85) 75%, rgba(239,68,68,0.9) 100%);
       padding: 90px 0 70px;
       text-align: center;
       position: relative;
@@ -44,8 +44,9 @@ $modules = $stmt->fetchAll();
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(circle at 20% 50%, rgba(13,110,253,0.12) 0%, transparent 40%),
-        radial-gradient(circle at 80% 30%, rgba(0,212,255,0.08) 0%, transparent 40%);
+        radial-gradient(circle at 20% 50%, rgba(59,130,246,0.15) 0%, transparent 40%),
+        radial-gradient(circle at 50% 20%, rgba(16,185,129,0.12) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(245,158,11,0.1) 0%, transparent 40%);
       pointer-events: none;
     }
     .modules-hero h1 {
@@ -76,11 +77,11 @@ $modules = $stmt->fetchAll();
     .hero-stat .num {
       font-size: 2rem;
       font-weight: 700;
-      color: #00d4ff;
+      color: #1e40af;
     }
     .hero-stat .lbl {
       font-size: 0.8rem;
-      color: #6c757d;
+      color: #6b7280;
       text-transform: uppercase;
       letter-spacing: 1px;
     }
@@ -94,9 +95,9 @@ $modules = $stmt->fetchAll();
       justify-content: center;
     }
     .filter-btn {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      color: #adb5bd;
+      background: rgba(255,255,255,0.8);
+      border: 1px solid #e5e7eb;
+      color: #6b7280;
       padding: 8px 20px;
       border-radius: 30px;
       font-size: 13px;
@@ -106,8 +107,8 @@ $modules = $stmt->fetchAll();
     }
     .filter-btn:hover,
     .filter-btn.active {
-      background: rgba(13,110,253,0.2);
-      border-color: #0d6efd;
+      background: #1e40af;
+      border-color: #1e40af;
       color: #fff;
     }
 
@@ -120,19 +121,42 @@ $modules = $stmt->fetchAll();
 
     /* ── Module card (passwords.html style) ── */
     .module-card {
-      background: rgba(18, 24, 38, 0.85);
-      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255, 255, 255, 0.95);
+      border: 2px solid transparent;
       border-radius: 18px;
       overflow: hidden;
       transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
       display: flex;
       flex-direction: column;
       position: relative;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
     .module-card:hover {
       transform: translateY(-8px);
-      border-color: var(--neon-cyan, #00d4ff);
-      box-shadow: 0 12px 40px rgba(0,212,255,0.18);
+      border-color: #1e40af;
+      box-shadow: 0 12px 40px rgba(30, 64, 175, 0.25);
+    }
+
+    /* Category-specific colors */
+    .module-card[data-category="Sécurité"] {
+      border-left: 4px solid #1e40af;
+      background: linear-gradient(135deg, rgba(30, 64, 175, 0.05) 0%, rgba(255, 255, 255, 0.95) 100%);
+    }
+    .module-card[data-category="Phishing"] {
+      border-left: 4px solid #dc2626;
+      background: linear-gradient(135deg, rgba(220, 38, 38, 0.05) 0%, rgba(255, 255, 255, 0.95) 100%);
+    }
+    .module-card[data-category="Ransomware"] {
+      border-left: 4px solid #d97706;
+      background: linear-gradient(135deg, rgba(217, 119, 6, 0.05) 0%, rgba(255, 255, 255, 0.95) 100%);
+    }
+    .module-card[data-category="Cloud"] {
+      border-left: 4px solid #059669;
+      background: linear-gradient(135deg, rgba(5, 150, 105, 0.05) 0%, rgba(255, 255, 255, 0.95) 100%);
+    }
+    .module-card[data-category="Mot de passe"] {
+      border-left: 4px solid #7c3aed;
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.05) 0%, rgba(255, 255, 255, 0.95) 100%);
     }
 
     .module-thumb {
@@ -161,9 +185,8 @@ $modules = $stmt->fetchAll();
 
     .module-tag {
       display: inline-block;
-      background: rgba(13,110,253,0.15);
-      color: #4d9aff;
-      border: 1px solid rgba(13,110,253,0.3);
+      color: #fff;
+      border: 1px solid transparent;
       padding: 4px 14px;
       border-radius: 20px;
       font-size: 11px;
@@ -173,9 +196,15 @@ $modules = $stmt->fetchAll();
       margin-bottom: 14px;
       align-self: flex-start;
     }
+    .module-tag[data-category="Sécurité"] { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+    .module-tag[data-category="Phishing"] { background: linear-gradient(135deg, #ef4444, #dc2626); }
+    .module-tag[data-category="Ransomware"] { background: linear-gradient(135deg, #f59e0b, #d97706); }
+    .module-tag[data-category="Cloud"] { background: linear-gradient(135deg, #10b981, #059669); }
+    .module-tag[data-category="Mot de passe"] { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+    .module-tag { background: linear-gradient(135deg, #6b7280, #4b5563); } /* default */
 
     .module-title {
-      color: #f1f5ff;
+      color: #1f2937;
       font-size: 1.25rem;
       font-weight: 700;
       margin-bottom: 10px;
@@ -183,7 +212,7 @@ $modules = $stmt->fetchAll();
     }
 
     .module-desc {
-      color: #8899aa;
+      color: #6b7280;
       font-size: 0.9rem;
       line-height: 1.65;
       flex: 1;
@@ -195,7 +224,7 @@ $modules = $stmt->fetchAll();
       align-items: center;
       gap: 18px;
       font-size: 0.82rem;
-      color: #00d4ff;
+      color: #1e40af;
       margin-bottom: 20px;
     }
     .module-meta i { font-size: 0.85rem; }
@@ -211,7 +240,7 @@ $modules = $stmt->fetchAll();
       align-items: center;
       justify-content: center;
       gap: 8px;
-      background: linear-gradient(135deg, #0d6efd, #00d4ff);
+      background: linear-gradient(135deg, #1e40af, #1e3a8a);
       color: #fff;
       text-decoration: none;
       border: none;
@@ -226,7 +255,7 @@ $modules = $stmt->fetchAll();
     .btn-access:hover {
       opacity: 0.88;
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(13,110,253,0.35);
+      box-shadow: 0 6px 20px rgba(30, 64, 175, 0.4);
       color: #fff;
     }
     .btn-access:disabled {
@@ -240,10 +269,10 @@ $modules = $stmt->fetchAll();
       align-items: center;
       justify-content: center;
       gap: 8px;
-      background: rgba(255,255,255,0.06);
-      color: #adb5bd;
+      background: rgba(16, 185, 129, 0.1);
+      color: #059669;
       text-decoration: none;
-      border: 1px solid rgba(255,255,255,0.12);
+      border: 1px solid #10b981;
       border-radius: 10px;
       padding: 10px 20px;
       font-weight: 500;
@@ -253,9 +282,9 @@ $modules = $stmt->fetchAll();
       width: 100%;
     }
     .btn-quiz:hover {
-      background: rgba(255,193,7,0.1);
-      border-color: #ffc107;
-      color: #ffc107;
+      background: rgba(16, 185, 129, 0.2);
+      border-color: #059669;
+      color: #047857;
     }
 
     /* ── Admin controls ── */
@@ -388,6 +417,92 @@ $modules = $stmt->fetchAll();
     @media (max-width: 640px) {
       .modules-grid { grid-template-columns: 1fr; }
     }
+
+    /* ── User Avatar & Dropdown ── */
+    .user-info {
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+
+    .user-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 2px solid #1e40af;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      object-fit: cover;
+    }
+
+    .user-avatar:hover {
+      border-color: #1e3a8a;
+      box-shadow: 0 0 20px rgba(30, 64, 175, 0.4);
+      transform: scale(1.05);
+    }
+
+    .user-dropdown {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      min-width: 180px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      z-index: 9999;
+    }
+
+    .user-dropdown.open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .user-dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      color: #374151;
+      text-decoration: none;
+      border-bottom: 1px solid #e5e7eb;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    .user-dropdown-item:hover {
+      background: #f3f4f6;
+      color: #1f2937;
+      transform: translateX(5px);
+    }
+
+    .user-dropdown-item:last-child {
+      border-bottom: none;
+    }
+
+    .user-dropdown-item i {
+      width: 16px;
+    }
+
+    /* Navbar adjustments for user info */
+    .nav-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    @media (max-width: 768px) {
+      .user-info {
+        margin-left: auto;
+      }
+    }
   </style>
 </head>
 <body>
@@ -395,7 +510,7 @@ $modules = $stmt->fetchAll();
 <!-- Navbar -->
 <nav class="navbar">
   <div class="nav-container">
-    <a class="nav-brand" href="index.html">
+    <a class="nav-brand" href="index.php">
       <i class="fas fa-shield-alt"></i>
       Sec<span>ura</span>
     </a>
@@ -403,16 +518,31 @@ $modules = $stmt->fetchAll();
       <i class="fas fa-bars"></i>
     </button>
     <ul class="nav-menu" id="navMenu">
-      <li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-home"></i> Accueil</a></li>
-      <li class="nav-item"><a class="nav-link" href="index.html#modules"><i class="fas fa-layer-group"></i> Modules</a></li>
+      <li class="nav-item"><a class="nav-link" href="index.php"><i class="fas fa-home"></i> Accueil</a></li>
+      <li class="nav-item"><a class="nav-link" href="index.php#modules"><i class="fas fa-layer-group"></i> Modules</a></li>
       <li class="nav-item"><a class="nav-link" href="index.html#about"><i class="fas fa-info-circle"></i> À propos</a></li>
       <?php if ($is_logged_in): ?>
-        <li class="nav-item"><a class="nav-link" href="admin_dashboard.php"><i class="fas fa-cog"></i> Admin</a></li>
-        <li class="nav-item"><a class="nav-link" href="login.php?action=logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></li>
+        <?php if ($user_role === 'admin'): ?>
+          <li class="nav-item"><a class="nav-link" href="admin_dashboard.php"><i class="fas fa-cog"></i> Admin</a></li>
+        <?php endif; ?>
       <?php else: ?>
         <li class="nav-item"><a class="nav-link" href="login.php"><i class="fas fa-sign-in-alt"></i> Connexion</a></li>
       <?php endif; ?>
     </ul>
+    <?php if ($is_logged_in): ?>
+      <div class="user-info">
+        <img src="<?php echo !empty($_SESSION['user_avatar']) ? htmlspecialchars($_SESSION['user_avatar']) : 'assets/images/default-avatar.svg'; ?>"
+             alt="Avatar" class="user-avatar" id="userAvatar">
+        <div class="user-dropdown" id="userDropdown">
+          <a href="profil.php" class="user-dropdown-item">
+            <i class="fas fa-user"></i> Mon Profil
+          </a>
+          <a href="login.php?action=logout" class="user-dropdown-item">
+            <i class="fas fa-sign-out-alt"></i> Déconnexion
+          </a>
+        </div>
+      </div>
+    <?php endif; ?>
   </div>
 </nav>
 
@@ -490,239 +620,6 @@ $modules = $stmt->fetchAll();
   </div>
 </footer>
 
-<script>
-(function () {
-  'use strict';
-
-  // ─── State ───────────────────────────────────────────────────────────────
-  const state = {
-    modules: [],
-    activeCategory: 'all',
-    pendingDeleteId: null,
-    isAdmin: <?php echo json_encode($user_role === 'admin'); ?>
-  };
-
-  // ─── DOM refs ─────────────────────────────────────────────────────────────
-  const grid       = document.getElementById('modulesGrid');
-  const filterBar  = document.getElementById('filterBar');
-  const deleteModal= document.getElementById('deleteModal');
-  const confirmBtn = document.getElementById('confirmDelete');
-  const cancelBtn  = document.getElementById('cancelDelete');
-
-  // ─── API helpers ─────────────────────────────────────────────────────────
-  function apiFetch(url, options = {}) {
-    return fetch(url, {
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      ...options
-    }).then(r => r.json());
-  }
-
-  function encodeBody(obj) {
-    return Object.entries(obj)
-      .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
-      .join('&');
-  }
-
-  // ─── Load modules ─────────────────────────────────────────────────────────
-  function loadModules() {
-    apiFetch('module.php?action=list')
-      .then(data => {
-        if (!data.success) throw new Error(data.error || 'Erreur serveur');
-        // JSON.stringify used for storage / transfer
-        sessionStorage.setItem('secura_modules', JSON.stringify(data.modules));
-        state.modules = data.modules;
-        buildFilterBar();
-        renderGrid(state.modules);
-        updateStats();
-      })
-      .catch(err => {
-        grid.innerHTML = `
-          <div class="empty-state">
-            <i class="fas fa-exclamation-triangle" style="color:#dc3545;"></i>
-            <h3 style="color:#dc3545;">Erreur de chargement</h3>
-            <p>${err.message}</p>
-          </div>`;
-      });
-  }
-
-  // ─── Stats ────────────────────────────────────────────────────────────────
-  function updateStats() {
-    const modules = state.modules;
-    const categories = new Set(modules.map(m => m.category)).size;
-    const duration   = modules.reduce((s, m) => s + parseInt(m.duration || 0), 0);
-    document.getElementById('totalCount').textContent    = modules.length;
-    document.getElementById('categoryCount').textContent = categories;
-    document.getElementById('totalDuration').textContent = duration;
-  }
-
-  // ─── Filter bar ───────────────────────────────────────────────────────────
-  function buildFilterBar() {
-    const categories = [...new Set(state.modules.map(m => m.category).filter(Boolean))];
-    const extra = categories.map(cat =>
-      `<button class="filter-btn" data-category="${escHtml(cat)}">${escHtml(cat)}</button>`
-    ).join('');
-    // Keep "Tous" button + append categories
-    const tous = filterBar.querySelector('[data-category="all"]');
-    tous.insertAdjacentHTML('afterend', extra);
-  }
-
-  // ─── Render grid ──────────────────────────────────────────────────────────
-  function renderGrid(modules) {
-    if (!modules.length) {
-      grid.innerHTML = `
-        <div class="empty-state">
-          <i class="fas fa-book-open"></i>
-          <h3>Aucun module disponible</h3>
-          <p>Les modules ajoutés par l'administrateur apparaîtront ici.</p>
-          ${state.isAdmin ? `<a href="admin_dashboard.php" class="btn-access" style="width:auto;display:inline-flex;margin-top:16px;"><i class="fas fa-plus"></i> Ajouter un module</a>` : ''}
-        </div>`;
-      return;
-    }
-
-    // Build HTML from JSON data – JSON.stringify used for data-attr embedding
-    grid.innerHTML = modules.map(m => buildCard(m)).join('');
-  }
-
-  function buildCard(m) {
-    const thumb = m.image
-      ? `<img class="module-thumb" src="${escHtml(m.image)}" alt="${escHtml(m.title)}" loading="lazy">`
-      : `<div class="module-thumb-placeholder"><i class="fas fa-book-open"></i></div>`;
-
-    const accessBtn = `<a href="module.php?id=${m.id}" class="btn-access"><i class="bi bi-play-circle-fill"></i> Accéder au module</a>`;
-
-    const quizBtn = parseInt(m.quiz_enabled)
-      ? `<a href="quiz.php?id=${m.id}" class="btn-quiz"><i class="fas fa-clipboard-check"></i> Faire le quiz</a>`
-      : '';
-
-    const adminRibbon = state.isAdmin ? `<span class="admin-ribbon">Admin</span>` : '';
-
-    // Embed full module data as JSON in data attribute (uses JSON.stringify)
-    const dataAttr = `data-module='${JSON.stringify(m).replace(/'/g, "&#39;")}'`;
-
-    const adminToolbar = state.isAdmin ? `
-      <div class="admin-toolbar">
-        <button class="btn-admin btn-admin-edit" data-action="edit" data-id="${m.id}">
-          <i class="fas fa-pen"></i> Modifier
-        </button>
-        <button class="btn-admin btn-admin-delete" data-action="delete" data-id="${m.id}">
-          <i class="fas fa-trash"></i> Supprimer
-        </button>
-      </div>` : '';
-
-    return `
-      <article class="module-card" data-id="${m.id}" data-category="${escHtml(m.category)}" ${dataAttr}>
-        ${adminRibbon}
-        ${thumb}
-        <div class="module-body">
-          <span class="module-tag"><i class="fas fa-tag me-1"></i>${escHtml(m.category)}</span>
-          <h3 class="module-title">${escHtml(m.title)}</h3>
-          <p class="module-desc">${escHtml(m.description || 'Aucune description fournie.')}</p>
-          <div class="module-meta">
-            <span><i class="fas fa-clock"></i> ${parseInt(m.duration) || 0} min</span>
-            ${parseInt(m.quiz_enabled) ? '<span><i class="fas fa-clipboard-check"></i> Quiz inclus</span>' : ''}
-          </div>
-          <div class="module-actions">
-            ${accessBtn}
-            ${quizBtn}
-          </div>
-        </div>
-        ${adminToolbar}
-      </article>`;
-  }
-
-  // ─── Filter ───────────────────────────────────────────────────────────────
-  function applyFilter(category) {
-    state.activeCategory = category;
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.category === category);
-    });
-    const filtered = category === 'all'
-      ? state.modules
-      : state.modules.filter(m => m.category === category);
-    renderGrid(filtered);
-  }
-
-  // ─── Event delegation – grid ──────────────────────────────────────────────
-  grid.addEventListener('click', function (e) {
-    const deleteBtn = e.target.closest('[data-action="delete"]');
-    const editBtn   = e.target.closest('[data-action="edit"]');
-
-    if (deleteBtn) {
-      e.preventDefault();
-      state.pendingDeleteId = deleteBtn.dataset.id;
-      deleteModal.classList.add('active');
-    }
-
-    if (editBtn) {
-      e.preventDefault();
-      const id = editBtn.dataset.id;
-      window.location.href = `admin_dashboard.php?edit=${id}`;
-    }
-  });
-
-  // ─── Event delegation – filter bar ────────────────────────────────────────
-  filterBar.addEventListener('click', function (e) {
-    const btn = e.target.closest('.filter-btn');
-    if (btn) applyFilter(btn.dataset.category);
-  });
-
-  // ─── Delete modal ─────────────────────────────────────────────────────────
-  confirmBtn.addEventListener('click', function () {
-    const id = state.pendingDeleteId;
-    if (!id) return;
-
-    apiFetch('module.php?action=delete', {
-      method: 'POST',
-      body: encodeBody({ id })
-    }).then(data => {
-      deleteModal.classList.remove('active');
-      state.pendingDeleteId = null;
-      if (data.success) {
-        showToast('Module supprimé avec succès', 'success');
-        loadModules();
-      } else {
-        showToast(data.error || 'Erreur lors de la suppression', 'error');
-      }
-    }).catch(() => {
-      deleteModal.classList.remove('active');
-      showToast('Erreur de connexion', 'error');
-    });
-  });
-
-  cancelBtn.addEventListener('click', function () {
-    deleteModal.classList.remove('active');
-    state.pendingDeleteId = null;
-  });
-
-  deleteModal.addEventListener('click', function (e) {
-    if (e.target === deleteModal) {
-      deleteModal.classList.remove('active');
-      state.pendingDeleteId = null;
-    }
-  });
-
-  // ─── Toast notification ───────────────────────────────────────────────────
-  function showToast(message, type = 'success') {
-    const el = document.createElement('div');
-    el.className = `toast-notification toast-${type}`;
-    el.textContent = message;
-    document.body.appendChild(el);
-    setTimeout(() => {
-      el.classList.add('toast-hide');
-      setTimeout(() => el.remove(), 400);
-    }, 3000);
-  }
-
-  // ─── XSS helper ───────────────────────────────────────────────────────────
-  function escHtml(str) {
-    const d = document.createElement('div');
-    d.textContent = String(str ?? '');
-    return d.innerHTML;
-  }
-
-  // ─── Bootstrap ────────────────────────────────────────────────────────────
-  loadModules();
-})();
-</script>
+<script src="assets/js/modules.js"></script>
 </body>
 </html>
