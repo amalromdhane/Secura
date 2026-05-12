@@ -6,11 +6,8 @@
 
 session_start();
 
-// Database configuration
-$db_host = '127.0.0.1';
-$db_name = 'secura_cyber';
-$db_user = 'root';
-$db_pass = '';
+// Include database configuration
+require_once 'config.php';
 
 // Handle logout
 if (isset($_GET['action']) && $_GET['action'] === 'logout') {
@@ -37,9 +34,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Veuillez remplir tous les champs.';
     } else {
         try {
-            // Connect to MySQL database
-            $pdo = new PDO("mysql:host=$db_host;dbname=$db_name;charset=utf8mb4", $db_user, $db_pass);
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            // Connect to MySQL database using config
+            $pdo = getDBConnection('secura');
             
             // Fetch user from database using email
             $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ? AND is_active = 1");
