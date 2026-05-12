@@ -7,7 +7,7 @@
 session_start();
 
 // Include database configuration
-require_once 'config.php';
+require_once 'includes/config.php';
 
 // Handle logout
 if (isset($_GET['action']) && $_GET['action'] === 'logout') {
@@ -50,6 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['user_role'] = $user['role'];
                 $_SESSION['user_email'] = $user['email'];
+                $_SESSION['user_avatar'] = $user['avatar'];
                 
                 // Redirect based on role
                 if ($user['role'] === 'admin') {
@@ -73,8 +74,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion - Secura</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/cyberaware.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/cyberaware.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         .auth-page {
@@ -92,10 +93,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             content: '';
             position: absolute;
             inset: 0;
-            background-image:
-                radial-gradient(circle at 10% 20%, rgba(13, 110, 253, 0.1) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(111, 66, 193, 0.1) 0%, transparent 20%),
-                radial-gradient(circle at 50% 50%, rgba(0, 212, 255, 0.05) 0%, transparent 30%);
+            background:
+                radial-gradient(circle at 25% 25%, rgba(100, 149, 237, 0.08) 0%, transparent 35%),
+                radial-gradient(circle at 75% 75%, rgba(138, 43, 226, 0.06) 0%, transparent 35%),
+                radial-gradient(circle at 50% 10%, rgba(65, 105, 225, 0.04) 0%, transparent 40%),
+                linear-gradient(135deg, rgba(10, 14, 23, 0.95), rgba(15, 23, 42, 0.98));
             pointer-events: none;
         }
 
@@ -108,51 +110,62 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         .shape {
             position: absolute;
-            background: rgba(13, 110, 253, 0.1);
-            border: 1px solid rgba(13, 110, 253, 0.2);
-            border-radius: 12px;
-            animation: float 8s ease-in-out infinite;
+            background: linear-gradient(135deg, rgba(100, 149, 237, 0.08), rgba(138, 43, 226, 0.06));
+            border: 1px solid rgba(100, 149, 237, 0.15);
+            border-radius: 50%;
+            animation: float 12s ease-in-out infinite;
+            backdrop-filter: blur(8px);
         }
 
         .shape:nth-child(1) {
-            width: 80px;
-            height: 80px;
-            top: 20%;
-            left: 10%;
+            width: 60px;
+            height: 60px;
+            top: 15%;
+            left: 8%;
+            animation-delay: 0s;
         }
 
         .shape:nth-child(2) {
-            width: 60px;
-            height: 60px;
-            top: 60%;
-            right: 15%;
-            animation-delay: 2s;
+            width: 45px;
+            height: 45px;
+            top: 65%;
+            right: 12%;
+            animation-delay: 3s;
         }
 
         .shape:nth-child(3) {
-            width: 100px;
-            height: 100px;
-            bottom: 20%;
-            left: 20%;
-            animation-delay: 4s;
+            width: 75px;
+            height: 75px;
+            bottom: 25%;
+            left: 18%;
+            animation-delay: 6s;
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(5deg); }
+            0%, 100% {
+                transform: translateY(0) rotate(0deg) scale(1);
+                opacity: 0.4;
+            }
+            50% {
+                transform: translateY(-15px) rotate(2deg) scale(1.05);
+                opacity: 0.7;
+            }
         }
 
         .auth-card {
-            background: rgba(18, 24, 36, 0.9);
-            border: 1px solid rgba(13, 110, 253, 0.3);
-            border-radius: 20px;
-            padding: 3rem;
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(100, 149, 237, 0.2);
+            border-radius: 24px;
+            padding: 3.5rem;
             width: 100%;
-            max-width: 440px;
+            max-width: 460px;
             position: relative;
             z-index: 2;
-            backdrop-filter: blur(20px);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(13, 110, 253, 0.1);
+            backdrop-filter: blur(25px);
+            box-shadow:
+                0 25px 80px rgba(0, 0, 0, 0.4),
+                0 0 60px rgba(100, 149, 237, 0.08),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
         }
 
         .auth-card::before {
@@ -161,8 +174,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             top: 0;
             left: 0;
             right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--cyber-primary), var(--cyber-accent), transparent);
+            height: 2px;
+            background: linear-gradient(90deg,
+                transparent 0%,
+                rgba(100, 149, 237, 0.6) 20%,
+                rgba(65, 105, 225, 0.8) 50%,
+                rgba(100, 149, 237, 0.6) 80%,
+                transparent 100%);
+            border-radius: 24px 24px 0 0;
         }
 
         .auth-header {
@@ -174,35 +193,59 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 80px;
-            height: 80px;
-            border-radius: 20px;
-            background: linear-gradient(135deg, rgba(13, 110, 253, 0.2), rgba(0, 212, 255, 0.1));
-            border: 2px solid rgba(13, 110, 253, 0.4);
-            margin-bottom: 1.5rem;
-            animation: pulse 2s infinite;
+            width: 90px;
+            height: 90px;
+            border-radius: 24px;
+            background: linear-gradient(135deg,
+                rgba(100, 149, 237, 0.15),
+                rgba(65, 105, 225, 0.12),
+                rgba(138, 43, 226, 0.08));
+            border: 2px solid rgba(100, 149, 237, 0.3);
+            margin-bottom: 2rem;
+            position: relative;
+            box-shadow: 0 8px 32px rgba(100, 149, 237, 0.2);
         }
 
-        @keyframes pulse {
-            0%, 100% { box-shadow: 0 0 20px rgba(13, 110, 253, 0.3); }
-            50% { box-shadow: 0 0 40px rgba(13, 110, 253, 0.6); }
+        .auth-logo::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 26px;
+            background: linear-gradient(135deg,
+                rgba(100, 149, 237, 0.4),
+                rgba(65, 105, 225, 0.3),
+                rgba(138, 43, 226, 0.2));
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+
+        .auth-card:hover .auth-logo::before {
+            opacity: 1;
         }
 
         .auth-logo i {
-            font-size: 2.5rem;
-            color: var(--cyber-accent);
+            font-size: 2.8rem;
+            color: #60a5fa;
+            filter: drop-shadow(0 2px 8px rgba(96, 165, 250, 0.3));
         }
 
         .auth-title {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
+            font-size: 2rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.025em;
         }
 
         .auth-subtitle {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
+            color: rgba(148, 163, 184, 0.8);
+            font-size: 1rem;
+            font-weight: 400;
+            letter-spacing: 0.025em;
         }
 
         .form-group {
@@ -224,22 +267,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         .form-input {
-            width: 100%;
-            padding: 1rem 1.25rem;
-            padding-left: 3rem;
-            background: rgba(10, 14, 23, 0.8);
-            border: 1px solid rgba(13, 110, 253, 0.3);
-            border-radius: 12px;
-            color: var(--text-primary);
+            width: 90%;
+            padding: 1.125rem 1.25rem;
+            padding-left: 3.25rem;
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(71, 85, 105, 0.3);
+            border-radius: 16px;
+            color: #f1f5f9;
             font-size: 1rem;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(8px);
         }
 
         .form-input:focus {
             outline: none;
-            border-color: var(--cyber-accent);
-            box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.15);
-            background: rgba(10, 14, 23, 0.95);
+            border-color: rgba(96, 165, 250, 0.6);
+            box-shadow:
+                0 0 0 3px rgba(96, 165, 250, 0.15),
+                0 8px 32px rgba(96, 165, 250, 0.1);
+            background: rgba(15, 23, 42, 0.9);
+            transform: translateY(-1px);
         }
 
         .form-input::placeholder {
@@ -248,27 +295,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         .input-icon {
             position: absolute;
-            left: 1rem;
+            left: 1.125rem;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--cyber-primary);
-            font-size: 1.1rem;
+            color: rgba(100, 149, 237, 0.8);
+            font-size: 1.125rem;
+            transition: color 0.3s ease;
+        }
+
+        .form-input-wrapper:focus-within .input-icon {
+            color: #60a5fa;
         }
 
         .btn-auth {
             width: 100%;
-            padding: 1rem 2rem;
-            background: linear-gradient(135deg, var(--cyber-primary), var(--cyber-secondary));
-            color: white;
+            padding: 1.125rem 2rem;
+            background: linear-gradient(135deg,
+                rgba(100, 149, 237, 0.9),
+                rgba(65, 105, 225, 0.9),
+                rgba(138, 43, 226, 0.8));
+            color: #ffffff;
             border: none;
-            border-radius: 12px;
+            border-radius: 16px;
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
-            margin-top: 0.5rem;
+            margin-top: 1rem;
+            box-shadow:
+                0 4px 20px rgba(100, 149, 237, 0.3),
+                0 2px 8px rgba(0, 0, 0, 0.2);
         }
 
         .btn-auth::before {
@@ -278,8 +336,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: 0.5s;
+            background: linear-gradient(90deg,
+                transparent,
+                rgba(255, 255, 255, 0.15),
+                transparent);
+            transition: left 0.6s ease;
         }
 
         .btn-auth:hover::before {
@@ -288,67 +349,116 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         .btn-auth:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(13, 110, 253, 0.4);
+            box-shadow:
+                0 12px 40px rgba(100, 149, 237, 0.4),
+                0 4px 16px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(135deg,
+                rgba(96, 165, 250, 1),
+                rgba(59, 130, 246, 1),
+                rgba(139, 92, 246, 0.9));
         }
 
         .btn-auth:active {
             transform: translateY(0);
+            transition: transform 0.1s ease;
         }
 
         .error-message {
-            background: rgba(255, 71, 87, 0.1);
-            border: 1px solid rgba(255, 71, 87, 0.3);
-            color: #ff6b6b;
-            padding: 1rem 1.25rem;
-            border-radius: 12px;
-            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg,
+                rgba(239, 68, 68, 0.1),
+                rgba(220, 38, 38, 0.08));
+            border: 1px solid rgba(239, 68, 68, 0.25);
+            color: #fca5a5;
+            padding: 1.125rem 1.375rem;
+            border-radius: 16px;
+            margin-bottom: 1.75rem;
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.875rem;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 16px rgba(239, 68, 68, 0.1);
         }
 
         .error-message i {
-            font-size: 1.2rem;
+            font-size: 1.25rem;
+            color: #ef4444;
         }
 
         .success-message {
-            background: rgba(32, 201, 151, 0.1);
-            border: 1px solid rgba(32, 201, 151, 0.3);
-            color: #51cf66;
-            padding: 1rem 1.25rem;
-            border-radius: 12px;
-            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg,
+                rgba(34, 197, 94, 0.1),
+                rgba(22, 163, 74, 0.08));
+            border: 1px solid rgba(34, 197, 94, 0.25);
+            color: #86efac;
+            padding: 1.125rem 1.375rem;
+            border-radius: 16px;
+            margin-bottom: 1.75rem;
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.875rem;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 16px rgba(34, 197, 94, 0.1);
         }
 
         .success-message i {
-            font-size: 1.2rem;
+            font-size: 1.25rem;
+            color: #22c55e;
         }
 
         .auth-footer {
             text-align: center;
-            margin-top: 2rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 2.5rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(71, 85, 105, 0.2);
+            position: relative;
+        }
+
+        .auth-footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 1px;
+            background: linear-gradient(90deg,
+                transparent,
+                rgba(100, 149, 237, 0.4),
+                transparent);
         }
 
         .auth-footer p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
+            color: rgba(148, 163, 184, 0.7);
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
         }
 
         .auth-footer a {
-            color: var(--cyber-accent);
+            color: #60a5fa;
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .auth-footer a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: linear-gradient(90deg, #60a5fa, #3b82f6);
+            transition: width 0.3s ease;
+        }
+
+        .auth-footer a:hover::after {
+            width: 100%;
         }
 
         .auth-footer a:hover {
-            color: #fff;
-            text-decoration: underline;
+            color: #3b82f6;
+            text-shadow: 0 0 8px rgba(96, 165, 250, 0.5);
         }
 
         .password-toggle {
@@ -356,34 +466,66 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             right: 1rem;
             top: 50%;
             transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: var(--text-secondary);
+            background: rgba(71, 85, 105, 0.2);
+            border: 1px solid rgba(71, 85, 105, 0.3);
+            border-radius: 8px;
+            color: rgba(148, 163, 184, 0.7);
             cursor: pointer;
-            font-size: 1rem;
-            padding: 0.25rem;
+            font-size: 0.875rem;
+            padding: 0.375rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
         }
 
         .password-toggle:hover {
-            color: var(--cyber-accent);
+            background: rgba(96, 165, 250, 0.2);
+            border-color: rgba(96, 165, 250, 0.4);
+            color: #60a5fa;
+            transform: translateY(-50%) scale(1.05);
         }
 
         @media (max-width: 576px) {
+            .auth-page {
+                padding: 1.5rem 1rem;
+            }
+
             .auth-card {
-                padding: 2rem 1.5rem;
+                padding: 2.5rem 1.75rem;
+                max-width: 400px;
+                border-radius: 20px;
             }
 
             .auth-title {
-                font-size: 1.5rem;
+                font-size: 1.75rem;
+            }
+
+            .auth-subtitle {
+                font-size: 0.95rem;
             }
 
             .auth-logo {
-                width: 70px;
-                height: 70px;
+                width: 80px;
+                height: 80px;
             }
 
             .auth-logo i {
-                font-size: 2rem;
+                font-size: 2.5rem;
+            }
+
+            .form-input {
+                padding: 1rem 1.125rem;
+                padding-left: 3rem;
+                font-size: 0.95rem;
+            }
+
+            .input-icon {
+                left: 1rem;
+                font-size: 1rem;
+            }
+
+            .btn-auth {
+                padding: 1rem 1.5rem;
+                font-size: 0.95rem;
             }
         }
     </style>

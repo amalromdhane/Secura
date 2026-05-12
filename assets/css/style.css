@@ -1,18 +1,38 @@
-    :root {
-      --cyber-primary: #0d6efd;
-      --cyber-secondary: #6f42c1;
-      --cyber-accent: #00d4ff;
-      --cyber-success: #20c997;
-      --cyber-warning: #ffc107;
-      --cyber-danger: #ff4757;
-      --cyber-dark: #0a0e17;
-      --cyber-card: #121826;
-      --cyber-border: rgba(13, 110, 253, 0.15);
-      --cyber-gradient: linear-gradient(135deg, #0d6efd 0%, #6f42c1 100%);
-      --cyber-glow: 0 0 20px rgba(13, 110, 253, 0.4);
-      --text-primary: #f8f9fa;
-      --text-secondary: #adb5bd;
-    }
+:root {
+  --cyber-primary: #0d6efd;
+  --cyber-secondary: #6f42c1;
+  --cyber-accent: #00d4ff;
+  --cyber-success: #20c997;
+  --cyber-warning: #ffc107;
+  --cyber-danger: #ff4757;
+  --cyber-dark: #0a0e17;
+  --cyber-card: #121826;
+  --cyber-border: rgba(13, 110, 253, 0.15);
+  --cyber-gradient: linear-gradient(135deg, #0d6efd 0%, #6f42c1 100%);
+  --cyber-glow: 0 0 20px rgba(13, 110, 253, 0.4);
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+
+  --neon-cyan: #00ffff;
+  --neon-magenta: #ff00ff;
+  --neon-blue: #00bfff;
+  --neon-purple: #9d00ff;
+  --dark-bg: #0a001a;
+  --darker-bg: #000a1a;
+  --card-bg: rgba(20, 25, 35, 0.7);
+  --glass-bg: rgba(30, 30, 50, 0.4);
+  --text-light: #f0f0f0;
+  --text-muted: #a0a0c0;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --danger: #ff5555;
+  --success: #55ff55;
+  --warning: #ffaa55;
+  --info: #55aaff;
+
+  --glow-cyan: 0 0 25px rgba(0, 255, 255, 0.6);
+  --glow-magenta: 0 0 25px rgba(255, 0, 255, 0.6);
+  --glow-blue: 0 0 25px rgba(0, 191, 255, 0.6);
+}
 
     *,
     *::before,
@@ -22,16 +42,13 @@
       padding: 0;
     }
 
-    body {
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      background: var(--cyber-dark);
-      color: var(--text-primary);
-      line-height: 1.6;
-      min-height: 100vh;
-      background-image:
-        radial-gradient(circle at 10% 20%, rgba(13, 110, 253, 0.05) 0%, transparent 20%),
-        radial-gradient(circle at 90% 80%, rgba(111, 66, 193, 0.05) 0%, transparent 20%);
-    }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, var(--dark-bg), #001a2a);
+  color: var(--text-light);
+  line-height: 1.6;
+  min-height: 100vh;
+}
 
     .container {
       width: 100%;
@@ -133,7 +150,7 @@
     }
 
     .text-muted {
-      color: var(--text-secondary);
+      color: var(--text-muted);
     }
 
     .d-flex {
@@ -167,7 +184,8 @@
   
     .display-5 {
       font-size: 2.5rem;
-      font-weight: 700;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
     }
 
     .display-6 {
@@ -176,10 +194,8 @@
     }
 
     .lead {
-      font-size: 1.125rem;
-      color: var(--text-secondary);
-      max-width: 800px;
-      margin: 0 auto 1.5rem;
+      font-size: 1.25rem;
+      margin-bottom: 1.5rem;
     }
 
    
@@ -214,13 +230,13 @@
 }
 
 .nav-brand i {
-  color: var(--cyber-accent);
+  color: var(--neon-cyan);
   margin-right: 0.5rem;
   font-size: 1.8rem;
 }
 
 .nav-brand span {
-  color: var(--cyber-accent);
+  color: var(--neon-cyan);
 }
 
 .brand-icon {
@@ -262,7 +278,7 @@
 
 .nav-link:hover {
   background: rgba(0, 255, 255, 0.1);
-  color: var(--cyber-accent);
+  color: var(--neon-cyan);
 }
 
 .nav-link i {
@@ -284,12 +300,18 @@
 
  
     .cyber-hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      padding: 8rem 0 4rem;
+      background: linear-gradient(135deg, #001a2a, var(--darker-bg));
+      padding: 9rem 0 6rem;
       position: relative;
-      overflow: hidden;
+      margin-top: 70px;
+    }
+
+    .cyber-hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(circle at center, rgba(0, 255, 255, 0.1), transparent 70%);
+      pointer-events: none;
     }
 
     .hero-content {
@@ -301,7 +323,7 @@
 
     .hero-subtitle {
       font-size: 1.2rem;
-      color: var(--cyber-accent);
+      color: var(--neon-cyan);
       text-transform: uppercase;
       letter-spacing: 3px;
       margin-bottom: 1rem;
@@ -309,14 +331,11 @@
     }
 
     .hero-title {
-      font-size: clamp(2.5rem, 5vw, 4.5rem);
-      font-weight: 800;
-      background: linear-gradient(135deg, #f8f9fa 0%, #00d4ff 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+      font-size: 3.5rem;
+      font-weight: 700;
       margin-bottom: 1.5rem;
-      animation: titleGlow 3s infinite;
+      color: var(--neon-cyan);
+      text-shadow: var(--glow-cyan);
     }
 
     @keyframes titleGlow {
@@ -340,7 +359,7 @@
 
     .hero-description {
       font-size: 1.2rem;
-      color: var(--text-secondary);
+      color: var(--text-muted);
       max-width: 600px;
       margin: 0 auto 3rem;
     }
@@ -410,19 +429,19 @@
 
    
     .cyber-card {
-      background: rgba(25, 28, 36, 0.8);
-      border: 1px solid rgba(13, 110, 253, 0.2);
-      border-radius: 16px;
-      padding: 1.5rem;
-      height: 100%;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
+      background: var(--glass-bg);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(0, 255, 255, 0.3);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      transition: all 0.4s ease;
+      padding: 2.5rem;
+      margin-bottom: 2.5rem;
     }
 
     .cyber-card:hover {
-      transform: translateY(-8px);
-      border-color: rgba(13, 110, 253, 0.5);
-      box-shadow: 0 10px 30px rgba(13, 110, 253, 0.2);
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 255, 255, 0.3);
     }
 
     .cyber-icon {
@@ -484,28 +503,15 @@
 
  
     .cyber-footer {
-      background: rgba(18, 24, 38, 0.9);
-      border-top: 1px solid rgba(13, 110, 253, 0.3);
-      padding: 3rem 0 2rem;
-      margin-top: 4rem;
-      position: relative;
-    }
-
-    .cyber-footer::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 1px;
-      background: var(--cyber-gradient);
+      padding: 3rem 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
   
     .form-label {
       display: block;
       margin-bottom: 0.5rem;
-      color: var(--text-primary);
+      color: var(--text-light);
       font-weight: 500;
       font-size: 0.95rem;
       text-transform: uppercase;
@@ -520,7 +526,7 @@
       background: rgba(18, 24, 38, 0.7);
       border: 1px solid rgba(13, 110, 253, 0.3);
       border-radius: 10px;
-      color: var(--text-primary);
+      color: var(--text-light);
       font-size: 1rem;
       transition: all 0.3s ease;
       backdrop-filter: blur(5px);
@@ -673,15 +679,16 @@
     }
 
     .contact-card {
-      background: rgba(25, 28, 36, 0.8);
-      border: 1px solid rgba(13, 110, 253, 0.2);
+      background: var(--glass-bg);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(0, 255, 255, 0.3);
       border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      transition: all 0.4s ease;
       padding: 2.5rem;
       height: 100%;
-      backdrop-filter: blur(15px);
       position: relative;
       overflow: hidden;
-      transition: all 0.3s ease;
     }
 
     .contact-card::before {
@@ -695,9 +702,8 @@
     }
 
     .contact-card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(13, 110, 253, 0.5);
-      box-shadow: 0 15px 40px rgba(13, 110, 253, 0.25);
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 255, 255, 0.3);
     }
 
     .contact-info-grid {
