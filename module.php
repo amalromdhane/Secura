@@ -11,7 +11,7 @@ switch ($action) {
         header('Content-Type: application/json');
         try {
             $pdo  = getDBConnection('cyber');
-            $stmt = $pdo->query("SELECT * FROM modules ORDER BY id DESC");
+            $stmt = $pdo->query("SELECT * FROM modules WHERE active = 1 ORDER BY id DESC");
             echo json_encode(['success' => true, 'modules' => $stmt->fetchAll(PDO::FETCH_ASSOC)]);
         } catch (PDOException $e) {
             echo json_encode(['success' => false, 'error' => $e->getMessage()]);

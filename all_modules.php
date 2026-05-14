@@ -28,26 +28,133 @@ $modules = $stmt->fetchAll();
   <title>Tous les Modules – Secura</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/cyberaware.css">
   <style>
+    :root {
+      --cyber-primary: #0d6efd;
+      --cyber-secondary: #6f42c1;
+      --cyber-accent: #00d4ff;
+      --cyber-success: #20c997;
+      --cyber-warning: #ffc107;
+      --cyber-danger: #ff4757;
+      --cyber-dark: #f8fafc;
+      --cyber-card: #ffffff;
+      --cyber-border: rgba(13, 110, 253, 0.2);
+      --cyber-gradient: linear-gradient(135deg, #0d6efd 0%, #6f42c1 100%);
+      --cyber-glow: 0 0 20px rgba(13, 110, 253, 0.4);
+      --text-primary: #333333;
+      --text-secondary: #666666;
+      --neon-cyan: #00d4ff;
+      --glow-cyan: 0 0 20px rgba(0, 212, 255, 0.4);
+    }
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%) !important;
+      color: var(--text-primary);
+      min-height: 100vh;
+      margin: 0;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.04) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(16, 185, 129, 0.03) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Navbar */
+    .navbar {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(25px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #1e293b;
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2.5rem;
+      border-radius: 20px;
+      position: relative;
+      z-index: 10;
+      transition: all 0.3s ease;
+    }
+    .navbar:hover {
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    }
+    .navbar::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(59, 130, 246, 0.3) 50%,
+        transparent 100%);
+    }
+    .navbar h1 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 0;
+      background: linear-gradient(135deg, #3b82f6, #334155);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.025em;
+    }
+
     /* ── Hero ── */
     .modules-hero {
-      background: linear-gradient(135deg, rgba(30,58,138,0.9) 0%, rgba(30,64,175,0.85) 25%, rgba(16,185,129,0.8) 50%, rgba(245,158,11,0.85) 75%, rgba(239,68,68,0.9) 100%);
-      padding: 90px 0 70px;
+      background: linear-gradient(135deg, rgba(30,58,138,0.95) 0%, rgba(30,64,175,0.9) 25%, rgba(16,185,129,0.85) 50%, rgba(245,158,11,0.9) 75%, rgba(239,68,68,0.95) 100%);
+      padding: 100px 0 80px;
       text-align: center;
       position: relative;
       overflow: hidden;
+      animation: fadeInUp 1s ease-out;
+    }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
     .modules-hero::before {
       content: '';
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(circle at 20% 50%, rgba(59,130,246,0.15) 0%, transparent 40%),
-        radial-gradient(circle at 50% 20%, rgba(16,185,129,0.12) 0%, transparent 40%),
-        radial-gradient(circle at 80% 70%, rgba(245,158,11,0.1) 0%, transparent 40%);
+        radial-gradient(circle at 20% 50%, rgba(59,130,246,0.2) 0%, transparent 50%),
+        radial-gradient(circle at 50% 20%, rgba(16,185,129,0.18) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(245,158,11,0.15) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(239,68,68,0.12) 0%, transparent 50%);
       pointer-events: none;
+      animation: float 6s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
     }
     .modules-hero h1 {
       font-size: clamp(2rem, 5vw, 3.2rem);
@@ -89,225 +196,288 @@ $modules = $stmt->fetchAll();
     /* ── Filter bar ── */
     .filter-bar {
       display: flex;
-      gap: 10px;
+      gap: 12px;
       flex-wrap: wrap;
-      margin-bottom: 36px;
+      margin-bottom: 40px;
       justify-content: center;
+      animation: fadeIn 0.8s ease-out 0.4s both;
     }
     .filter-btn {
-      background: rgba(255,255,255,0.8);
-      border: 1px solid #e5e7eb;
+      background: rgba(255,255,255,0.85);
+      border: 1px solid rgba(255,255,255,0.3);
       color: #6b7280;
-      padding: 8px 20px;
-      border-radius: 30px;
-      font-size: 13px;
+      padding: 10px 24px;
+      border-radius: 50px;
+      font-size: 14px;
       cursor: pointer;
-      transition: all 0.25s;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       font-weight: 500;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     }
-    .filter-btn:hover,
+    .filter-btn:hover {
+      background: rgba(30, 64, 175, 0.1);
+      border-color: #1e40af;
+      color: #1e40af;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(30, 64, 175, 0.2);
+    }
     .filter-btn.active {
-      background: #1e40af;
+      background: linear-gradient(135deg, #1e40af, #3b82f6);
       border-color: #1e40af;
       color: #fff;
+      box-shadow: 0 4px 20px rgba(30, 64, 175, 0.3);
     }
 
     /* ── Module grid ── */
     .modules-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 28px;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 32px;
+      animation: fadeIn 1s ease-out 0.5s both;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
-    /* ── Module card (passwords.html style) ── */
+    /* ── Module Card Modern & Elegant ── */
     .module-card {
-      background: rgba(255, 255, 255, 0.95);
-      border: 2px solid transparent;
-      border-radius: 18px;
+      background: white;
+      border-radius: 20px;
       overflow: hidden;
-      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       display: flex;
       flex-direction: column;
       position: relative;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    .module-card:hover {
-      transform: translateY(-8px);
-      border-color: #1e40af;
-      box-shadow: 0 12px 40px rgba(30, 64, 175, 0.25);
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
+      border: 1px solid rgba(203, 213, 225, 0.3);
     }
 
-    /* Category-specific colors */
-    .module-card[data-category="Sécurité"] {
-      border-left: 4px solid #1e40af;
-      background: linear-gradient(135deg, rgba(30, 64, 175, 0.05) 0%, rgba(255, 255, 255, 0.95) 100%);
+    .module-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.2);
+      border-color: rgba(59, 130, 246, 0.3);
     }
-    .module-card[data-category="Phishing"] {
-      border-left: 4px solid #dc2626;
-      background: linear-gradient(135deg, rgba(220, 38, 38, 0.05) 0%, rgba(255, 255, 255, 0.95) 100%);
-    }
-    .module-card[data-category="Ransomware"] {
-      border-left: 4px solid #d97706;
-      background: linear-gradient(135deg, rgba(217, 119, 6, 0.05) 0%, rgba(255, 255, 255, 0.95) 100%);
-    }
-    .module-card[data-category="Cloud"] {
-      border-left: 4px solid #059669;
-      background: linear-gradient(135deg, rgba(5, 150, 105, 0.05) 0%, rgba(255, 255, 255, 0.95) 100%);
-    }
-    .module-card[data-category="Mot de passe"] {
-      border-left: 4px solid #7c3aed;
-      background: linear-gradient(135deg, rgba(124, 58, 237, 0.05) 0%, rgba(255, 255, 255, 0.95) 100%);
+
+    /* Card Image Container */
+    .card-image-container {
+      position: relative;
+      height: 220px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     }
 
     .module-thumb {
       width: 100%;
-      height: 190px;
+      height: 100%;
       object-fit: cover;
-      display: block;
+      transition: transform 0.5s ease;
     }
+
+    .module-card:hover .module-thumb {
+      transform: scale(1.08);
+    }
+
     .module-thumb-placeholder {
       width: 100%;
-      height: 190px;
-      background: linear-gradient(135deg, #0d6efd22, #00d4ff11);
+      height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: rgba(255,255,255,0.15);
-      font-size: 3.5rem;
+      font-size: 4rem;
+      color: rgba(255, 255, 255, 0.4);
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     }
 
+    /* Category Badge on Image */
+    .category-badge {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: white;
+      backdrop-filter: blur(8px);
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 2;
+      transition: all 0.3s ease;
+    }
+
+    .module-card:hover .category-badge {
+      background: rgba(0, 0, 0, 0.8);
+      transform: scale(1.05);
+    }
+
+    /* Overlay gradient on image */
+    .card-image-container::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: linear-gradient(to top, rgba(0,0,0,0.3), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .module-card:hover .card-image-container::after {
+      opacity: 1;
+    }
+
+    /* Card Body */
     .module-body {
       padding: 24px;
       flex: 1;
       display: flex;
       flex-direction: column;
+      background: white;
     }
 
-    .module-tag {
-      display: inline-block;
-      color: #fff;
-      border: 1px solid transparent;
-      padding: 4px 14px;
-      border-radius: 20px;
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      margin-bottom: 14px;
-      align-self: flex-start;
-    }
-    .module-tag[data-category="Sécurité"] { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
-    .module-tag[data-category="Phishing"] { background: linear-gradient(135deg, #ef4444, #dc2626); }
-    .module-tag[data-category="Ransomware"] { background: linear-gradient(135deg, #f59e0b, #d97706); }
-    .module-tag[data-category="Cloud"] { background: linear-gradient(135deg, #10b981, #059669); }
-    .module-tag[data-category="Mot de passe"] { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
-    .module-tag { background: linear-gradient(135deg, #6b7280, #4b5563); } /* default */
-
-    .module-title {
-      color: #1f2937;
-      font-size: 1.25rem;
-      font-weight: 700;
-      margin-bottom: 10px;
-      line-height: 1.35;
-    }
-
-    .module-desc {
-      color: #6b7280;
-      font-size: 0.9rem;
-      line-height: 1.65;
-      flex: 1;
-      margin-bottom: 18px;
-    }
-
+    /* Difficulty/Length indicator */
     .module-meta {
       display: flex;
       align-items: center;
-      gap: 18px;
-      font-size: 0.82rem;
-      color: #1e40af;
-      margin-bottom: 20px;
+      gap: 16px;
+      margin-bottom: 16px;
     }
-    .module-meta i { font-size: 0.85rem; }
 
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 10px;
+      background: #f1f5f9;
+      border-radius: 20px;
+      color: #475569;
+    }
+
+    .meta-item i {
+      font-size: 11px;
+      color: #3b82f6;
+    }
+
+    .module-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 12px;
+      line-height: 1.4;
+      transition: color 0.3s ease;
+    }
+
+    .module-card:hover .module-title {
+      color: #2563eb;
+    }
+
+    .module-desc {
+      color: #64748b;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* Module Actions */
     .module-actions {
       display: flex;
-      gap: 10px;
-      flex-direction: column;
+      gap: 12px;
+      margin-top: auto;
+    }
+
+    .btn-access, .btn-quiz {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      border: none;
+      font-family: 'Inter', sans-serif;
     }
 
     .btn-access {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
       background: linear-gradient(135deg, #1e40af, #1e3a8a);
-      color: #fff;
-      text-decoration: none;
-      border: none;
-      border-radius: 10px;
-      padding: 12px 20px;
-      font-weight: 600;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: all 0.25s;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-access::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
       width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s ease;
     }
+
+    .btn-access:hover::before {
+      left: 100%;
+    }
+
     .btn-access:hover {
-      opacity: 0.88;
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(30, 64, 175, 0.4);
-      color: #fff;
-    }
-    .btn-access:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-      transform: none;
+      box-shadow: 0 8px 20px rgba(30, 64, 175, 0.35);
     }
 
     .btn-quiz {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      background: rgba(16, 185, 129, 0.1);
+      background: #f8fafc;
       color: #059669;
-      text-decoration: none;
-      border: 1px solid #10b981;
-      border-radius: 10px;
-      padding: 10px 20px;
-      font-weight: 500;
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: all 0.25s;
-      width: 100%;
-    }
-    .btn-quiz:hover {
-      background: rgba(16, 185, 129, 0.2);
-      border-color: #059669;
-      color: #047857;
+      border: 1px solid #d1fae5;
     }
 
-    /* ── Admin controls ── */
+    .btn-quiz:hover {
+      background: #ecfdf5;
+      border-color: #10b981;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+    }
+
+    /* Admin Ribbon */
     .admin-ribbon {
       position: absolute;
-      top: 12px;
-      right: 12px;
-      background: #28a745;
-      color: #fff;
-      padding: 4px 10px;
-      border-radius: 12px;
+      top: 16px;
+      left: 16px;
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 20px;
       font-size: 10px;
       font-weight: 700;
-      letter-spacing: 0.5px;
       text-transform: uppercase;
+      letter-spacing: 0.5px;
+      z-index: 2;
+      backdrop-filter: blur(4px);
     }
+
+    /* Admin Toolbar */
     .admin-toolbar {
       display: flex;
       gap: 8px;
-      padding: 14px 24px;
-      border-top: 1px solid rgba(255,255,255,0.06);
-      background: rgba(0,0,0,0.15);
+      padding: 12px 24px;
+      border-top: 1px solid #e2e8f0;
+      background: #fafcff;
     }
+
     .btn-admin {
       flex: 1;
       display: flex;
@@ -315,27 +485,36 @@ $modules = $stmt->fetchAll();
       justify-content: center;
       gap: 6px;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       padding: 8px 12px;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.2s ease;
+      font-family: 'Inter', sans-serif;
     }
-    .btn-admin-edit {
-      background: rgba(255,193,7,0.12);
-      color: #ffc107;
-      border: 1px solid rgba(255,193,7,0.25);
-    }
-    .btn-admin-edit:hover { background: rgba(255,193,7,0.22); }
-    .btn-admin-delete {
-      background: rgba(220,53,69,0.12);
-      color: #dc3545;
-      border: 1px solid rgba(220,53,69,0.25);
-    }
-    .btn-admin-delete:hover { background: rgba(220,53,69,0.22); }
 
-    /* ── Empty state ── */
+    .btn-admin-edit {
+      background: #fef3c7;
+      color: #d97706;
+    }
+
+    .btn-admin-edit:hover {
+      background: #fde68a;
+      transform: translateY(-1px);
+    }
+
+    .btn-admin-delete {
+      background: #fee2e2;
+      color: #dc2626;
+    }
+
+    .btn-admin-delete:hover {
+      background: #fecaca;
+      transform: translateY(-1px);
+    }
+
+    /* Empty State */
     .empty-state {
       grid-column: 1 / -1;
       text-align: center;
@@ -344,7 +523,7 @@ $modules = $stmt->fetchAll();
     }
     .empty-state i { font-size: 4rem; margin-bottom: 20px; display: block; }
 
-    /* ── Notification toast ── */
+    /* Toast Notification */
     .toast-notification {
       position: fixed;
       bottom: 30px;
@@ -366,7 +545,7 @@ $modules = $stmt->fetchAll();
     .toast-notification.toast-error { border-color: rgba(220,53,69,0.5); }
     .toast-notification.toast-hide { opacity: 0; transform: translateY(20px); }
 
-    /* ── Delete confirm modal ── */
+    /* Delete Modal */
     .modal-overlay {
       display: none;
       position: fixed;
@@ -413,12 +592,12 @@ $modules = $stmt->fetchAll();
     }
     .btn-modal-confirm:hover { background: #b02a37; }
 
-    /* ── Responsive ── */
+    /* Responsive */
     @media (max-width: 640px) {
       .modules-grid { grid-template-columns: 1fr; }
     }
 
-    /* ── User Avatar & Dropdown ── */
+    /* User Avatar & Dropdown */
     .user-info {
       display: flex;
       align-items: center;
@@ -490,7 +669,6 @@ $modules = $stmt->fetchAll();
       width: 16px;
     }
 
-    /* Navbar adjustments for user info */
     .nav-container {
       display: flex;
       align-items: center;
@@ -503,33 +681,120 @@ $modules = $stmt->fetchAll();
         margin-left: auto;
       }
     }
+
+    /* Sidebar (unchanged) */
+    .sidebar {
+      width: 250px;
+      background: var(--cyber-card);
+      background-image: linear-gradient(135deg, rgba(30,58,138,0.3) 0%, rgba(30,64,175,0.25) 25%, rgba(16,185,129,0.2) 50%, rgba(245,158,11,0.25) 75%, rgba(239,68,68,0.3) 100%);
+      border-right: 1px solid rgba(0, 0, 0, 0.1);
+      height: 100vh;
+      position: fixed;
+      left: 0;
+      top: 0;
+      padding: 20px;
+      box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
+      z-index: 100;
+    }
+    .sidebar-header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    .sidebar-header h2 {
+      color: var(--text-primary);
+      font-size: 18px;
+      margin: 0;
+    }
+    .sidebar-menu {
+      list-style: none;
+      padding: 0;
+    }
+    .sidebar-menu li {
+      margin-bottom: 10px;
+    }
+    .sidebar-menu a {
+      display: flex;
+      align-items: center;
+      padding: 12px 15px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+    .sidebar-menu a:hover, .sidebar-menu a.active {
+      background: rgba(0, 0, 0, 0.1);
+      color: var(--text-primary);
+      border-left: 3px solid var(--cyber-primary);
+    }
+    .sidebar-menu a i {
+      margin-right: 10px;
+      width: 20px;
+      text-align: center;
+    }
+
+    /* Main content */
+    .main-content {
+      margin-left: 250px;
+      flex: 1;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    /* Search bar */
+    .search-bar {
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: center;
+      animation: fadeIn 0.8s ease-out 0.3s both;
+    }
+    .search-bar .form-input {
+      max-width: 450px;
+      width: 100%;
+      padding: 16px 24px;
+      border: 2px solid rgba(203, 213, 225, 0.5);
+      border-radius: 50px;
+      font-size: 16px;
+      background: rgba(255, 255, 255, 0.95);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+      font-family: 'Inter', sans-serif;
+    }
+    .search-bar .form-input:focus {
+      outline: none;
+      border-color: #1e40af;
+      box-shadow: 0 0 0 4px rgba(30, 64, 175, 0.1), 0 8px 30px rgba(0, 0, 0, 0.08);
+      background: rgba(255, 255, 255, 1);
+    }
+    .search-bar .form-input::placeholder {
+      color: #9ca3af;
+      font-weight: 400;
+    }
   </style>
 </head>
 <body>
 
-<!-- Navbar -->
-<nav class="navbar">
-  <div class="nav-container">
-    <a class="nav-brand" href="index.php">
-      <i class="fas fa-shield-alt"></i>
-      Sec<span>ura</span>
-    </a>
-    <button class="nav-toggler" id="navToggler">
-      <i class="fas fa-bars"></i>
-    </button>
-    <ul class="nav-menu" id="navMenu">
-      <li class="nav-item"><a class="nav-link" href="index.php"><i class="fas fa-home"></i> Accueil</a></li>
-      <li class="nav-item"><a class="nav-link" href="index.php#modules"><i class="fas fa-layer-group"></i> Modules</a></li>
-      <li class="nav-item"><a class="nav-link" href="index.html#about"><i class="fas fa-info-circle"></i> À propos</a></li>
-      <?php if ($is_logged_in): ?>
-        <?php if ($user_role === 'admin'): ?>
-          <li class="nav-item"><a class="nav-link" href="admin_dashboard.php"><i class="fas fa-cog"></i> Admin</a></li>
-        <?php endif; ?>
-      <?php else: ?>
-        <li class="nav-item"><a class="nav-link" href="login.php"><i class="fas fa-sign-in-alt"></i> Connexion</a></li>
-      <?php endif; ?>
+  <!-- Sidebar (unchanged) -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h2>🔐 Secura</h2>
+    </div>
+    <ul class="sidebar-menu">
+      <li><a href="admin_dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+      <li><a href="all_modules.php" class="active"><i class="fas fa-layer-group"></i> Modules</a></li>
+      <li><a href="profil.php"><i class="fas fa-cog"></i> Paramètres</a></li>
+      <li><a href="admin_users.php"><i class="fas fa-users"></i> Utilisateurs</a></li>
     </ul>
-    <?php if ($is_logged_in): ?>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="main-content">
+
+    <!-- Navbar -->
+    <nav class="navbar">
+      <h1><i class="fas fa-graduation-cap"></i> Catalogue de Formation</h1>
       <div class="user-info">
         <img src="<?php echo !empty($_SESSION['user_avatar']) ? htmlspecialchars($_SESSION['user_avatar']) : 'assets/images/default-avatar.svg'; ?>"
              alt="Avatar" class="user-avatar" id="userAvatar">
@@ -537,89 +802,79 @@ $modules = $stmt->fetchAll();
           <a href="profil.php" class="user-dropdown-item">
             <i class="fas fa-user"></i> Mon Profil
           </a>
+          <?php if ($user_role === 'admin'): ?>
+          <a href="admin_dashboard.php" class="user-dropdown-item">
+            <i class="fas fa-tachometer-alt"></i> Dashboard
+          </a>
+          <a href="admin_users.php" class="user-dropdown-item">
+            <i class="fas fa-users"></i> Gestion Utilisateurs
+          </a>
+          <?php endif; ?>
           <a href="login.php?action=logout" class="user-dropdown-item">
             <i class="fas fa-sign-out-alt"></i> Déconnexion
           </a>
         </div>
       </div>
-    <?php endif; ?>
-  </div>
-</nav>
+    </nav>
 
-<!-- Hero -->
-<section class="modules-hero">
-  <div class="container">
-    <h1><i class="fas fa-graduation-cap"></i> Catalogue de Formation</h1>
-    <p>Explorez notre bibliothèque complète de modules de cybersécurité. Des contenus pratiques, interactifs et constamment mis à jour.</p>
-    <div class="hero-stats">
-      <div class="hero-stat">
-        <div class="num" id="totalCount">–</div>
-        <div class="lbl">Modules</div>
+    <!-- Content -->
+    <div class="container" style="padding: 50px 20px 80px;">
+
+      <!-- Search bar -->
+      <div class="search-bar" style="margin-bottom: 20px; display: flex; justify-content: center;">
+        <input type="text" id="moduleSearch" placeholder="🔍 Rechercher un module par titre, description ou catégorie..." class="form-input" style="max-width: 500px; width: 100%; padding: 14px 20px; border: 2px solid #e2e8f0; border-radius: 40px; font-size: 15px; transition: all 0.3s;">
       </div>
-      <div class="hero-stat">
-        <div class="num" id="categoryCount">–</div>
-        <div class="lbl">Catégories</div>
+
+      <!-- Filter bar -->
+      <div class="filter-bar" id="filterBar">
+        <button class="filter-btn active" data-category="all">Tous</button>
+        <!-- categories injected by JS -->
       </div>
-      <div class="hero-stat">
-        <div class="num" id="totalDuration">–</div>
-        <div class="lbl">Minutes de contenu</div>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- Content -->
-<div class="container" style="padding: 50px 20px 80px;">
-
-  <!-- Filter bar -->
-  <div class="filter-bar" id="filterBar">
-    <button class="filter-btn active" data-category="all">Tous</button>
-    <!-- categories injected by JS -->
-  </div>
-
-  <!-- Modules grid -->
-  <div class="modules-grid" id="modulesGrid">
-    <div class="empty-state">
-      <i class="fas fa-spinner fa-spin"></i>
-      <p>Chargement des modules…</p>
-    </div>
-  </div>
-</div>
-
-<!-- Delete confirmation modal -->
-<div class="modal-overlay" id="deleteModal">
-  <div class="modal-box">
-    <h3><i class="fas fa-trash-alt me-2"></i>Supprimer le module</h3>
-    <p>Cette action est irréversible. Êtes-vous sûr de vouloir supprimer ce module ?</p>
-    <div class="modal-btns">
-      <button class="btn-modal-cancel" id="cancelDelete">Annuler</button>
-      <button class="btn-modal-confirm" id="confirmDelete">Supprimer</button>
-    </div>
-  </div>
-</div>
-
-<!-- Footer -->
-<footer class="cyber-footer">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8" style="margin:0 auto;">
-        <div class="d-flex justify-content-center mb-4" style="gap:1.5rem;">
-          <div style="width:50px;height:50px;background:rgba(13,110,253,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;">
-            <i class="bi bi-shield-lock" style="font-size:1.8rem;color:var(--cyber-primary);"></i>
-          </div>
-          <div style="width:50px;height:50px;background:rgba(32,201,151,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;">
-            <i class="bi bi-lock" style="font-size:1.8rem;color:var(--cyber-success);"></i>
-          </div>
+      <!-- Modules grid -->
+      <div class="modules-grid" id="modulesGrid">
+        <div class="empty-state">
+          <i class="fas fa-spinner fa-spin"></i>
+          <p>Chargement des modules…</p>
         </div>
-        <h3 class="text-center mb-3"><span style="color:var(--cyber-accent);">Secura</span></h3>
-        <p class="text-center text-muted mb-4">Plateforme de sensibilisation à la cybersécurité</p>
-        <hr style="opacity:0.25;margin:2rem 0;">
-        <p class="text-center text-muted small mb-0">© 2026 Secura – Plateforme de Sensibilisation à la Cybersécurité</p>
       </div>
     </div>
-  </div>
-</footer>
 
-<script src="assets/js/modules.js"></script>
+    <!-- Delete confirmation modal -->
+    <div class="modal-overlay" id="deleteModal">
+      <div class="modal-box">
+        <h3><i class="fas fa-trash-alt me-2"></i> Supprimer le module</h3>
+        <p>Cette action est irréversible. Êtes-vous sûr de vouloir supprimer ce module ?</p>
+        <div class="modal-btns">
+          <button class="btn-modal-cancel" id="cancelDelete">Annuler</button>
+          <button class="btn-modal-confirm" id="confirmDelete">Supprimer</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+  window.isAdmin = <?php echo json_encode($user_role === 'admin'); ?>;
+  window.modulesData = <?php echo json_encode($modules); ?>;
+  </script>
+  <script src="assets/js/modules.js"></script>
+  
+  <script>
+  // User dropdown toggle
+  const userAvatar = document.getElementById('userAvatar');
+  const userDropdown = document.getElementById('userDropdown');
+
+  if (userAvatar && userDropdown) {
+    userAvatar.addEventListener('click', (e) => {
+      e.stopPropagation();
+      userDropdown.classList.toggle('open');
+    });
+
+    document.addEventListener('click', () => {
+      userDropdown.classList.remove('open');
+    });
+  }
+  </script>
 </body>
 </html>

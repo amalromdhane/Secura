@@ -5,13 +5,15 @@
   const state = {
     modules: [],
     activeCategory: 'all',
+    searchQuery: '',
     pendingDeleteId: null,
-    isAdmin: <?php echo json_encode($user_role === 'admin'); ?>
+    isAdmin: window.isAdmin
   };
 
   // ─── DOM refs ─────────────────────────────────────────────────────────────
   const grid       = document.getElementById('modulesGrid');
   const filterBar  = document.getElementById('filterBar');
+  const searchInput= document.getElementById('moduleSearch');
   const deleteModal= document.getElementById('deleteModal');
   const confirmBtn = document.getElementById('confirmDelete');
   const cancelBtn  = document.getElementById('cancelDelete');
@@ -39,7 +41,7 @@
         sessionStorage.setItem('secura_modules', JSON.stringify(data.modules));
         state.modules = data.modules;
         buildFilterBar();
-        renderGrid(state.modules);
+        renderFilteredGrid();
         updateStats();
       })
       .catch(err => {
@@ -53,25 +55,36 @@
   }
 
   // ─── Stats ────────────────────────────────────────────────────────────────
-  function updateStats() {
-    const modules = state.modules;
-    const categories = new Set(modules.map(m => m.category)).size;
-    const duration   = modules.reduce((s, m) => s + parseInt(m.duration || 0), 0);
-    document.getElementById('totalCount').textContent    = modules.length;
-    document.getElementById('categoryCount').textContent = categories;
-    document.getElementById('totalDuration').textContent = duration;
-  }
+function updateStats() {
+  const modules = state.modules;
+  const categories = new Set(modules.map(m => m.category)).size;
+  const duration = modules.reduce((s, m) => s + parseInt(m.duration || 0), 0);
+
+  document.getElementById('totalCount')?.textContent = modules.length;
+  document.getElementById('categoryCount')?.textContent = categories;
+  document.getElementById('totalDuration')?.textContent = duration;
+}
 
   // ─── Filter bar ───────────────────────────────────────────────────────────
-  function buildFilterBar() {
-    const categories = [...new Set(state.modules.map(m => m.category).filter(Boolean))];
-    const extra = categories.map(cat =>
-      `<button class="filter-btn" data-category="${escHtml(cat)}">${escHtml(cat)}</button>`
-    ).join('');
-    // Keep "Tous" button + append categories
-    const tous = filterBar.querySelector('[data-category="all"]');
-    tous.insertAdjacentHTML('afterend', extra);
-  }
+ function buildFilterBar() {
+  if (!filterBar) return;
+
+  const tous = filterBar.querySelector('[data-category="all"]');
+
+  if (!tous) return;
+
+  const categories = [
+    ...new Set(state.modules.map(m => m.category).filter(Boolean))
+  ];
+
+  const extra = categories.map(cat =>
+    `<button class="filter-btn" data-category="${escHtml(cat)}">
+      ${escHtml(cat)}
+    </button>`
+  ).join('');
+
+  tous.insertAdjacentHTML('afterend', extra);
+}
 
   // ─── Render grid ──────────────────────────────────────────────────────────
   function renderGrid(modules) {
@@ -137,15 +150,36 @@
       </article>`;
   }
 
-  // ─── Filter ───────────────────────────────────────────────────────────────
+  // ─── Filter and Search ────────────────────────────────────────────────────
   function applyFilter(category) {
     state.activeCategory = category;
     document.querySelectorAll('.filter-btn').forEach(btn => {
       btn.classList.toggle('active', btn.dataset.category === category);
     });
-    const filtered = category === 'all'
-      ? state.modules
-      : state.modules.filter(m => m.category === category);
+    renderFilteredGrid();
+  }
+
+  function applySearch(query) {
+    state.searchQuery = query.toLowerCase();
+    renderFilteredGrid();
+  }
+
+  function renderFilteredGrid() {
+    let filtered = state.modules;
+
+    // Apply category filter
+    if (state.activeCategory !== 'all') {
+      filtered = filtered.filter(m => m.category === state.activeCategory);
+    }
+
+    // Apply search filter
+    if (state.searchQuery) {
+      filtered = filtered.filter(m =>
+        m.title.toLowerCase().includes(state.searchQuery) ||
+        (m.description && m.description.toLowerCase().includes(state.searchQuery))
+      );
+    }
+
     renderGrid(filtered);
   }
 
@@ -172,6 +206,13 @@
     const btn = e.target.closest('.filter-btn');
     if (btn) applyFilter(btn.dataset.category);
   });
+
+  // ─── Search input ──────────────────────────────────────────────────────────
+  if (searchInput) {
+    searchInput.addEventListener('input', function () {
+      applySearch(this.value);
+    });
+  }
 
   // ─── Delete modal ─────────────────────────────────────────────────────────
   confirmBtn.addEventListener('click', function () {
