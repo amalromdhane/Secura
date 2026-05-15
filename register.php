@@ -13,7 +13,7 @@ if (isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] === true) 
 }
 
 // Include database configuration
-require_once 'includes/config.php';
+require_once 'config/database.php';
 
 $error = '';
 $success = '';

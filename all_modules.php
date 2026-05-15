@@ -14,7 +14,7 @@ if (!isset($_SESSION['user_logged_in']) || $_SESSION['user_logged_in'] !== true)
     $user_role = $_SESSION['user_role'] ?? '';
 }
 
-require_once 'includes/config.php';
+require_once 'config/database.php';
 
 $pdo = getDBConnection('cyber');
 $stmt = $pdo->query("SELECT id, title, description, category, duration, image, page, quiz_page, video_url, active FROM modules WHERE active = 1 ORDER BY id DESC");

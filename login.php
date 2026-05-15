@@ -7,7 +7,7 @@
 session_start();
 
 // Include database configuration
-require_once 'includes/config.php';
+require_once 'config/database.php';
 
 // Handle logout
 if (isset($_GET['action']) && $_GET['action'] === 'logout') {

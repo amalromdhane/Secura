@@ -3,7 +3,7 @@ session_start();
 if (!isset($_SESSION['user_logged_in']) || $_SESSION['user_role'] !== 'admin') {
     header('Location: login.php'); exit();
 }
-require_once 'includes/config.php';
+require_once 'config/database.php';
 
 $module_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 if ($module_id <= 0) { header('Location: admin_dashboard.php'); exit(); }
