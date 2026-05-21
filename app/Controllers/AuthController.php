@@ -1,0 +1,74 @@
+<?php
+require_once __DIR__ . '/../Models/User.php';
+require_once __DIR__ . '/../Core/Session.php';
+
+use App\Core\Session;
+
+class AuthController {
+    private $userModel;
+
+    public function __construct() {
+        $pdo = getDBConnection();
+        $this->userModel = new \App\Models\User($pdo);
+    }
+
+    public function login($email, $password) {
+        $user = $this->userModel->authenticate($email, $password);
+        if ($user) {
+            Session::put('user_logged_in', true);
+            Session::put('user_id',       $user['id']);
+            Session::put('user_email',    $user['email']);
+            Session::put('user_role',     $user['role']);
+            Session::put('user_avatar',   $user['avatar'] ?? '');
+            return true;
+        }
+        return false;
+    }
+
+    public function register($email, $password, $role = 'user') {
+        return $this->userModel->register($email, $password, $role);
+    }
+
+    public function logout() {
+        Session::destroy();
+    }
+
+    public function isLoggedIn(): bool {
+        return Session::get('user_logged_in', false);
+    }
+
+    public function isAdmin(): bool {
+        return $this->isLoggedIn() && Session::get('user_role', '') === 'admin';
+    }
+}
+
+    public function login($email, $password) {
+        $user = $this->userModel->authenticate($email, $password);
+        if ($user) {
+            $_SESSION['user_logged_in'] = true;
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['user_email'] = $user['email'];
+            $_SESSION['user_role'] = $user['role'];
+            $_SESSION['user_avatar'] = $user['avatar'];
+            return true;
+        }
+        return false;
+    }
+
+    public function register($email, $password, $role = 'user') {
+        return $this->userModel->register($email, $password, $role);
+    }
+
+    public function logout() {
+        session_destroy();
+    }
+
+    public function isLoggedIn() {
+        return isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'];
+    }
+
+    public function isAdmin() {
+        return $this->isLoggedIn() && $_SESSION['user_role'] === 'admin';
+    }
+}
+?>

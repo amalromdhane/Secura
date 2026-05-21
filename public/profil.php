@@ -22,7 +22,7 @@ if (isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] === true &
 }
 
 // Include database configuration
-require_once 'config/database.php';
+require_once __DIR__ . '/../config/database.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     $pdo = getDBConnection('secura');
@@ -145,6 +145,7 @@ $user_data = $stmt->fetch(PDO::FETCH_ASSOC);
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+  <base href="/Secura/public/">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mon Profil – Secura</title>

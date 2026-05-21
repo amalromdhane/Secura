@@ -102,6 +102,7 @@ function col(array $row, string $key, string $default = ''): string {
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+  <base href="/Secura/public/">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><?php echo htmlspecialchars($module['title']); ?> - Secura</title>

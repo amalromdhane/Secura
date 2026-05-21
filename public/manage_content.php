@@ -11,7 +11,7 @@ if (!isset($_SESSION['user_logged_in']) || $_SESSION['user_role'] !== 'admin') {
 }
 
 try {
-    require_once 'config/database.php';
+    require_once __DIR__ . '/../config/database.php';
     $pdo = getDBConnection('cyber');
     $action = $_GET['action'] ?? '';
 

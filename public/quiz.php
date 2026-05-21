@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'config/database.php';
+require_once __DIR__ . '/../config/database.php';
 
 // Check if user is logged in
 $is_logged_in = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] === true;
@@ -61,6 +61,7 @@ try {
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+  <base href="/Secura/public/">
   <meta charset="UTF-8">
   <title>Quiz <?php echo htmlspecialchars($module['title']); ?> - Secura</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">

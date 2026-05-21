@@ -14,7 +14,7 @@ if (!isset($_SESSION['user_logged_in']) || $_SESSION['user_logged_in'] !== true)
     $user_role = $_SESSION['user_role'] ?? '';
 }
 
-require_once 'config/database.php';
+require_once __DIR__ . '/../config/database.php';
 
 $pdo = getDBConnection('cyber');
 $stmt = $pdo->query("SELECT id, title, description, category, duration, image, page, quiz_page, video_url, active FROM modules WHERE active = 1 ORDER BY id DESC");
@@ -23,6 +23,7 @@ $modules = $stmt->fetchAll();
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+  <base href="/Secura/public/">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tous les Modules – Secura</title>

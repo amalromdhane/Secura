@@ -1,0 +1,17 @@
+# ── Redirect all requests to public/ ─────────────────────────────────────
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # ── EXISTING FILES: serve directly, no redirect ──────────────────────
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # ── SERVER-SIDE DIRECTORIES (not accessible by browser) ───────────────
+  RewriteRule ^(app|config|scripts|views|\.git)/ - [L]
+
+  # ── EVERYTHING ELSE → EXTERNAL REDIRECT to public/ ───────────────────
+  # [R=302,L] = external redirect so browser URL updates to /public/…
+  # QSA      = preserve query string
+  RewriteRule ^(.*)$ public/$1 [QSA,R=302,L]
+</IfModule>
