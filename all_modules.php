@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * Dynamic Modules Display Page
  * Shows all modules from database in passwords.html style
@@ -15,10 +15,20 @@ if (!isset($_SESSION['user_logged_in']) || $_SESSION['user_logged_in'] !== true)
 }
 
 require_once 'includes/config.php';
+require_once 'includes/auth.php';
 
-$pdo = getDBConnection('cyber');
-$stmt = $pdo->query("SELECT id, title, description, category, duration, image, page, quiz_page, video_url, active FROM modules WHERE active = 1 ORDER BY id DESC");
-$modules = $stmt->fetchAll();
+$modules = [];
+$db_error = '';
+try {
+    $pdo = getDBConnection('cyber');
+    $stmt = $pdo->query(
+        'SELECT id, title, description, category, duration, image, page, quiz_page, video_url, quiz_enabled, active
+         FROM modules WHERE active = 1 ORDER BY id DESC'
+    );
+    $modules = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    $db_error = $e->getMessage();
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -29,8 +39,8 @@ $modules = $stmt->fetchAll();
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css">
-  <link rel="stylesheet" href="assets/css/cyberaware.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/cyberaware.css">
   <style>
     :root {
       --cyber-primary: #0d6efd;
@@ -234,7 +244,7 @@ $modules = $stmt->fetchAll();
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
       gap: 32px;
-      animation: fadeIn 1s ease-out 0.5s both;
+      opacity: 1;
     }
     @keyframes fadeIn {
       from { opacity: 0; }
@@ -268,9 +278,16 @@ $modules = $stmt->fetchAll();
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     }
 
+    .module-card > .module-thumb,
+    .module-card > .module-thumb-placeholder {
+      display: block;
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
     .module-thumb {
       width: 100%;
-      height: 100%;
+      height: 200px;
       object-fit: cover;
       transition: transform 0.5s ease;
     }
@@ -831,6 +848,13 @@ $modules = $stmt->fetchAll();
         <!-- categories injected by JS -->
       </div>
 
+      <?php if ($db_error !== ''): ?>
+      <div class="empty-state" style="color:#dc3545;">
+        <i class="fas fa-exclamation-triangle"></i>
+        <h3>Erreur base de données</h3>
+        <p><?php echo htmlspecialchars($db_error); ?></p>
+      </div>
+      <?php else: ?>
       <!-- Modules grid -->
       <div class="modules-grid" id="modulesGrid">
         <div class="empty-state">
@@ -838,6 +862,7 @@ $modules = $stmt->fetchAll();
           <p>Chargement des modules…</p>
         </div>
       </div>
+      <?php endif; ?>
     </div>
 
     <!-- Delete confirmation modal -->
@@ -856,9 +881,12 @@ $modules = $stmt->fetchAll();
 
   <script>
   window.isAdmin = <?php echo json_encode($user_role === 'admin'); ?>;
-  window.modulesData = <?php echo json_encode($modules); ?>;
+  window.isLoggedIn = <?php echo json_encode($is_logged_in); ?>;
+  window.modulesData = <?php echo json_encode($modules, JSON_UNESCAPED_UNICODE); ?>;
   </script>
-  <script src="assets/js/modules.js"></script>
+  <?php if ($db_error === ''): ?>
+  <script src="js/modules.js"></script>
+  <?php endif; ?>
   
   <script>
   // User dropdown toggle

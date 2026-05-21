@@ -8,6 +8,9 @@ session_start();
 
 // Include database configuration
 require_once 'includes/config.php';
+require_once 'includes/auth.php';
+
+$login_redirect = auth_safe_redirect(trim($_GET['redirect'] ?? '')) ?? '';
 
 // Handle logout
 if (isset($_GET['action']) && $_GET['action'] === 'logout') {
@@ -17,56 +20,22 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
 }
 
 // Check if already logged in
-if (isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] === true) {
-    header('Location: admin_dashboard.php');
+if (auth_is_logged_in()) {
+    if ($login_redirect !== '') {
+        header('Location: ' . $login_redirect);
+        exit();
+    }
+    if (($_SESSION['user_role'] ?? '') === 'admin') {
+        header('Location: admin_dashboard.php');
+        exit();
+    }
+    header('Location: index.php');
     exit();
 }
 
-$error = '';
+$error = $_SESSION['login_error'] ?? '';
+unset($_SESSION['login_error']);
 $success = '';
-
-// Handle login form submission
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = trim($_POST['email'] ?? '');
-    $password = $_POST['password'] ?? '';
-    
-    if (empty($email) || empty($password)) {
-        $error = 'Veuillez remplir tous les champs.';
-    } else {
-        try {
-            // Connect to MySQL database using config
-            $pdo = getDBConnection('secura');
-            
-            // Fetch user from database using email
-            $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ? AND is_active = 1");
-            $stmt->execute([$email]);
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
-            
-            // Verify password
-            if ($user && password_verify($password, $user['password_hash'])) {
-                // Login successful - store user info in session
-                $_SESSION['user_logged_in'] = true;
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['username'] = $user['username'];
-                $_SESSION['user_role'] = $user['role'];
-                $_SESSION['user_email'] = $user['email'];
-                $_SESSION['user_avatar'] = $user['avatar'];
-                
-                // Redirect based on role
-                if ($user['role'] === 'admin') {
-                    header('Location: admin_dashboard.php');
-                } else {
-                    header('Location: index.php');
-                }
-                exit();
-            } else {
-                $error = 'Nom d\'utilisateur ou mot de passe incorrect.';
-            }
-        } catch (PDOException $e) {
-            $error = 'Erreur de connexion à la base de données.';
-        }
-    }
-}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -74,8 +43,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion - Secura</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/cyberaware.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/cyberaware.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         .auth-page {
@@ -561,7 +530,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <?php endif; ?>
 
-            <form method="POST" action="">
+            <form method="POST" action="traitement/login_traitement.php">
+                <?php if ($login_redirect !== ''): ?>
+                <input type="hidden" name="redirect" value="<?php echo htmlspecialchars($login_redirect); ?>">
+                <?php endif; ?>
                 <div class="form-group">
                     <label class="form-label" for="email">Adresse Email</label>
                     <div class="form-input-wrapper">
@@ -578,7 +550,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <i class="fas fa-lock input-icon"></i>
                         <input type="password" id="password" name="password" class="form-input" required
                                placeholder="••••••••">
-                        <button type="button" class="password-toggle" onclick="togglePassword()">
+                        <button type="button" class="password-toggle">
                             <i class="fas fa-eye"></i>
                         </button>
                     </div>
@@ -593,20 +565,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 
-    <script>
-        function togglePassword() {
-            const input = document.getElementById('password');
-            const icon = input.nextElementSibling.querySelector('i');
-            if (input.type === 'password') {
-                input.type = 'text';
-                icon.classList.remove('fa-eye');
-                icon.classList.add('fa-eye-slash');
-            } else {
-                input.type = 'password';
-                icon.classList.remove('fa-eye-slash');
-                icon.classList.add('fa-eye');
-            }
-        }
-    </script>
+    <script src="js/auth.js"></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 session_start();
 
 if (!isset($_SESSION['user_logged_in']) || $_SESSION['user_logged_in'] !== true) {
@@ -7,6 +7,29 @@ if (!isset($_SESSION['user_logged_in']) || $_SESSION['user_logged_in'] !== true)
 } else {
     $is_logged_in = true;
     $user_role = $_SESSION['user_role'] ?? '';
+}
+
+require_once __DIR__ . '/includes/config.php';
+require_once __DIR__ . '/includes/auth.php';
+
+$home_modules = [];
+try {
+    $pdo = getDBConnection('cyber');
+    $stmt = $pdo->query(
+        'SELECT id, title, description, category, duration, image, page, quiz_enabled
+         FROM modules WHERE active = 1 ORDER BY id DESC'
+    );
+    $home_modules = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    $home_modules = [];
+}
+
+function home_module_image(array $m): string
+{
+    if (!empty($m['image'])) {
+        return $m['image'];
+    }
+    return 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=480&q=80';
 }
 ?>
 <!DOCTYPE html>
@@ -18,7 +41,7 @@ if (!isset($_SESSION['user_logged_in']) || $_SESSION['user_logged_in'] !== true)
   <title>Secura - Sensibilisation à la Cybersécurité</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="css/style.css">
 
 </head>
 
@@ -155,61 +178,45 @@ if (!isset($_SESSION['user_logged_in']) || $_SESSION['user_logged_in'] !== true)
         </h2>
         <p class="lead text-muted">Les principales menaces expliquées simplement</p>
       </div>
-      <div class="row">
-        <div class="col col-md-3">
-          <div class="cyber-card text-center">
-
+      <div class="row" id="homeModulesRow">
+        <?php if (empty($home_modules)): ?>
+        <div class="col-12 text-center py-4">
+          <p class="text-muted mb-3">Aucun module publié pour le moment.</p>
+          <?php if ($user_role === 'admin'): ?>
+          <a href="admin_dashboard.php" class="btn btn-primary"><i class="bi bi-plus-circle me-2"></i> Ajouter un module</a>
+          <?php else: ?>
+          <a href="all_modules.php" class="btn btn-outline">Voir le catalogue</a>
+          <?php endif; ?>
+        </div>
+        <?php else: ?>
+        <?php foreach ($home_modules as $mod): ?>
+        <div class="col col-md-3 col-sm-6 mb-4">
+          <div class="cyber-card text-center h-100">
             <img
-              src="https://thumbs.dreamstime.com/b/glowing-envelope-symbol-represents-phishing-attacks-illustration-email-scams-cyber-security-threats-digital-communication-risk-407759383.jpg"
-              alt="Phishing & Hameçonnage"
-              style="width: 240px; height: 150px; border-radius: 16px; object-fit: cover; border: 2px solid  var(--neon-cyan); box-shadow: var(--glow-cyan);">
-            <h5 class="mt-4 mb-3">Phishing & Hameçonnage</h5>
-            <p class="text-muted mb-4">Reconnaître les emails et messages frauduleux pour éviter les pièges.</p>
-            <a href="./pages/phishing.html" class="btn btn-primary"><i class="bi bi-play-circle me-2"></i> Accéder
-              au cours</a>
+              src="<?php echo htmlspecialchars(home_module_image($mod)); ?>"
+              alt="<?php echo htmlspecialchars($mod['title']); ?>"
+              style="width: 240px; max-width: 100%; height: 150px; border-radius: 16px; object-fit: cover; border: 2px solid var(--neon-cyan); box-shadow: var(--glow-cyan);">
+            <h5 class="mt-4 mb-3"><?php echo htmlspecialchars($mod['title']); ?></h5>
+            <p class="text-muted mb-4">
+              <?php
+              $desc = trim($mod['description'] ?? '');
+              echo htmlspecialchars($desc !== '' ? $desc : 'Module de sensibilisation — ' . ($mod['category'] ?? 'Cybersécurité'));
+              ?>
+            </p>
+            <a href="<?php echo htmlspecialchars(module_access_href($mod, $is_logged_in)); ?>" class="btn btn-primary<?php echo $is_logged_in ? '' : ' btn-module-locked'; ?>">
+              <i class="bi bi-<?php echo $is_logged_in ? 'play-circle' : 'lock'; ?> me-2"></i>
+              <?php echo $is_logged_in ? 'Accéder au cours' : 'Se connecter pour accéder'; ?>
+            </a>
           </div>
         </div>
-        <div class="col col-md-3">
-          <div class="cyber-card text-center">
-
-            <img
-              src="https://thumbs.dreamstime.com/b/glowing-neon-padlock-futuristic-cyber-security-concept-digital-protection-privacy-illustration-364017358.jpg"
-              alt="Sécurité des mots de passe"
-              style="width: 240px; height: 150px; border-radius: 16px; object-fit: cover; border: 2px solid  var(--neon-cyan); box-shadow: var(--glow-cyan);">
-            <h5 class="mt-4 mb-3">Sécurité des mots de passe</h5>
-            <p class="text-muted mb-4">Créer et gérer des mots de passe robustes pour une sécurité optimale.</p>
-            <a href="./pages/passwords.html" class="btn btn-primary"><i class="bi bi-play-circle me-2"></i>
-              Accéder au cours</a>
-          </div>
-        </div>
-        <div class="col col-md-3">
-          <div class="cyber-card text-center">
-
-            <img
-              src="https://www.shutterstock.com/image-vector/vector-illustration-futuristic-cybersecurity-breach-600nw-2544403121.jpg"
-              alt="Ransomware & Malwares"
-              style="width: 240px; height: 150px; border-radius: 16px; object-fit: cover; border: 2px solid  var(--neon-cyan); box-shadow: var(--glow-cyan);">
-            <h5 class="mt-4 mb-3">Ransomware & Malwares</h5>
-            <p class="text-muted mb-4">Comprendre les logiciels malveillants et comment s'en protéger.</p>
-            <a href="./pages/ransomware.html" class="btn btn-primary"><i class="bi bi-play-circle me-2"></i>
-              Accéder au cours</a>
-          </div>
-        </div>
-        <div class="col col-md-3">
-          <div class="cyber-card text-center">
-
-
-            <img
-              src="https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-              alt="Cloud & Intelligence Artificielle"
-              style="width: 240px; height: 150px; border-radius: 16px; object-fit: cover; border: 2px solid  var(--neon-cyan); box-shadow: var(--glow-cyan);">
-            <h5 class="mt-4 mb-3">Cloud & Intelligence Artificielle</h5>
-            <p class="text-muted mb-4">Sécurité des données dans le cloud et enjeux de l'IA.</p><br>
-            <a href="./pages/cloud.html" class="btn btn-primary"><i class="bi bi-play-circle me-2"></i> Accéder au
-              cours</a>
-          </div>
-        </div>
+        <?php endforeach; ?>
+        <?php endif; ?>
       </div>
+      <?php if (!empty($home_modules)): ?>
+      <div class="text-center mt-4">
+        <a href="all_modules.php" class="btn btn-outline"><i class="bi bi-grid me-2"></i> Voir tous les modules</a>
+      </div>
+      <?php endif; ?>
     </div>
   </section>
 
@@ -248,7 +255,7 @@ if (!isset($_SESSION['user_logged_in']) || $_SESSION['user_logged_in'] !== true)
           <i class="bi bi-shield-shaded" style="font-size:9rem;color:#0d6efd;"></i>
           <div class="row text-center mt-4">
             <div class="col">
-              <div style="font-size:2rem;font-weight:700;color:var(--cyber-primary);margin-left:170px;">12+</div><small
+              <div style="font-size:2rem;font-weight:700;color:var(--cyber-primary);margin-left:170px;"><?php echo max(1, count($home_modules)); ?>+</div><small
                 class="text-muted" style="margin-left:170px;">Modules</small>
             </div>
             <div class="col">
@@ -288,54 +295,56 @@ if (!isset($_SESSION['user_logged_in']) || $_SESSION['user_logged_in'] !== true)
               <i class="bi bi-send me-2"></i>Envoyez-nous un message
             </h4>
 
-            <form id="contactForm">
+            <div id="contactAlert" class="contact-alert" role="alert" style="display:none;"></div>
+
+            <form id="contactForm" novalidate>
               <div class="form-row">
                 <div class="form-group">
-                  <label class="form-label">Nom complet <span class="required-star">*</span></label>
+                  <label class="form-label" for="contactName">Nom complet <span class="required-star">*</span></label>
                   <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-person"></i></span>
-                    <input type="text" class="form-control" placeholder="Votre nom" required>
+                    <input type="text" id="contactName" name="full_name" class="form-control" placeholder="Votre nom" required>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="form-label">Email <span class="required-star">*</span></label>
+                  <label class="form-label" for="contactEmail">Email <span class="required-star">*</span></label>
                   <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-envelope"></i></span>
-                    <input type="email" class="form-control" placeholder="votre@email.com" required>
+                    <input type="email" id="contactEmail" name="email" class="form-control" placeholder="votre@email.com" required>
                   </div>
                 </div>
               </div>
 
               <div class="mb-4">
-                <label class="form-label">Sujet</label>
+                <label class="form-label" for="contactSubject">Sujet <span class="required-star">*</span></label>
                 <div class="input-group">
                   <span class="input-group-text"><i class="bi bi-tag"></i></span>
-                  <select class="form-select">
-                    <option selected>Sélectionnez un sujet</option>
-                    <option>Question sur un module</option>
-                    <option>Problème technique</option>
-                    <option>Suggestion d'amélioration</option>
-                    <option>Partenaire/Formation entreprise</option>
-                    <option>Autre demande</option>
+                  <select id="contactSubject" name="subject" class="form-select" required>
+                    <option value="" selected disabled>Sélectionnez un sujet</option>
+                    <option value="Question sur un module">Question sur un module</option>
+                    <option value="Problème technique">Problème technique</option>
+                    <option value="Suggestion d'amélioration">Suggestion d'amélioration</option>
+                    <option value="Partenaire/Formation entreprise">Partenaire/Formation entreprise</option>
+                    <option value="Autre demande">Autre demande</option>
                   </select>
                 </div>
               </div>
 
               <div class="mb-4">
-                <label class="form-label">Message <span class="required-star">*</span></label>
-                <textarea class="form-textarea" placeholder="Décrivez votre question ou demande en détail..."
-                  required></textarea>
+                <label class="form-label" for="contactMessage">Message <span class="required-star">*</span></label>
+                <textarea id="contactMessage" name="message" class="form-textarea" placeholder="Décrivez votre question ou demande en détail..."
+                  required minlength="10"></textarea>
               </div>
 
               <div class="form-check mb-4">
-                <input class="form-check-input" type="checkbox" id="newsletter">
+                <input class="form-check-input" type="checkbox" id="newsletter" name="newsletter" value="1">
                 <label class="form-check-label" for="newsletter">
                   Je souhaite recevoir les mises à jour et les nouveaux modules par email
                 </label>
               </div>
 
               <div class="text-center">
-                <button type="submit" class="submit-btn">
+                <button type="submit" id="contactSubmit" class="submit-btn">
                   <i class="bi bi-send-check me-2"></i>Envoyer le message
                 </button>
               </div>
@@ -386,6 +395,7 @@ if (!isset($_SESSION['user_logged_in']) || $_SESSION['user_logged_in'] !== true)
     </div>
   </footer>
 
+  <script src="js/contact.js"></script>
 </body>
 
 </html>

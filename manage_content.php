@@ -12,6 +12,7 @@ if (!isset($_SESSION['user_logged_in']) || $_SESSION['user_role'] !== 'admin') {
 
 try {
     require_once 'includes/config.php';
+    require_once 'includes/request.php';
     $pdo = getDBConnection('cyber');
     $action = $_GET['action'] ?? '';
 
@@ -70,8 +71,9 @@ try {
         break;
 
     case 'delete_chapter':
+        $in = getRequestData();
         $stmt = $pdo->prepare("DELETE FROM course_chapters WHERE id=?");
-        echo json_encode(['success' => $stmt->execute([(int)$_POST['id']])]);
+        echo json_encode(['success' => $stmt->execute([(int)($in['id'] ?? 0)])]);
         break;
 
     case 'list_quiz':
@@ -91,19 +93,24 @@ try {
         break;
 
     case 'save_quiz_question':
+        $in = getRequestData();
         $pdo->beginTransaction();
         try {
-            $q_id = $_POST['id'] ?? null;
+            $q_id = $in['id'] ?? null;
+            $options = $in['options'] ?? [];
+            if (is_string($options)) {
+                $options = json_decode($options, true) ?: [];
+            }
             if ($q_id) {
                 $pdo->prepare("UPDATE quiz_questions SET question_text=?, order_index=? WHERE id=?")
-                    ->execute([$_POST['question_text'], $_POST['order_index'], $q_id]);
+                    ->execute([$in['question_text'], $in['order_index'], $q_id]);
                 $pdo->prepare("DELETE FROM quiz_options WHERE question_id=?")->execute([$q_id]);
             } else {
                 $pdo->prepare("INSERT INTO quiz_questions (module_id, question_text, order_index) VALUES (?,?,?)")
-                    ->execute([$_POST['module_id'], $_POST['question_text'], $_POST['order_index']]);
+                    ->execute([$in['module_id'], $in['question_text'], $in['order_index']]);
                 $q_id = $pdo->lastInsertId();
             }
-            foreach (json_decode($_POST['options'], true) as $opt) {
+            foreach ($options as $opt) {
                 $pdo->prepare("INSERT INTO quiz_options (question_id, option_text, is_correct) VALUES (?,?,?)")
                     ->execute([$q_id, $opt['text'], $opt['is_correct'] ? 1 : 0]);
             }
@@ -116,8 +123,9 @@ try {
         break;
 
     case 'delete_quiz_question':
+        $in = getRequestData();
         $stmt = $pdo->prepare("DELETE FROM quiz_questions WHERE id=?");
-        echo json_encode(['success' => $stmt->execute([(int)$_POST['id']])]);
+        echo json_encode(['success' => $stmt->execute([(int)($in['id'] ?? 0)])]);
         break;
 
     default:

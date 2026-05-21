@@ -15,53 +15,10 @@ if (isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] === true) 
 // Include database configuration
 require_once 'includes/config.php';
 
-$error = '';
-$success = '';
-
-// Handle registration form submission
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = !empty($_POST['username']) ? trim($_POST['username']) : null;
-    $email = trim($_POST['email'] ?? '');
-    $password = $_POST['password'] ?? '';
-    $confirm_password = $_POST['confirm_password'] ?? '';
-    
-    // New users are always 'user' role (admin is set manually in DB)
-    $role = 'user';
-    
-    // Validate inputs
-    if (empty($email) || empty($password) || empty($confirm_password)) {
-        $error = 'Veuillez remplir tous les champs obligatoires.';
-    } elseif ($password !== $confirm_password) {
-        $error = 'Les mots de passe ne correspondent pas.';
-    } elseif (strlen($password) < 8) {
-        $error = 'Le mot de passe doit contenir au moins 8 caractères.';
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $error = 'Veuillez entrer une adresse email valide.';
-    } else {
-        try {
-            // Connect to MySQL database using config
-            $pdo = getDBConnection('cyber');
-            
-            // Check if email already exists (email is unique for login)
-            $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
-            $stmt->execute([$email]);
-            if ($stmt->fetch()) {
-                $error = 'Cette adresse email est déjà utilisée.';
-            } else {
-                // Hash password
-                $password_hash = password_hash($password, PASSWORD_DEFAULT);
-                
-                // Insert new user (role is always 'user')
-                $stmt = $pdo->prepare("INSERT INTO users (username, email, password_hash, role) VALUES (?, ?, ?, ?)");
-                $stmt->execute([$username, $email, $password_hash, $role]);
-                
-                $success = 'Compte créé avec succès! <a href="login.php">Se connecter</a>';
-            }
-        } catch (PDOException $e) {
-            $error = 'Erreur de connexion à la base de données.';
-        }
-    }
-}
+$error = $_SESSION['register_error'] ?? '';
+unset($_SESSION['register_error']);
+$success = $_SESSION['register_success'] ?? '';
+unset($_SESSION['register_success']);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -69,8 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inscription - Secura</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/cyberaware.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/cyberaware.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         .auth-page {
@@ -568,12 +525,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <?php else: ?>
 
-            <form method="POST" action="">
+            <form method="POST" action="traitement/register_traitement.php">
                 <div class="form-group">
                     <label class="form-label" for="username">Nom d'utilisateur</label>
                     <div class="form-input-wrapper">
                         <i class="fas fa-user input-icon"></i>
-                        <input type="text" id="username" name="username" class="form-input"
+                        <input type="text" id="username" name="username" class="form-input" required
                                placeholder="Votre nom d'utilisateur"
                                value="<?php echo htmlspecialchars($_POST['username'] ?? ''); ?>">
                     </div>
@@ -595,7 +552,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <i class="fas fa-lock input-icon"></i>
                         <input type="password" id="password" name="password" class="form-input" required
                                placeholder="Min. 8 caractères">
-                        <button type="button" class="password-toggle" onclick="togglePassword(this)">
+                        <button type="button" class="password-toggle">
                             <i class="fas fa-eye"></i>
                         </button>
                     </div>
@@ -607,7 +564,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <i class="fas fa-lock input-icon"></i>
                         <input type="password" id="confirm_password" name="confirm_password" class="form-input" required
                                placeholder="Répétez votre mot de passe">
-                        <button type="button" class="password-toggle" onclick="togglePassword(this)">
+                        <button type="button" class="password-toggle">
                             <i class="fas fa-eye"></i>
                         </button>
                     </div>
@@ -624,21 +581,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 
-    <script>
-        function togglePassword(btn) {
-            const wrapper = btn.parentElement;
-            const input = wrapper.querySelector('.form-input');
-            const icon = btn.querySelector('i');
-            if (input.type === 'password') {
-                input.type = 'text';
-                icon.classList.remove('fa-eye');
-                icon.classList.add('fa-eye-slash');
-            } else {
-                input.type = 'password';
-                icon.classList.remove('fa-eye-slash');
-                icon.classList.add('fa-eye');
-            }
-        }
-    </script>
+    <script src="js/auth.js"></script>
 </body>
 </html>

@@ -1,0 +1,2 @@
+# Les pages HTML ne sont accessibles que via access_module.php (utilisateur connecté).
+Require all denied

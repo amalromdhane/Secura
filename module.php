@@ -1,6 +1,8 @@
 <?php
 session_start();
 require_once 'includes/config.php';
+require_once 'includes/request.php';
+require_once 'includes/auth.php';
 
 $is_logged_in = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] === true;
 $user_role    = $_SESSION['user_role'] ?? '';
@@ -26,25 +28,26 @@ switch ($action) {
         }
         try {
             $pdo  = getDBConnection('cyber');
+            $in   = getRequestData();
             $data = [
-                'title'        => $_POST['title']        ?? '',
-                'category'     => $_POST['category']     ?? '',
-                'duration'     => (int)($_POST['duration'] ?? 30),
-                'description'  => $_POST['description']  ?? '',
-                'image'        => $_POST['image']        ?? '',
-                'page'         => $_POST['page']         ?? '',
-                'video_url'    => $_POST['video_url']    ?? '',
-                'content'      => $_POST['content']      ?? '',
-                'quiz_enabled' => isset($_POST['quiz_enabled']) ? (int)$_POST['quiz_enabled'] : 0,
-                'quiz_page'    => $_POST['quiz_page']    ?? '',
-                'active'       => isset($_POST['active']) ? (int)$_POST['active'] : 1,
+                'title'        => $in['title']        ?? '',
+                'category'     => $in['category']     ?? '',
+                'duration'     => (int)($in['duration'] ?? 30),
+                'description'  => $in['description']  ?? '',
+                'image'        => $in['image']        ?? '',
+                'page'         => $in['page']         ?? '',
+                'video_url'    => $in['video_url']    ?? '',
+                'content'      => $in['content']      ?? '',
+                'quiz_enabled' => isset($in['quiz_enabled']) ? (int)$in['quiz_enabled'] : 0,
+                'quiz_page'    => $in['quiz_page']    ?? '',
+                'active'       => isset($in['active']) ? (int)$in['active'] : 1,
             ];
             if ($action === 'add') {
                 $stmt = $pdo->prepare("INSERT INTO modules (title,category,duration,description,image,page,video_url,content,quiz_enabled,quiz_page,active) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
                 $stmt->execute(array_values($data));
                 $insertId = $pdo->lastInsertId();
             } else {
-                $data['id'] = (int)$_POST['id'];
+                $data['id'] = (int)($in['id'] ?? 0);
                 $stmt = $pdo->prepare("UPDATE modules SET title=?,category=?,duration=?,description=?,image=?,page=?,video_url=?,content=?,quiz_enabled=?,quiz_page=?,active=?,updated_at=CURRENT_TIMESTAMP WHERE id=?");
                 $stmt->execute(array_values($data));
                 $insertId = $data['id'];
@@ -63,7 +66,8 @@ switch ($action) {
         try {
             $pdo  = getDBConnection('cyber');
             $stmt = $pdo->prepare("DELETE FROM modules WHERE id=?");
-            echo json_encode(['success' => $stmt->execute([$_POST['id']])]);
+            $in = getRequestData();
+            echo json_encode(['success' => $stmt->execute([$in['id'] ?? 0])]);
         } catch (PDOException $e) {
             echo json_encode(['success' => false, 'error' => $e->getMessage()]);
         }
@@ -71,7 +75,9 @@ switch ($action) {
 }
 
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-if ($id <= 0) { header('Location: index.html'); exit(); }
+if ($id <= 0) { header('Location: index.php'); exit(); }
+
+auth_require_login('module.php?id=' . $id);
 
 try {
     $pdo  = getDBConnection('cyber');
@@ -106,7 +112,7 @@ function col(array $row, string $key, string $default = ''): string {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><?php echo htmlspecialchars($module['title']); ?> - Secura</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="assets/css/cyberaware.css">
+  <link rel="stylesheet" href="css/cyberaware.css">
   <style>
     :root { --neon-cyan:#00d4ff; --neon-green:#00ff88; }
 

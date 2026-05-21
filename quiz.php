@@ -1,17 +1,19 @@
-<?php
+﻿<?php
 session_start();
 require_once 'includes/config.php';
+require_once 'includes/auth.php';
 
-// Check if user is logged in
-$is_logged_in = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] === true;
+$is_logged_in = auth_is_logged_in();
 $user_role = $_SESSION['user_role'] ?? '';
 
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
 if ($id <= 0) {
-    header('Location: index.html');
+    header('Location: index.php');
     exit();
 }
+
+auth_require_login('quiz.php?id=' . $id);
 
 try {
     $pdo = getDBConnection('cyber');
@@ -65,7 +67,7 @@ try {
   <title>Quiz <?php echo htmlspecialchars($module['title']); ?> - Secura</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="assets/css/quizStyle.css">
+  <link rel="stylesheet" href="css/quizStyle.css">
   <style>
     /* Assurer que le style correspond à l'original */
     .correct { background-color: rgba(40, 167, 69, 0.2) !important; border: 1px solid #28a745 !important; }
@@ -253,7 +255,7 @@ try {
             <a href="module.php?id=<?php echo $id; ?>" class="btn-access">
                 <i class="fas fa-arrow-left"></i> Retour au cours
             </a>
-            <button onclick="window.location.reload();" class="btn-quiz">
+            <button type="button" id="btnRetryQuiz" class="btn-quiz">
                 <i class="fas fa-redo"></i> Recommencer
             </button>
         </div>
@@ -365,11 +367,17 @@ if (userAvatar && userDropdown) {
         userDropdown.classList.toggle('show');
     });
 
-    // Close dropdown when clicking outside
     document.addEventListener('click', function(e) {
         if (!userAvatar.contains(e.target) && !userDropdown.contains(e.target)) {
             userDropdown.classList.remove('show');
         }
+    });
+}
+
+const btnRetry = document.getElementById('btnRetryQuiz');
+if (btnRetry) {
+    btnRetry.addEventListener('click', function () {
+        window.location.reload();
     });
 }
 </script>
